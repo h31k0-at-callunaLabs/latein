@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latein Lektion 12 – Lernen für Donnerstag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F6;--surface:#FFFFFF;--ink:#172840;--muted:#56677E;--sea:#245F86;--seabg:#DDE9F2;
+  --gold:#B07C10;--goldbg:#F6EBCF;--ok:#3B7531;--okbg:#E2EFDD;--bad:#AE3630;--badbg:#F6E0DE;--line:#D3DCE6;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1828;--surface:#172539;--ink:#E4EAF2;--muted:#9DACC0;--sea:#73B3DC;--seabg:#1C3450;
+    --gold:#E2B34A;--goldbg:#3A3018;--ok:#83C873;--okbg:#1C3322;--bad:#F08079;--badbg:#3C2124;--line:#2A3B55;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1828;--surface:#172539;--ink:#E4EAF2;--muted:#9DACC0;--sea:#73B3DC;--seabg:#1C3450;
+  --gold:#E2B34A;--goldbg:#3A3018;--ok:#83C873;--okbg:#1C3322;--bad:#F08079;--badbg:#3C2124;--line:#2A3B55;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1,h2,.lat-big{font-family:"Marcellus","Palatino Linotype",Palatino,Georgia,serif;font-weight:400}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.box:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px}
+.back{background:none;border:0;color:var(--sea);font-weight:700;padding:8px 0;font-size:16px}
+.hero{padding:18px 0 22px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.hero h1{font-size:clamp(34px,9vw,48px);line-height:1.05;margin:0 0 6px;letter-spacing:.01em}
+.hero p{margin:0;color:var(--muted)}
+.count{display:inline-block;margin-top:12px;background:var(--goldbg);color:var(--gold);font-weight:800;padding:4px 12px;border-radius:999px;font-size:15px}
+h2{font-size:24px;margin:26px 0 10px}
+.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.box{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tick{flex:none;width:30px;height:30px;border:2.5px solid var(--ink);border-radius:5px;display:grid;place-items:center;font-size:22px;font-weight:800;color:var(--gold)}
+.box.done .tick{border-color:var(--gold);background:var(--goldbg)}
+.box b{display:block;font-size:17px}
+.box small{color:var(--muted);font-size:14px;display:block}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;background:var(--sea);color:#fff}
+.btn.ghost{background:var(--seabg);color:var(--sea)}
+.btn.wide{width:100%}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 18px}
+.progress i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.meta{color:var(--muted);font-size:14px;font-weight:700}
+.prompt{font-size:20px;margin:4px 0 18px}
+.prompt .lat-big{font-size:30px;display:block;margin:4px 0}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.explain{margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--seabg);font-size:16px}
+.explain.ok{background:var(--okbg)}
+.typer{display:flex;gap:8px}
+.inp{flex:1;min-width:0;font:inherit;font-size:20px;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.inp:focus{outline:3px solid var(--gold);outline-offset:1px}
+.inp.right{border-color:var(--ok);background:var(--okbg)}
+.inp.wrong{border-color:var(--bad);background:var(--badbg)}
+.typer .btn:disabled{opacity:.5} .explain.bad{background:var(--badbg)}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.word{font-family:"Marcellus",Georgia,serif;font-size:22px;padding:6px 12px;border-radius:10px;background:var(--bg);border:2px solid var(--line)}
+.word.pred{border-color:var(--sea);background:var(--seabg)}
+.word.subj{border-color:var(--gold);background:var(--goldbg)}
+.word.wrong{border-color:var(--bad);background:var(--badbg)}
+.legend{font-size:14px;color:var(--muted)}
+.card{min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;width:100%;margin-bottom:14px}
+.card .lat-big{font-size:32px;line-height:1.2}
+.card .sub{color:var(--muted);margin-top:8px}
+.card .ans{font-size:20px;font-weight:700}
+.card .note{margin-top:10px;font-size:15px;color:var(--muted)}
+.card .long{font-size:17px;text-align:left;font-weight:600}
+.hint{color:var(--muted);font-size:14px;text-align:center;margin:0 0 14px}
+.seg{display:flex;background:var(--seabg);border-radius:12px;padding:4px;gap:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;border-radius:9px;padding:9px 6px;font-weight:700;color:var(--sea);font-size:15px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink)}
+.score{font-family:"Marcellus",Georgia,serif;font-size:64px;line-height:1;margin:10px 0}
+.tw{overflow-x:auto;margin:8px 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:700;font-size:13px}
+tr:last-child td{border-bottom:0}
+td.lat{font-family:"Marcellus",Georgia,serif;font-size:16px}
+td em{color:var(--muted);font-style:normal;font-size:13px}
+.rule{border-left:4px solid var(--sea);background:var(--surface);padding:12px 14px;border-radius:0 12px 12px 0;margin:8px 0 18px}
+.rule p{margin:0 0 6px}.rule p:last-child{margin:0}
+.motto{font-family:"Marcellus",Georgia,serif}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+/* ---------- Daten ---------- */
+// [Stichwort, Lernform, Deutsch, Checkliste?, Zusatz]
+const VOK=[
+['nox','nox, noctis f.','die Nacht',1],
+['mīles','mīles, mīlitis m.','der Soldat',1],
+['excitāre','excitāre, excitō, excitāvī','aufschrecken',1],
+['dubitāre','dubitāre, dubitō, dubitāvī','zögern',1],
+['suus','suus, -a, -um','sein, ihr (Possessivpronomen)',1],
+['relinquere','relinquere, relinquō, relīquī','verlassen',1],
+['quaerere','quaerere, quaerō, quaesīvī','suchen',1],
+['dēbēre','dēbēre, dēbeō, dēbuī','müssen',1],
+['quamquam','quamquam (Subj.)','obwohl',1],
+['tamen','tamen (Adv.)','dennoch, trotzdem',1],
+['Trōia','Trōia, Trōiae f.','(die Stadt) Troja',1],
+['Trōiānī','Trōiānī, Trōiānōrum m.','die Trojaner',1],
+['Graecī','Graecī, Graecōrum m.','die Griechen',1],
+['diū','diū (Adv.)','lange',2],
+['ubīque','ubīque (Adv.)','überall',2],
+['prō','prō (Präp. + Abl.)','für',2],
+['timēre','timēre, timeō, timuī','(sich) fürchten, Angst haben (vor)',2,'timēre prō: fürchten um'],
+['adīre','adīre, adeō, adiī','an jdn. herangehen, sich jdm. nähern',2,'Perfekt: ad + Perfektformen von īre'],
+['perīre','perīre, pereō, periī','ums Leben kommen, sterben',2],
+['pius','pius, -a, -um','pflichtbewusst',2],
+['currere','currere, currō, cucurrī','laufen',2],
+['penātēs','penātēs, penātium m. Pl.','die Penaten',2,'römische Hausgötter'],
+['annus','annus, annī m.','das Jahr',2,'annīs īnfirmus: altersschwach'],
+['īnfirmus','īnfirmus, -a, -um','schwach, geschwächt',2],
+['dextra','dextra, dextrae f.','die rechte Hand',2],
+['capere','capere, capiō, cēpī','fangen, ergreifen',2],
+['ruīnae','ruīnae, ruīnārum f. Pl.','die Ruinen, die Trümmer',2],
+['flamma','flamma, flammae f.','die Flamme',2],
+['lītus','lītus, lītoris n.','die Küste, der Strand',2],
+['iter','iter, itineris n.','der Weg, der Marsch',2],
+['respicere','respicere, respiciō, respexī','zurückblicken',0],
+['oculus','oculus, oculī m.','das Auge',0,'ex oculīs abīre: aus dem Blickfeld verschwinden'],
+['trādere','trādere, trādō, trādidī','übergeben, anvertrauen',0],
+['nōmen','nōmen, nōminis n.','der Name',0],
+['dēspērāre','dēspērāre, dēspērō','die Hoffnung aufgeben, verzweifeln',0],
+['cum','cum (Subj. + Perf.)','als (plötzlich)',0],
+['umbra','umbra, umbrae f.','der Schatten, das Schattenbild',0],
+['fātum','fātum, fātī n.','das Schicksal, der Schicksalsspruch',0],
+['patria','patria, patriae f.','die Heimat',0],
+['novus','novus, -a, -um','neu',0],
+['mūnus','mūnus, mūneris n.','die Aufgabe',0],
+['temptāre','temptāre, temptō','versuchen',0],
+['nāvis','nāvis, nāvis f.','das Schiff',0,'Gen. Pl. nāvium'],
+['Aenēās','Aenēās, Aenēae m.','Aeneas',0,'Trojaner, Stammvater der Römer']
+];
+
+const P=['1. P. Sg.','2. P. Sg.','3. P. Sg.','1. P. Pl.','2. P. Pl.','3. P. Pl.'];
+const VB=[
+{inf:'temptāre',de:'versuchen',t:'a',s:'temptā',pf:'temptāv'},
+{inf:'excitāre',de:'aufschrecken',t:'a',s:'excitā',pf:'excitāv'},
+{inf:'dubitāre',de:'zögern',t:'a',s:'dubitā',pf:'dubitāv'},
+{inf:'vocāre',de:'rufen',t:'a',s:'vocā',pf:'vocāv'},
+{inf:'timēre',de:'fürchten',t:'e',s:'tim',pf:'timu'},
+{inf:'dēbēre',de:'müssen',t:'e',s:'dēb',pf:'dēbu'},
+{inf:'currere',de:'laufen',t:'k',s:'curr',pf:'cucurr'},
+{inf:'relinquere',de:'verlassen',t:'k',s:'relinqu',pf:'relīqu'},
+{inf:'quaerere',de:'suchen',t:'k',s:'quaer',pf:'quaesīv'},
+{inf:'trādere',de:'übergeben',t:'k',s:'trād',pf:'trādid'},
+{inf:'capere',de:'fangen',t:'g',s:'cap',pf:'cēp'},
+{inf:'respicere',de:'zurückblicken',t:'g',s:'respic',pf:'respex'},
+{inf:'esse',de:'sein',irr:{pr:['sum','es','est','sumus','estis','sunt'],im:['eram','erās','erat','erāmus','erātis','erant'],pf:['fuī','fuistī','fuit','fuimus','fuistis','fuērunt']}},
+{inf:'posse',de:'können',irr:{pr:['possum','potes','potest','possumus','potestis','possunt'],im:['poteram','poterās','poterat','poterāmus','poterātis','poterant'],pf:['potuī','potuistī','potuit','potuimus','potuistis','potuērunt']}},
+{inf:'īre',de:'gehen',irr:{pr:['eō','īs','it','īmus','ītis','eunt'],im:['ībam','ībās','ībat','ībāmus','ībātis','ībant'],pf:['iī','īstī','iit','iimus','īstis','iērunt']}},
+{inf:'adīre',de:'herangehen',irr:{pr:['adeō','adīs','adit','adīmus','adītis','adeunt'],im:['adībam','adībās','adībat','adībāmus','adībātis','adībant'],pf:['adiī','adīstī','adiit','adiimus','adīstis','adiērunt']}}
+];
+const PF_END=['ī','istī','it','imus','istis','ērunt'];
+const IMPF_A=['bam','bās','bat','bāmus','bātis','bant'];
+const IMPF_E=['ēbam','ēbās','ēbat','ēbāmus','ēbātis','ēbant'];
+function forms(v){
+  if(v.irr) return v.irr;
+  const s=v.s; let pr,im;
+  if(v.t==='a'){const b=s.slice(0,-1);pr=[b+'ō',s+'s',b+'at',s+'mus',s+'tis',b+'ant'];im=IMPF_A.map(e=>s+e);}
+  if(v.t==='e'){pr=['eō','ēs','et','ēmus','ētis','ent'].map(e=>s+e);im=IMPF_E.map(e=>s+e);}
+  if(v.t==='k'){pr=['ō','is','it','imus','itis','unt'].map(e=>s+e);im=IMPF_E.map(e=>s+e);}
+  if(v.t==='g'){pr=['iō','is','it','imus','itis','iunt'].map(e=>s+e);im=IMPF_E.map(e=>s+'i'+e);}
+  return {pr,im,pf:PF_END.map(e=>v.pf+e)};
+}
+const TN={pr:'Präsens',im:'Imperfekt',pf:'Perfekt'};
+
+const TX=[
+['Inter Trōiānōs Aenēās praestābat et diū cum Graecīs <u>pugnābat</u>.','im','Signalwort diū (lange): Die Handlung dauert an – Hintergrund.'],
+['Subitō Venerem mātrem <u>cōnspexit</u>.','pf','Signalwort subitō (plötzlich): ein einmaliges Ereignis – Vordergrund.'],
+['Statim Aenēās, quia pius erat, domum <u>cucurrit</u>.','pf','Signalwort statim (sofort): Die Handlung geht weiter – Vordergrund.'],
+['Itaque Aenēās saepe ad Trōiam <u>respiciēbat</u>.','im','Signalwort saepe (oft): Die Handlung wiederholt sich – Hintergrund.'],
+['Ubīque uxōrem quaerēbat, iterum iterumque nōmen eius <u>vocābat</u>.','im','Signalwort iterum iterumque (immer wieder): Wiederholung – Hintergrund.'],
+['In itinere magnōs clāmōrēs hominum <u>audiēbant</u>.','im','Das Hören dauert während des ganzen Weges an – Hintergrund.'],
+['Statim sociīs patrem fīliumque <u>trādidit</u>.','pf','Signalwort statim: einmaliges Ereignis – Vordergrund.'],
+['Miser <u>erat</u> et iam dēspērābat.','im','Ein Zustand wird beschrieben (er war unglücklich) – Hintergrund.'],
+['Tandem Aenēās ad sociōs <u>cucurrit</u>.','pf','Signalwort tandem (endlich): Die Handlung geht voran – Vordergrund.'],
+['Ter Aenēās umbram Creūsae tenēre <u>temptābat</u>.','im','Ter (dreimal): Der Versuch wiederholt sich – Hintergrund.'],
+['Aenēās sociōs ad sē <u>vocāvit</u>.','pf','Ein einmaliges Ereignis, die Handlung geht voran – Vordergrund.']
+];
+const SW=[['diū','lange','im'],['saepe','oft','im'],['iterum iterumque','immer wieder','im'],['subitō','plötzlich','pf'],['statim','sofort','pf'],['tum','dann, da','pf'],['tandem','endlich','pf']];
+
+const CAS=['Nominativ','Genitiv','Dativ','Akkusativ','Ablativ'];
+const GEN=['maskulin','feminin','neutrum'];
+const PRON={
+ 'hic, haec, hoc':{sg:[['hic','haec','hoc'],['huius','huius','huius'],['huic','huic','huic'],['hunc','hanc','hoc'],['hōc','hāc','hōc']],
+   pl:[['hī','hae','haec'],['hōrum','hārum','hōrum'],['hīs','hīs','hīs'],['hōs','hās','haec'],['hīs','hīs','hīs']],de:'dieser, diese, dieses (hier)'},
+ 'ille, illa, illud':{sg:[['ille','illa','illud'],['illīus','illīus','illīus'],['illī','illī','illī'],['illum','illam','illud'],['illō','illā','illō']],
+   pl:[['illī','illae','illa'],['illōrum','illārum','illōrum'],['illīs','illīs','illīs'],['illōs','illās','illa'],['illīs','illīs','illīs']],de:'jener, jene, jenes (dort)'},
+ 'is, ea, id':{sg:[['is','ea','id'],['eius','eius','eius'],['eī','eī','eī'],['eum','eam','id'],['eō','eā','eō']],
+   pl:[['eī / iī','eae','ea'],['eōrum','eārum','eōrum'],['eīs / iīs','eīs / iīs','eīs / iīs'],['eōs','eās','ea'],['eīs / iīs','eīs / iīs','eīs / iīs']],de:'er, sie, es; dieser, diese, dieses'}
+};
+
+// [Wörter, Index Prädikat, Index Subjekt (-1 = steckt im Prädikat), Übersetzung]
+const SATZ=[
+['Dea ad fīlium adiit.',3,0,'Die Göttin ging zu ihrem Sohn.'],
+['Pater tuus adhūc vīvit.',3,0,'Dein Vater lebt noch.'],
+['Aenēās sociōs ad sē vocāvit.',4,0,'Aeneas rief die Gefährten zu sich.'],
+['Tum patrī penātēs dedit.',3,-1,'Dann gab er dem Vater die Penaten.'],
+['Aenēās dextram fīliī cēpit.',3,0,'Aeneas ergriff die rechte Hand des Sohnes.'],
+['Trōiānī per ruīnās flammāsque ad lītus iērunt.',6,0,'Die Trojaner gingen durch Trümmer und Flammen zum Strand.'],
+['Ubīque uxōrem quaerēbat.',2,-1,'Überall suchte er seine Frau.'],
+['Deī mē ad sē vocāvērunt.',4,0,'Die Götter haben mich zu sich gerufen.'],
+['Ter umbra eius fugiēbat.',3,1,'Dreimal entfloh ihr Schattenbild.'],
+['Cum eīs ad nāvēs fūgit.',4,-1,'Mit ihnen floh er zu den Schiffen.'],
+['Mīles noctem in urbe exspectābat.',4,0,'Der Soldat erwartete die Nacht in der Stadt.'],
+['Trōiam relinquere dubitābant.',2,-1,'Sie zögerten, Troja zu verlassen.'],
+['Aenēās Creūsam iterum iterumque vocābat.',4,0,'Aeneas rief Kreusa immer wieder.'],
+['Miser erat.',1,-1,'Er war unglücklich.'],
+['Subitō Creūsae umbra eī appāruit.',4,2,'Plötzlich erschien ihm Kreusas Schattenbild.'],
+['Deī tē hīc perīre nōn cupiunt.',5,0,'Die Götter wollen nicht, dass du hier stirbst.'],
+['Statim Aenēās domum cucurrit.',3,1,'Sofort lief Aeneas nach Hause.'],
+['Itaque Aenēās saepe ad Trōiam respiciēbat.',5,1,'Deshalb blickte Aeneas oft nach Troja zurück.'],
+['Mīlitēs Graecōrum ubīque pugnābant.',3,0,'Überall kämpften die Soldaten der Griechen.'],
+['Nocte Trōiānōs excitāvērunt.',2,-1,'In der Nacht schreckten sie die Trojaner auf.']
+];
+
+// [Frage, richtige Antwort, Falsch1, Falsch2, Falsch3, Erklärung]
+const AEN=[
+['Welches Schicksal ist Aeneas bestimmt?','In Italien eine neue Heimat für die Trojaner gründen','In Troja bleiben und die Stadt verteidigen','König von Karthago werden','Frieden mit den Griechen schließen','Das „neue Troja“ soll in Italien entstehen. Deshalb gilt Aeneas als Stammvater der Römer.'],
+['Was bedeutet „vir pius“?','ein pflichtbewusster Mann','ein starker Krieger','ein reicher Mann','ein trauriger Mann','pius = pflichtbewusst. Aeneas bekommt den Ehrentitel pius Aeneas.'],
+['Gegenüber wem zeigt Aeneas seine pietās?','Göttern, Familie und Gefährten','nur den Göttern','nur seinem Vater','nur dem König von Troja','pietās ist Pflichtbewusstsein gegenüber den Göttern und den Mitmenschen.'],
+['Wer ist die Mutter von Aeneas?','Venus','Juno','Kreusa','Dido','Die Göttin Venus erscheint ihm in Troja und warnt ihn.'],
+['Was rät Venus ihrem Sohn?','Seine Familie retten und aus der Stadt fliehen','Weiter gegen die Griechen kämpfen','Im Tempel beten','Die Schiffe verbrennen','„Servā hōs et cum hīs ex urbe fuge!“ – Rette sie und flieh mit ihnen aus der Stadt!'],
+['Warum trägt Aeneas seinen Vater auf den Schultern?','Anchises ist altersschwach und kann sich nicht beeilen','Anchises wurde von Soldaten verletzt','Die Götter befehlen es','Anchises will sich verstecken','„quia annīs īnfirmus erat neque properāre poterat“'],
+['Was gibt Aeneas seinem Vater zum Tragen?','die Penaten (Hausgötter)','sein Schwert','den Schatz Trojas','eine Fackel','Er rettet auch die Götter – ein Zeichen seiner pietās.'],
+['Wie heißen Vater, Sohn und Frau von Aeneas?','Anchises, Ascanius, Kreusa','Ascanius, Anchises, Dido','Priamus, Ascanius, Venus','Anchises, Merkur, Kreusa','Vater Anchises, Sohn Ascanius, Frau Kreusa.'],
+['Was geschieht mit Kreusa auf der Flucht?','Sie verschwindet und erscheint als Schattenbild','Sie wird von Griechen gefangen','Sie erreicht die Schiffe','Sie bleibt freiwillig zu Hause','„Subitō uxōrem ex oculīs abīsse animadvertit.“ Später erscheint ihr Schattenbild (umbra).'],
+['Was trägt Kreusas Schattenbild Aeneas auf?','Ohne sie eine neue Heimat suchen und seine Aufgaben erfüllen','Nach Troja zurückkehren','Die Griechen bestrafen','Auf sie warten','„Patriam novam sine mē petere dēbēs! Explē mūnera tua!“'],
+['Wer hat die Geschichte von Aeneas geschrieben?','Vergil','Homer','Cicero','Caesar','Vergil, einer der berühmtesten römischen Dichter, in der Aeneis.'],
+['Warum verlässt Aeneas Dido in Karthago?','Merkur erinnert ihn im Auftrag Jupiters an seine Mission','Dido schickt ihn weg','Karthago brennt','Er will zurück nach Troja','Er stellt sein Pflichtgefühl über seine Liebe – typisch pius.'],
+['Wo betreten die Trojaner zum ersten Mal Italien?','in Cumae','in Rom','in Karthago','auf Sizilien','In Cumae betreten die Flüchtlinge den Boden ihrer neuen Heimat.'],
+['Was tut Jupiter, als die Frauen auf Sizilien die Schiffe anzünden?','Er schickt einen Platzregen, der den Brand löscht','Er bestraft die Frauen','Er schickt einen Sturm','Er schickt Merkur','Die Götter sorgen dafür, dass Aeneas seine Bestimmung erfüllt.'],
+['Mit wie vielen Schiffen stechen die Trojaner in See?','zwanzig','zwei','zwölf','hundert','Mit zwanzig Schiffen fliehen die überlebenden Trojaner.'],
+['Wer ist Dido?','die Königin von Karthago','die Mutter von Aeneas','eine trojanische Göttin','die Schwester von Kreusa','Dido nimmt die Trojaner freundlich auf und verliebt sich in Aeneas.'],
+['Wer sind die Penaten?','römische Hausgötter','trojanische Soldaten','die Diener von Aeneas','griechische Krieger','Aeneas rettet die Penaten aus dem brennenden Troja.'],
+['Was erscheint plötzlich um den Kopf von Ascanius?','ein Flammenkranz','ein Lorbeerkranz','eine goldene Krone','ein Adler','Anchises deutet das als Zeichen der Götter und ist sofort zur Flucht bereit.'],
+['Warum will Anchises zuerst nicht fliehen?','Er ist alt und weigert sich, die Flucht auf sich zu nehmen','Er will gegen die Griechen kämpfen','Er sucht Kreusa','Er wartet auf Venus','Erst das Zeichen der Götter (der Flammenkranz) stimmt ihn um.'],
+['Wohin fliehen Aeneas und seine Gefährten am Ende des Lektionstextes?','zu den Schiffen','in den Tempel','zur Burg von Troja','nach Karthago','„Cum eīs ad nāvēs fūgit.“'],
+['Was geschieht mit Anchises auf Sizilien?','Er stirbt und wird feierlich bestattet','Er wird König','Er bleibt freiwillig dort','Er kehrt nach Troja zurück','Danach bricht ein Sturm los und verschlägt die Schiffe nach Nordafrika.']
+];
+
+const AENCARDS=[
+['Welches Schicksal ist dem trojanischen Helden Aeneas bestimmt?','Er soll mit den überlebenden Trojanern eine neue Heimat suchen und in Italien ein „neues Troja“ gründen. Er gilt als Stammvater der Römer.'],
+['Was macht Aeneas zu einem vir pius?','Er ist pflichtbewusst gegenüber den Göttern (gehorcht Venus und Kreusa, rettet die Penaten) und gegenüber den Menschen (trägt den Vater, führt den Sohn, sucht Kreusa, kümmert sich um die Gefährten). Seine Pflicht ist ihm wichtiger als eigene Wünsche – er verlässt sogar Dido.'],
+['Nenne drei Beispiele für pietās im Lektionstext.','1. Er rettet den altersschwachen Vater auf den Schultern. 2. Er nimmt die Penaten mit. 3. Er nimmt den Sohn an der Hand. Außerdem: Er sucht Kreusa überall und übergibt Vater und Sohn den Gefährten.'],
+['Wer ist wer? Anchises, Ascanius, Kreusa, Venus','Anchises: Vater. Ascanius: Sohn. Kreusa: Ehefrau. Venus: Göttin und Mutter von Aeneas.'],
+['Wann Imperfekt, wann Perfekt in einer Erzählung?','Imperfekt = Hintergrund: Handlungen und Zustände, die lange andauern oder sich wiederholen (diū, saepe, iterum iterumque). Perfekt = Vordergrund: einmalige Ereignisse, Beginn oder Fortschritt der Handlung (subitō, statim, tum, tandem).'],
+['Woran erkennst du das Imperfekt?','Am Tempuszeichen -ba- oder -ēba-. Endungen: -m, -s, -t, -mus, -tis, -nt (z. B. vocābat, quaerēbat).'],
+['Was ist das Satzgerüst?','Prädikat (das Verb: Was passiert?) und Subjekt (im Nominativ: Wer handelt?). Steht kein Subjekt da, steckt es in der Endung des Prädikats.']
+];
+
+/* ---------- Helfer ---------- */
+const $=s=>document.querySelector(s);
+const rnd=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rnd(a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const KEY='oda-latein-l12';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+function save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+let store=load();
+if(store.best&&!store.pct){store.pct={};for(const k in store.best)store.pct[k]=store.best[k]*10;save(store)}
+const miss=()=>store.miss||(store.miss={});
+// Gewichtete Auswahl: Fehler kommen deutlich oefter dran
+function wsample(arr,n,idf){const pool=arr.slice(),out=[];while(out.length<n&&pool.length){const ws=pool.map(x=>1+4*(miss()[idf(x)]||0));let r=Math.random()*ws.reduce((a,b)=>a+b,0),i=0;while(i<ws.length-1&&r>=ws[i]){r-=ws[i];i++}out.push(pool.splice(i,1)[0])}return out}
+// falsch: +2, richtig: -1 (zweimal richtig, dann ist es raus)
+function mark(id,ok){if(!id)return;const m=miss();if(ok){if(m[id]){m[id]--;if(!m[id])delete m[id]}}else m[id]=(m[id]||0)+2;save(store)}
+const PFX={vok:['v:'],tempus:['t:','s:','f:'],pron:['p:'],satz:['z:'],aen:['a:']};
+function openCount(k){return Object.keys(miss()).filter(id=>PFX[k].some(p=>id.startsWith(p))).length}
+function again(q){const c=Object.assign({},q,{rep:true});if(q.type==='mc'){const o=shuffle(q.options);c.options=o;c.correct=o.indexOf(q.options[q.correct])}return c}
+function fin(q,ok){if(ok&&!q.rep)S.score++;mark(q.id,ok);if(!ok&&!q.rep)S.qs.push(again(q))}
+
+function mc(html,right,wrongs,explain,id){
+  const uniq=[...new Set(wrongs.filter(w=>w!==right))].slice(0,3);
+  const options=shuffle([right,...uniq]);
+  return {type:'mc',html,options,correct:options.indexOf(right),explain,id};
+}
+
+/* ---------- Fragengeneratoren ---------- */
+/* Tipp-Fragen */
+function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/ß/g,'ss').replace(/[^a-z ]+/g,' ').replace(/\s+/g,' ').trim()}
+function strip(n){let o=n,p;do{p=o;o=o.replace(/^(der|die|das|sich|an|jdn|jdm|zu) /,'')}while(o!==p);return o}
+function deVariants(s){const out=new Set();s.split(/[,;]/).forEach(part=>{[part.replace(/\([^)]*\)/g,' '),part.replace(/[()]/g,' ')].forEach(x=>{const n=norm(x);if(n){out.add(n);out.add(strip(n))}})});return [...out].filter(Boolean)}
+function lev(a,b){const m=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let prev=m[0];m[0]=i;for(let j=1;j<=b.length;j++){const t=m[j];m[j]=Math.min(m[j]+1,m[j-1]+1,prev+(a[i-1]===b[j-1]?0:1));prev=t}}return m[b.length]}
+function judge(input,answers,strict){if(strict)return answers.includes(norm(input))?'ok':'bad';const n=strip(norm(input)),first=n.split(' ')[0];
+  for(const a of answers){if(n===a||first===a)return 'ok';if(n.length>=4&&(' '+a+' ').includes(' '+n+' '))return 'ok'}
+  for(const a of answers){if(a.length>=4&&lev(n,a)<=(a.length>=9?2:1))return 'near'}
+  return 'bad'}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function typeQ(v){const id='v:'+v[0],ex=v[4]?`Merke: ${v[4]}`:'';
+  if(Math.random()<.6) return {type:'type',id,html:`Tippe auf Latein<span class="lat-big">${v[2]}</span><span class="meta">Längenstriche wie ā musst du nicht tippen.</span>`,answers:[norm(v[0])],show:v[1],ph:'lateinisches Wort',explain:ex};
+  return {type:'type',id,html:`Was heißt das auf Deutsch?<span class="lat-big">${v[1]}</span><span class="meta">Eine Bedeutung reicht.</span>`,answers:deVariants(v[2]),show:v[2],ph:'deutsche Bedeutung',explain:ex}}
+// Formen tippen: streng, jeder Buchstabe der Endung zählt
+function formQ(html,right,id,explain){return {type:'type',strict:true,id,html:html+'<span class="meta" style="display:block">Längenstriche wie ā musst du nicht tippen.</span>',answers:right.split('/').map(norm),show:right,ph:'Form eintippen',explain}}
+function checkTyped(){const q=S.qs[S.i];if(S.view!=='quiz'||S.answered||q.type!=='type')return;const el=document.getElementById('ans');const val=el?el.value:'';if(!norm(val)){el&&el.focus();return}
+  S.typed=val;S.res=judge(val,q.answers,q.strict);S.answered=true;fin(q,S.res!=='bad');render()}
+
+const TOPICS={
+ vok:{title:'Vokabeln Lektion 12',sub:'Checkliste und Lektion 12 bis iter',make(){
+   const imp=wsample(VOK.filter(v=>v[3]===1),10,v=>'v:'+v[0]), rest=wsample(VOK.filter(v=>v[3]===2),10,v=>'v:'+v[0]);
+   return shuffle([...imp,...rest]).map(v=>{
+     const others=shuffle(VOK.filter(o=>o!==v));
+     if(Math.random()<.35) return typeQ(v);
+     if(Math.random()<.6) return mc(`Was heißt<span class="lat-big">${v[1]}</span>`,v[2],others.map(o=>o[2]),v[4]?`Merke: ${v[4]}`:'','v:'+v[0]);
+     return mc(`Wie heißt auf Latein<span class="lat-big">${v[2]}</span>`,v[0],others.map(o=>o[0]),`Lernform: ${v[1]}`,'v:'+v[0]);
+   });
+ }},
+ tempus:{title:'Imperfekt und Perfekt',sub:'Formen erkennen, Hintergrund oder Vordergrund',make(){
+   const qs=[];
+   wsample(TX,6,t=>'t:'+t[0]).forEach(t=>qs.push(mc(`Hintergrund oder Vordergrund?<span class="lat-big" style="font-size:22px">${t[0]}</span>`,
+     t[1]==='im'?'Hintergrund (Imperfekt)':'Vordergrund (Perfekt)',[t[1]==='im'?'Vordergrund (Perfekt)':'Hintergrund (Imperfekt)'],t[2],'t:'+t[0])));
+   wsample(SW,2,s=>'s:'+s[0]).forEach(s=>{
+   qs.push(mc(`„<b>${s[0]}</b>“ (${s[1]}) ist ein Signalwort für …`,s[2]==='im'?'Imperfekt (Hintergrund)':'Perfekt (Vordergrund)',[s[2]==='im'?'Perfekt (Vordergrund)':'Imperfekt (Hintergrund)'],
+     'Imperfekt: diū, saepe, iterum iterumque. Perfekt: subitō, statim, tum, tandem.','s:'+s[0]))});
+   wsample(VB,4,v=>'f:'+v.inf).forEach(v=>{ // Bestimme
+     const f=forms(v),p=rnd(6),t=pick(['im','im','pf','pr']);
+     const right=`${P[p]} ${TN[t]}`;
+     const cands=[];
+     ['pr','im','pf'].filter(x=>x!==t).forEach(x=>{if(f[x][p]!==f[t][p])cands.push(`${P[p]} ${TN[x]}`)});
+     const op=(p+3)%6; if(f[t][op]!==f[t][p]) cands.push(`${P[op]} ${TN[t]}`);
+     qs.push(mc(`Bestimme die Form<span class="lat-big">${f[t][p]}</span><span class="meta">von ${v.inf} (${v.de})</span>`,right,cands,
+       `Imperfekt: ${f.im[p]}, Perfekt: ${f.pf[p]}, Präsens: ${f.pr[p]}`,'f:'+v.inf));
+   });
+   wsample(VB,8,v=>'f:'+v.inf).forEach(v=>{ // Bilde
+     const f=forms(v),p=rnd(6),op=(p+1+rnd(5))%6;
+     const bh=`Bilde das <b>Imperfekt</b>: ${P[p]}<span class="lat-big">${v.inf}</span><span class="meta">${v.de}</span>`;
+     const stem=v.t==='e'?v.s+'ē-':v.t==='g'?v.s+'i-':v.s+'-',tz=(v.t==='a'||v.t==='e')?'-ba-':'-ēba-';
+     const bx=v.irr?`${v.inf} ist unregelmäßig: ${f.im.join(', ')}`:`Präsensstamm ${stem} + ${tz} + Endung: ${f.im.join(', ')}`;
+     if(Math.random()<.75){qs.push(formQ(bh,f.im[p],'f:'+v.inf,bx));return}
+     qs.push(mc(bh,f.im[p],[f.pr[p],f.pf[p],f.im[op]],bx,'f:'+v.inf));
+   });
+   return shuffle(qs);
+ }},
+ pron:{title:'Pronomina',sub:'hic, haec, hoc · ille, illa, illud · is, ea, id'.replace(/ · /g,' / '),make(){
+   const qs=[];
+   const combos=[];Object.keys(PRON).forEach(name=>['sg','pl'].forEach(num=>{for(let c=0;c<5;c++)for(let g=0;g<3;g++)combos.push({name,num,c,g})}));
+   wsample(combos,20,o=>`p:${o.name}${o.num}${o.c}${o.g}`).forEach(o=>{
+     const {name,num,c,g}=o,pr=PRON[name];
+     const right=pr[num][c][g];
+     const all=[...pr.sg.flat(),...pr.pl.flat()];
+     if(Math.random()<.4){qs.push(formQ(`<span class="lat-big">${name}</span>${CAS[c]} ${num==='sg'?'Singular':'Plural'}, ${GEN[g]}`,right,`p:${name}${num}${c}${g}`,`${name}: ${pr.de}. Die ganze Tabelle steht unter „Tabellen“.`));return}
+     qs.push(mc(`<span class="lat-big">${name}</span>${CAS[c]} ${num==='sg'?'Singular':'Plural'}, ${GEN[g]}`,right,shuffle(all),
+       `${name}: ${pr.de}. Die ganze Tabelle steht unter „Tabellen“.`,`p:${name}${num}${c}${g}`));
+   });
+   return qs;
+ }},
+ satz:{title:'Satzgerüst',sub:'Prädikat und Subjekt sofort erkennen',make(){
+   return wsample(SATZ,20,s=>'z:'+s[0]).map(s=>({type:'tap',id:'z:'+s[0],words:s[0].split(' '),pred:s[1],subj:s[2],de:s[3]}));
+ }},
+ aen:{title:'Inhalt: Aeneas',sub:'Schicksal, vir pius, Lektionstext und Sachinfo',make(){
+   return wsample(AEN,20,a=>'a:'+a[0]).map(a=>mc(a[0],a[1],[a[2],a[3],a[4]],a[5],'a:'+a[0]));
+ }}
+};
+const ORDER=['vok','tempus','pron','satz','aen'];
+
+/* ---------- Ansichten ---------- */
+let S={view:'home'};
+function go(v,extra){S=Object.assign({view:v},extra||{});render();window.scrollTo(0,0)}
+
+function countdown(){
+  const t=new Date();t.setHours(0,0,0,0);
+  const d=Math.round((new Date(2026,10,12)-t)/864e5);
+  if(d>1) return `Noch ${d} Tage bis Donnerstag`;
+  if(d===1) return 'Morgen ist die Arbeit';
+  if(d===0) return 'Heute ist die Arbeit – viel Erfolg!';
+  return 'Die Arbeit ist geschrieben';
+}
+
+function home(){
+  const best=store.pct||{};
+  const items=ORDER.map(k=>{
+    const t=TOPICS[k],b=best[k],done=b>=80,o=openCount(k);
+    return `<li><button class="box${done?' done':''}" data-quiz="${k}">
+      <span class="tick" aria-hidden="true">${done?'✓':''}</span>
+      <span><b>${t.title}</b><small>${t.sub}${b!=null?` – Bestes Ergebnis: ${b} %`:''}${o?`<br>${o} Wackelkandidaten`:''}</small></span></button></li>`;
+  }).join('');
+  return `<div class="hero">
+    <h1>Lateinarbeit Nr. 1</h1>
+    <p>Lektion 12, Aeneas flieht aus Troja</p>
+    <span class="count">${countdown()}</span></div>
+  <h2>Checkliste</h2>
+  <p class="legend" style="margin-top:-4px">Ein Haken kommt dazu, wenn du in einer Runde mindestens 80 Prozent schaffst. Falsche Antworten kommen am Ende der Runde nochmal und in späteren Runden öfter.</p>
+  <ul class="check">${items}</ul>
+  <h2>Üben ohne Druck</h2>
+  <div class="row">
+    <button class="btn" data-go="cards">Karteikarten</button>
+    <button class="btn ghost" data-go="tables">Tabellen nachschlagen</button>
+  </div>
+  <p class="legend" style="margin-top:30px"><span class="motto">Explē mūnera tua!</span> – Erfülle deine Aufgaben! (Kreusa zu Aeneas)</p>`;
+}
+
+function topbar(label){return `<div class="top"><button class="back" data-go="home">‹ Übersicht</button><span class="meta">${label||''}</span></div>`}
+
+function startQuiz(k){const qs=TOPICS[k].make();go('quiz',{topic:k,qs,base:qs.length,i:0,score:0,answered:false})}
+
+function quiz(){
+  const q=S.qs[S.i],t=TOPICS[S.topic];
+  let body='';
+  if(q.type==='mc'){
+    body=`<div class="prompt">${q.html}</div><div class="opts">${q.options.map((o,i)=>{
+      let c='opt';if(S.answered){if(i===q.correct)c+=' right';else if(i===S.chosen)c+=' wrong'}
+      return `<button class="${c}" data-opt="${i}" ${S.answered?'disabled':''}>${o}</button>`}).join('')}</div>`;
+    if(S.answered){const ok=S.chosen===q.correct;
+      body+=`<div class="explain ${ok?'ok':'bad'}"><b>${ok?'Richtig!':'Nicht ganz.'}</b>${q.explain?' '+q.explain:''}</div>`}
+  } else if(q.type==='type'){
+    const cls=S.answered?(S.res==='bad'?' wrong':' right'):'';
+    body=`<div class="prompt">${q.html}</div>
+    <div class="typer"><input id="ans" class="inp${cls}" value="${S.answered?esc(S.typed):''}" ${S.answered?'disabled':''} autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="${q.ph}" aria-label="${q.ph}"><button class="btn" data-check ${S.answered?'disabled':''}>Prüfen</button></div>`;
+    if(S.answered){
+      const head=S.res==='ok'?'Richtig!':S.res==='near'?'Fast richtig – achte auf die Schreibweise.':'Nicht ganz.';
+      body+=`<div class="explain ${S.res==='bad'?'bad':'ok'}"><b>${head}</b>${S.res!=='ok'?` Lösung: <b>${q.show}</b>`:''}${q.explain?' '+q.explain:''}</div>`;
+    }
+  } else {
+    const st=S.tap||(S.tap={stage:'pred',miss:false,wrong:null});
+    const ws=q.words.map((w,i)=>{
+      let c='word';
+      if((st.stage!=='pred')&&i===q.pred)c+=' pred';
+      if(st.stage==='done'&&i===q.subj)c+=' subj';
+      if(st.wrong===i)c+=' wrong';
+      return `<button class="${c}" data-w="${i}" ${st.stage==='done'?'disabled':''}>${w}</button>`}).join('');
+    const ask=st.stage==='pred'?'Tippe auf das <b>Prädikat</b> (das Verb).':st.stage==='subj'?'Gut! Jetzt das <b>Subjekt</b> (Wer handelt?).':'';
+    body=`<div class="prompt">${ask||'Satzgerüst'}</div><div class="words">${ws}</div>`;
+    if(st.stage==='subj') body+=`<button class="btn ghost" data-nosubj>Subjekt steckt im Prädikat</button>`;
+    if(st.stage==='done'){
+      const subjTxt=q.subj<0?`Das Subjekt steckt in der Endung von <b>${q.words[q.pred]}</b>.`:`Subjekt: <b>${q.words[q.subj].replace(/[.,!]/g,'')}</b>.`;
+      body+=`<p class="legend">Blau = Prädikat, gold = Subjekt</p><div class="explain ${st.miss?'bad':'ok'}"><b>${st.miss?'Fast.':'Richtig!'}</b> Prädikat: <b>${q.words[q.pred].replace(/[.,!]/g,'')}</b>. ${subjTxt}<br>${q.de}</div>`;
+    }
+  }
+  const showNext=S.answered||(S.tap&&S.tap.stage==='done');
+  return `${topbar(`${S.i+1} von ${S.qs.length}`)}
+  <h2 style="margin-top:6px">${t.title}</h2>
+  ${q.rep?'<p class="meta" style="color:var(--gold);margin:-4px 0 0">Wiederholung: Das war vorhin falsch.</p>':''}
+  <div class="progress"><i style="width:${(S.i/S.qs.length)*100}%"></i></div>
+  <div class="panel">${body}${showNext?`<div style="margin-top:16px"><button class="btn wide" data-next>${S.i+1<S.qs.length?'Nächste Frage':'Ergebnis ansehen'}</button></div>`:''}</div>`;
+}
+
+function result(){
+  const k=S.topic,sc=S.score,pct=Math.round(sc/S.base*100),best=store.pct||(store.pct={});
+  if(best[k]==null||pct>best[k]){best[k]=pct;save(store)}
+  const open=openCount(k);
+  const msg=pct>=100?'Perfekt! Optimē!':pct>=80?'Sehr gut – Haken gesetzt!':pct>=50?'Schon ordentlich. Noch eine Runde?':'Weiter üben – die Fehler kommen jetzt öfter dran.';
+  return `${topbar()}<div class="panel" style="text-align:center">
+    <p class="meta">${TOPICS[k].title}</p><div class="score">${sc} / ${S.base}</div><p style="font-weight:700">${msg}</p>${open?`<p class="legend">${open} Wackelkandidaten werden in den nächsten Runden öfter abgefragt.</p>`:''}
+    <div class="row" style="justify-content:center;margin-top:14px">
+      <button class="btn" data-quiz="${k}">Neue Runde</button><button class="btn ghost" data-go="home">Zur Checkliste</button></div></div>`;
+}
+
+/* Karteikarten */
+function startCards(){
+  const deck=S.deck||'imp',dir=S.dir||'ld';
+  let cards;
+  if(deck==='aen') cards=AENCARDS.map(c=>({f:c[0],b:c[1],long:true}));
+  else cards=VOK.filter(v=>deck==='all'||(deck==='iter'?v[3]===2:v[3]===1)).map(v=>dir==='ld'?{f:v[1],b:v[2],n:v[4],lat:true}:{f:v[2],b:v[1],n:v[4],latB:true});
+  S.cards=shuffle(cards);S.flip=false;S.known=0;S.total=cards.length;
+}
+function cards(){
+  if(!S.cards) startCards();
+  const seg=(name,val,label)=>`<button data-${name}="${val}" aria-pressed="${(S[name]||(name==='deck'?'imp':'ld'))===val}">${label}</button>`;
+  let inner;
+  if(!S.cards.length){
+    inner=`<div class="card"><div class="lat-big">Bene!</div><div class="sub">Alle ${S.total} Karten gewusst.</div></div><button class="btn wide" data-restart>Nochmal mischen</button>`;
+  } else {
+    const c=S.cards[0];
+    const front=`<div class="${c.lat?'lat-big':c.long?'ans':'ans'}">${c.f}</div>`;
+    const back=c.long?`<div class="long">${c.b}</div>`:`<div class="${c.latB?'lat-big':'ans'}">${c.b}</div>${c.n?`<div class="note">${c.n}</div>`:''}`;
+    inner=`<button class="card" data-flip aria-label="Karte umdrehen">${S.flip?back:front}${S.flip?'':'<div class="sub">Tippen zum Umdrehen</div>'}</button>
+    ${S.flip?`<div class="row"><button class="btn ghost" style="flex:1" data-again>Nochmal</button><button class="btn" style="flex:1" data-knew>Gewusst</button></div>`:''}`;
+  }
+  return `${topbar(S.cards.length?`noch ${S.cards.length} Karten`:'')}
+  <h2 style="margin-top:6px">Karteikarten</h2>
+  <div class="seg">${seg('deck','imp','Checkliste')}${seg('deck','iter','Bis iter')}${seg('deck','all','Alle')}${seg('deck','aen','Aeneas')}</div>
+  ${(S.deck||'imp')!=='aen'?`<div class="seg">${seg('dir','ld','Latein → Deutsch')}${seg('dir','dl','Deutsch → Latein')}</div>`:''}
+  <p class="hint">„Nochmal“ legt die Karte zurück in den Stapel.</p>${inner}`;
+}
+
+/* Tabellen */
+function tables(){
+  const pt=(name)=>{const p=PRON[name];
+    const rows=(arr,lab)=>arr.map((r,i)=>`<tr><th>${i===0?lab:''}</th><th>${CAS[i]}</th>${r.map(x=>`<td class="lat">${x}</td>`).join('')}</tr>`).join('');
+    return `<h2>${name}</h2><p class="legend" style="margin:-6px 0 0">${p.de}</p><div class="tw"><table><tr><th></th><th></th><th>m.</th><th>f.</th><th>n.</th></tr>${rows(p.sg,'Sg.')}${rows(p.pl,'Pl.')}</table></div>`};
+  const ex=[VB[3],VB[4],VB[6],VB[10]];
+  const imp=`<div class="tw"><table><tr><th></th>${ex.map(v=>`<th>${v.inf}</th>`).join('')}</tr>${P.map((p,i)=>`<tr><th>${p}</th>${ex.map(v=>`<td class="lat">${forms(v).im[i]}</td>`).join('')}</tr>`).join('')}</table></div>`;
+  const irr=['esse','posse','īre'].map(n=>VB.find(v=>v.inf===n));
+  const imp2=`<div class="tw"><table><tr><th></th>${irr.map(v=>`<th>${v.inf}</th>`).join('')}</tr>${P.map((p,i)=>`<tr><th>${p}</th>${irr.map(v=>`<td class="lat">${v.irr.im[i]}</td>`).join('')}</tr>`).join('')}</table></div>`;
+  return `${topbar()}
+  <h2 style="margin-top:6px">Imperfekt oder Perfekt?</h2>
+  <div class="rule"><p><b>Imperfekt = Hintergrund.</b> Was lange dauert oder sich wiederholt. Signalwörter: diū, saepe, iterum iterumque.</p>
+  <p><b>Perfekt = Vordergrund.</b> Einmalige Ereignisse, Beginn oder Fortschritt der Handlung. Signalwörter: subitō, statim, tum, tandem.</p></div>
+  <h2>Imperfekt bilden</h2>
+  <div class="rule"><p>Präsensstamm + <b>-ba-</b> oder <b>-ēba-</b> + Endung -m, -s, -t, -mus, -tis, -nt.</p></div>
+  ${imp}<p class="legend">esse, posse, īre (und adīre: adībam …):</p>${imp2}
+  ${pt('hic, haec, hoc')}${pt('ille, illa, illud')}${pt('is, ea, id')}
+  <h2>Satzgerüst</h2>
+  <div class="rule"><p><b>Prädikat:</b> das Verb – Was passiert? Zuerst suchen, steht oft am Satzende.</p><p><b>Subjekt:</b> im Nominativ – Wer handelt? Fehlt es, steckt es in der Endung des Prädikats (quaerēbat = er suchte).</p></div>`;
+}
+
+function render(){
+  const v=S.view;
+  $('#app').innerHTML=v==='home'?home():v==='quiz'?quiz():v==='result'?result():v==='cards'?cards():tables();
+  const a=document.getElementById('ans');if(a&&!a.disabled)a.focus({preventScroll:true});
+}
+
+/* ---------- Ereignisse ---------- */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||S.view!=='quiz')return;
+  if(e.target.id==='ans'){e.preventDefault();checkTyped();return}
+  if(S.answered&&e.target.tagName!=='BUTTON'){const n=$('[data-next]');if(n){e.preventDefault();n.click()}}
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const d=b.dataset;
+  if(d.go){go(d.go);return}
+  if(d.quiz){startQuiz(d.quiz);return}
+  if(S.view==='quiz'){
+    const q=S.qs[S.i];
+    if('check' in d){checkTyped();return}
+    if(d.opt!=null&&!S.answered){S.chosen=+d.opt;S.answered=true;fin(q,S.chosen===q.correct);render();return}
+    if(d.w!=null){const st=S.tap,i=+d.w;
+      if(st.stage==='pred'){if(i===q.pred){st.stage='subj';st.wrong=null}else{st.miss=true;st.wrong=i;st.stage='subj'}}
+      else if(st.stage==='subj'){if(i!==q.subj){st.miss=true;st.wrong=i}else st.wrong=null;st.stage='done';fin(q,!st.miss)}
+      render();return}
+    if('nosubj' in d){const st=S.tap;if(q.subj!==-1)st.miss=true;st.wrong=null;st.stage='done';fin(q,!st.miss);render();return}
+    if('next' in d){S.i++;S.answered=false;S.chosen=null;S.tap=null;if(S.i>=S.qs.length)go('result',{topic:S.topic,score:S.score,base:S.base});else{render();window.scrollTo(0,0)}return}
+  }
+  if(S.view==='cards'){
+    if(d.deck){S.deck=d.deck;S.cards=null;render();return}
+    if(d.dir){S.dir=d.dir;S.cards=null;render();return}
+    if('flip' in d){S.flip=!S.flip;render();return}
+    if('knew' in d){S.cards.shift();S.flip=false;render();return}
+    if('again' in d){S.cards.push(S.cards.shift());S.flip=false;render();return}
+    if('restart' in d){S.cards=null;render();return}
+  }
+});
+render();
+</script>
+</body>
+</html>
