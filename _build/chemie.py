@@ -23,19 +23,28 @@ LESEN = {
 "t1": """
 <div class="box merke"><h3>Das musst du wissen</h3>
 <p>Eine chemische Reaktion erkennst du an zwei Dingen:</p>
-<ul><li><b>Stoffumwandlung (immer):</b> Die Ausgangsstoffe werden verbraucht. Es entstehen <b>neue Stoffe mit neuen Eigenschaften</b>.</li>
+<ul><li><b>Stoffumwandlung (immer):</b> Die Ausgangsstoffe werden vernichtet (verbraucht). Es entstehen <b>neue Stoffe mit neuen Eigenschaften</b>.</li>
 <li><b>Energieumwandlung (meistens):</b> Energie wird aufgenommen oder abgegeben, zum Beispiel als Wärme oder Licht.</li></ul></div>
 <div class="box"><h3>Zwei wichtige Wörter</h3>
 <p><b>Edukte</b> sind die Ausgangsstoffe. Sie sind <b>vorher</b> da.</p>
 <p><b>Produkte</b> sind die neuen Stoffe. Sie sind <b>nachher</b> da.</p>
 <p>Beispiel aus dem Heft: Aus Holz wird Holzkohle hergestellt. Das Edukt ist Holz. Die Produkte sind Holzkohle, Teer, Holzgas und Holzflüssigkeit.</p></div>
+<div class="box"><h3>Aus dem Heft: die Stationsarbeit</h3>
+<p><b>Station 1: Zucker wird erhitzt.</b> <span class="badge b-exo" style="background:var(--ok)">chemische Reaktion</span></p>
+<div class="tbl"><table><tr><th>Edukt</th><th>Produkte</th></tr>
+<tr><td><b>Zucker:</b> süß, weiß, fest, geruchlos, kristallin</td><td><b>Karamell:</b> süß bis bitter, bräunlich, fest<br><b>Zuckerkohle:</b> schwarz, fest</td></tr></table></div>
+<p>Begründung: Das Edukt Zucker wurde vernichtet, und karamellisierter Zucker ist als Produkt entstanden.</p>
+<p><b>Station 2a: Glas.</b> <span class="badge" style="background:var(--muted)">keine chemische Reaktion</span></p>
+<div class="tbl"><table><tr><th>vorher</th><th>nachher</th></tr>
+<tr><td>fest, transparent, nicht brennbar, Glas</td><td>fest, transparent, nicht brennbar, Glas</td></tr></table></div>
+<p>Begründung: Es hat keine Stoffvernichtung stattgefunden, weil das Glas immer noch Glas geblieben ist.</p></div>
 <div class="box"><h3>Chemische Reaktion: ja oder nein?</h3>
 <div class="tbl"><table><tr><th>Ja</th><th>Nein</th></tr>
 <tr><td>Holz, Kerze oder Gas verbrennt</td><td>Eis schmilzt</td></tr>
 <tr><td>Zucker karamellisiert</td><td>Wasser verdampft</td></tr>
 <tr><td>Holzkohle wird aus Holz hergestellt</td><td>Eine LED leuchtet</td></tr>
-<tr><td>Eisen rostet</td><td>Glas zerbricht</td></tr></table></div>
-<p><b>Frag dich immer: Ist ein neuer Stoff entstanden?</b> Beim Schmelzen, Verdampfen oder Zerbrechen bleibt der Stoff derselbe. Wärme oder Licht allein reichen nicht: Eine LED leuchtet und wird warm, aber es entsteht kein neuer Stoff.</p>
+<tr><td>Eisen rostet</td><td>Glas bleibt Glas (Station 2a)</td></tr></table></div>
+<p><b>Frag dich immer: Ist ein neuer Stoff entstanden?</b> Beim Schmelzen oder Verdampfen bleibt der Stoff derselbe. Wärme oder Licht allein reichen nicht: Eine LED leuchtet und wird warm, aber es entsteht kein neuer Stoff.</p>
 <p>Beispiele für die Arbeit: <b>alle Verbrennungen</b> und <b>Karamellisieren</b>.</p></div>
 """,
 "t2": """
@@ -48,6 +57,8 @@ LESEN = {
 <div class="box"><h3>Beispiele</h3>
 <div class="schema">Holz<sub>(s)</sub> → Holzkohle<sub>(s)</sub> + Teer<sub>(l)</sub> + Holzgas<sub>(g)</sub> + Holzflüssigkeit<sub>(l)</sub></div>
 <p class="meta">Gelesen: Holz reagiert zu Holzkohle und Teer und Holzgas und Holzflüssigkeit.</p>
+<div class="schema">Zucker → karamellisierter Zucker</div>
+<p class="meta">Aus dem Heft (Station 1). Über dem Pfeil steht dort: konstante Energiezufuhr.</p>
 <div class="schema">Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser</div>
 <div class="schema">Holzkohle<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Kohlenstoffdioxid<sub>(g)</sub></div></div>
 <div class="box"><h3>Aus dem Heft: Herstellung von Holzkohle</h3>
@@ -129,7 +140,9 @@ CARDS = {
  ["Was ist eine chemische Reaktion?", "Ein Vorgang, bei dem aus Edukten neue Stoffe mit neuen Eigenschaften entstehen (Produkte). Meistens wird dabei auch Energie umgewandelt."],
  ["Edukt", "Ausgangsstoff einer chemischen Reaktion. Er ist vorher da."],
  ["Produkt", "Stoff, der bei der Reaktion neu entsteht. Er ist nachher da."],
- ["Stoffumwandlung", "Die Edukte werden verbraucht, und Produkte mit neuen Eigenschaften entstehen."],
+ ["Stoffumwandlung", "Die Edukte werden vernichtet (verbraucht), und Produkte mit neuen Eigenschaften entstehen."],
+ ["Station 1: Warum ist Zucker erhitzen eine chemische Reaktion?", "Das Edukt Zucker wurde vernichtet, und neue Stoffe sind als Produkte entstanden: Karamell (bräunlich) und Zuckerkohle (schwarz)."],
+ ["Station 2a: Warum gab es beim Glas keine chemische Reaktion?", "Es hat keine Stoffvernichtung stattgefunden. Das Glas hat nachher dieselben Eigenschaften und ist immer noch Glas."],
  ["Energieumwandlung", "Eine Energieform wird in eine andere umgewandelt, z. B. chemische Energie in Wärme und Licht."],
  ["Ist Eisschmelzen eine chemische Reaktion?", "Nein. Es entsteht kein neuer Stoff, nur der Zustand ändert sich."],
  ["Nenne zwei Beispiele für chemische Reaktionen.", "Alle Verbrennungen (z. B. Holz, Kerze) und Karamellisieren."],
@@ -141,6 +154,7 @@ CARDS = {
  ["Wie liest man das Plus + im Wortschema?", "„und“"],
  ["(s), (l), (g)", "fest, flüssig, gasförmig"],
  ["Wortschema: Herstellung von Holzkohle", "Holz(s) → Holzkohle(s) + Teer(l) + Holzgas(g) + Holzflüssigkeit(l)"],
+ ["Wortschema: Zucker wird erhitzt (Station 1)", "Zucker → karamellisierter Zucker (mit konstanter Energiezufuhr)"],
  ["Wortschema: Eine Kerze brennt", "Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser"],
 ],
 "t3": [
@@ -178,10 +192,12 @@ QUIZ = {
 "t1": [
  ["Woran erkennt man sicher eine chemische Reaktion?", ["Es entsteht ein neuer Stoff mit neuen Eigenschaften.", "Es wird warm.", "Etwas leuchtet.", "Etwas ändert seine Form."], "Wärme und Licht gibt es auch ohne Reaktion, zum Beispiel bei einer Lampe. Entscheidend ist der neue Stoff."],
  ["Welcher Vorgang ist eine chemische Reaktion?", ["Zucker karamellisiert.", "Eis schmilzt.", "Wasser verdampft.", "Eine LED leuchtet."], "Beim Karamellisieren entsteht ein neuer Stoff. Schmelzen und Verdampfen ändern nur den Zustand."],
- ["Welcher Vorgang ist keine chemische Reaktion?", ["Glas zerbricht.", "Holz verbrennt.", "Eisen rostet.", "Eine Kerze brennt."], "Beim Zerbrechen bleibt es Glas. Es ändert sich nur die Form."],
+ ["Welcher Vorgang ist keine chemische Reaktion?", ["Eis schmilzt.", "Holz verbrennt.", "Eisen rostet.", "Eine Kerze brennt."], "Beim Schmelzen bleibt es Wasser. Es ändert sich nur der Zustand."],
+ ["Station 1: Zucker wird erhitzt. Welche Produkte entstehen?", ["Karamell und Zuckerkohle", "Holzkohle und Teer", "Zucker bleibt Zucker", "Holzgas und Holzflüssigkeit"], "Aus weißem Zucker wird bräunliches Karamell und schwarze Zuckerkohle."],
+ ["Station 2a: Das Glas ist vorher und nachher fest, transparent und nicht brennbar. Was folgt daraus?", ["Keine chemische Reaktion, weil keine Stoffvernichtung stattgefunden hat.", "Eine chemische Reaktion, weil es heiß war.", "Eine chemische Reaktion, weil Glas ein Produkt ist.", "Man kann es nicht entscheiden."], "Das Glas ist immer noch Glas. Es ist kein neuer Stoff entstanden."],
  ["Was sind Edukte?", ["die Ausgangsstoffe einer Reaktion", "die Stoffe, die neu entstehen", "die Energieformen nach der Reaktion", "die Geräte im Versuch"], "Edukte sind die Ausgangsstoffe. Sie sind vorher da."],
  ["Was sind Produkte?", ["die Stoffe, die bei der Reaktion neu entstehen", "die Ausgangsstoffe einer Reaktion", "die Energieformen vor der Reaktion", "die Beobachtungen im Versuch"], "Produkte sind die neuen Stoffe. Sie sind nachher da."],
- ["Was passiert bei einer Reaktion mit den Edukten?", ["Sie werden verbraucht und in Produkte umgewandelt.", "Sie verschwinden einfach spurlos.", "Sie bleiben unverändert.", "Sie werden komplett zu Energie."], "Aus den Edukten werden neue Stoffe, die Produkte."],
+ ["Was passiert bei einer Reaktion mit den Edukten?", ["Sie werden vernichtet (verbraucht), und daraus entstehen die Produkte.", "Sie werden nur wärmer.", "Sie bleiben unverändert.", "Sie werden komplett zu Energie."], "Im Heft heißt das: Vernichtung der Edukte, Herstellung der Produkte."],
 ],
 "t2": [
  ["Wo stehen im Wortschema die Produkte?", ["rechts vom Pfeil", "links vom Pfeil", "über dem Pfeil", "unter dem Pfeil"], "Edukte links, Produkte rechts."],
@@ -245,7 +261,7 @@ FOOT = """
 </body>
 </html>
 """
-VER = "11"
+VER = "12"
 
 def nav(cur):
     items = [("../index.html", "← Fächer", None), ("index.html", "🏠 Start", "start")]
