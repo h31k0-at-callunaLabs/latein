@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chemie: Chemische Reaktionen – Lernen für Dienstag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F0F8;--surface:#FFFFFF;--ink:#1D1930;--muted:#5C5675;--violet:#4E3D96;--violetbg:#E6E1F5;--line:#D7D2E6;
+  --ok:#2C7A4B;--okbg:#DFF0E5;--bad:#B0352D;--badbg:#F7E0DD;
+  --chem:#6A4FC4;--th:#D85F1C;--st:#B88A00;--el:#2477B3;--be:#2E8A5E;--sc:#C2407E;
+  --chembg:#ECE6FB;--thbg:#FBE5D8;--stbg:#FBF1C9;--elbg:#DDEBF7;--bebg:#DDF1E6;--scbg:#F8DFEB;
+  --exo:#D85F1C;--endo:#2477B3;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#15121F;--surface:#1F1B2E;--ink:#ECE9F5;--muted:#A8A1C0;--violet:#B4A6F0;--violetbg:#2C2645;--line:#38324F;
+    --ok:#7DD19E;--okbg:#1B3527;--bad:#F09A90;--badbg:#3C201D;
+    --chem:#B4A0F5;--th:#F59A62;--st:#E8C548;--el:#7DB8E6;--be:#7DCFA4;--sc:#EE8FBB;
+    --chembg:#2E2650;--thbg:#3E261A;--stbg:#3A3215;--elbg:#1A2E40;--bebg:#1A3528;--scbg:#3D1D2D;
+    --exo:#F59A62;--endo:#7DB8E6;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15121F;--surface:#1F1B2E;--ink:#ECE9F5;--muted:#A8A1C0;--violet:#B4A6F0;--violetbg:#2C2645;--line:#38324F;
+  --ok:#7DD19E;--okbg:#1B3527;--bad:#F09A90;--badbg:#3C201D;
+  --chem:#B4A0F5;--th:#F59A62;--st:#E8C548;--el:#7DB8E6;--be:#7DCFA4;--sc:#EE8FBB;
+  --chembg:#2E2650;--thbg:#3E261A;--stbg:#3A3215;--elbg:#1A2E40;--bebg:#1A3528;--scbg:#3D1D2D;
+  --exo:#F59A62;--endo:#7DB8E6;color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.4rem;font-weight:800;margin:0 0 .6rem}
+h3{font-size:1.1rem;font-weight:600;margin:1.2rem 0 .4rem}
+p{margin:.4rem 0 .8rem}
+header{background:var(--surface);padding:1.4rem 1rem 1rem;border-bottom:1px solid var(--line)}
+.wrap{max-width:46rem;margin:0 auto}
+header p{color:var(--muted);margin:.4rem 0 0}
+.ribbon{display:flex;gap:4px;margin-top:.9rem;flex-wrap:wrap}
+.ribbon span{font-size:.78rem;padding:.15rem .55rem;border-radius:4px;font-weight:700}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:.25rem;overflow-x:auto;padding:.5rem 1rem;scrollbar-width:none}
+nav button{flex:none;border:0;background:transparent;color:var(--muted);font:700 .95rem "Atkinson Hyperlegible",sans-serif;padding:.5rem .8rem;border-radius:8px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--violet);color:var(--surface)}
+main{padding:1.2rem 1rem 3rem}
+main>section{display:none}
+main>section.on{display:block}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:0 0 1rem}
+.merke{border-left:5px solid var(--violet)}
+.fix{border-left:5px solid var(--bad);background:var(--badbg)}
+ul{padding-left:1.2rem;margin:.3rem 0 .8rem}li{margin:.2rem 0}
+.schema{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:1.05rem;background:var(--violetbg);padding:.6rem .8rem;border-radius:8px;margin:.5rem 0;overflow-x:auto}
+.schema sub{font-size:.7em}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+td,th{text-align:left;padding:.4rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl{overflow-x:auto}
+/* Energieformen-Farben */
+.e-chem{--c:var(--chem);--cb:var(--chembg)}.e-th{--c:var(--th);--cb:var(--thbg)}.e-st{--c:var(--st);--cb:var(--stbg)}
+.e-el{--c:var(--el);--cb:var(--elbg)}.e-be{--c:var(--be);--cb:var(--bebg)}.e-sc{--c:var(--sc);--cb:var(--scbg)}
+.tag{background:var(--cb);color:var(--ink);border-left:4px solid var(--c)}
+/* Diagramm */
+.diag{display:grid;grid-template-columns:1fr auto 1fr;gap:.4rem;align-items:center;margin:.6rem 0;overflow-x:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.diag .col{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.arrow{background:var(--cb);border-left:4px solid var(--c);padding:.35rem 1.1rem .35rem .5rem;font-size:.82rem;font-weight:700;line-height:1.2;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%)}
+.mid{border:2px solid var(--ink);border-radius:6px;padding:.5rem .6rem;font-size:.85rem;font-weight:700;text-align:center;max-width:8.5rem;background:var(--surface)}
+.badge{display:inline-block;font-weight:800;font-size:.85rem;padding:.1rem .5rem;border-radius:4px;color:var(--surface)}
+.b-exo{background:var(--exo)}.b-endo{background:var(--endo)}
+/* Buttons */
+.btn{border:2px solid var(--violet);background:var(--violet);color:var(--surface);font:700 1rem "Atkinson Hyperlegible",sans-serif;padding:.65rem 1.1rem;border-radius:10px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--violet)}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+button:focus-visible{outline:3px solid var(--th);outline-offset:2px}
+/* Karten */
+.card{min-height:13rem;display:flex;flex-direction:column;justify-content:center;text-align:center;cursor:pointer;user-select:none;border:2px solid var(--line);font-size:1.15rem}
+.card .side{font-size:.8rem;color:var(--muted);margin-bottom:.6rem}
+.card.back{border-color:var(--violet);background:var(--violetbg)}
+.meta{color:var(--muted);font-size:.9rem}
+/* Quiz */
+.opt{display:block;width:100%;text-align:left;margin:.45rem 0;padding:.75rem .9rem;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:1rem/1.35 "Atkinson Hyperlegible",sans-serif;cursor:pointer}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.fb{padding:.7rem .9rem;border-radius:10px;margin-top:.6rem}
+.fb.right{background:var(--okbg)}.fb.wrong{background:var(--badbg)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.3rem 0 1rem}
+.bar i{display:block;height:100%;background:var(--violet)}
+/* Diagramm-Baukasten */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0 .8rem}
+.chip{border:2px solid var(--c);background:transparent;color:var(--ink);font:700 .88rem "Atkinson Hyperlegible",sans-serif;padding:.4rem .7rem;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--c);color:var(--surface)}
+.seg{display:flex;gap:.4rem;flex-wrap:wrap}
+.seg button{border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 .95rem "Atkinson Hyperlegible",sans-serif;padding:.45rem .9rem;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--violet);background:var(--violetbg)}
+.picker{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.3rem;margin-bottom:.8rem}
+.picker button{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:.4rem .7rem;font:700 .9rem "Atkinson Hyperlegible",sans-serif;cursor:pointer}
+.picker button.cur{border-color:var(--violet);box-shadow:inset 0 0 0 1px var(--violet)}
+.picker button.done::after{content:" ✓";color:var(--ok)}
+/* Blätter */
+.task{margin:0 0 1.1rem}
+.task b.pts{float:right;color:var(--muted);font-weight:400;font-size:.9rem}
+.lines{border-bottom:1px solid var(--line);height:1.9rem}
+.sol{display:none;margin-top:.4rem;padding:.6rem .8rem;background:var(--okbg);border-radius:8px}
+body.showsol .sol{display:block}
+.solhead{display:none}
+@media (prefers-reduced-motion:no-preference){.card{transition:background .15s}}
+@media print{
+  :root{padding:0}
+  body{background:#fff;color:#000;font-size:11.5pt}
+  body::before,header,nav,.noprint{display:none!important}
+  main{padding:0}
+  main>section{display:none!important}
+  body[data-print="ub"] #ub,body[data-print="pk"] #pk{display:block!important}
+  .box{border:0;padding:0}
+  .lines{border-bottom:1px solid #999}
+  .sol{display:none!important}
+  body[data-sol="1"] .sol{display:block!important;background:none;border-left:3px solid #2C7A4B;border-radius:0}
+  body[data-sol="1"] .lines{display:none}
+  .task{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a href="../index.html" class="noprint" style="position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:20;background:#4E3D96;color:#fff;font:700 15px system-ui,sans-serif;text-decoration:none;padding:10px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle Fächer</a>
+<header><div class="wrap">
+  <h1>Chemische Reaktionen</h1>
+  <p>Lernen für die Chemiearbeit am Dienstag, 17.11.</p>
+  <div class="ribbon" aria-label="Energieformen und ihre Farben">
+    <span class="tag e-chem">Enthalpie</span><span class="tag e-th">thermisch</span><span class="tag e-st">Strahlung</span><span class="tag e-el">elektrisch</span><span class="tag e-be">Bewegung</span><span class="tag e-sc">Schall</span>
+  </div>
+</div></header>
+<nav><div class="wrap" role="tablist">
+  <button role="tab" data-tab="lernen" aria-selected="true">Zusammenfassung</button>
+  <button role="tab" data-tab="karten">Karteikarten</button>
+  <button role="tab" data-tab="quiz">Quiz</button>
+  <button role="tab" data-tab="bau">Diagramme üben</button>
+  <button role="tab" data-tab="ub">Übungsblatt</button>
+  <button role="tab" data-tab="pk">Probeklausur</button>
+</div></nav>
+<main><div class="wrap">
+
+<!-- ZUSAMMENFASSUNG -->
+<section id="lernen" class="on">
+  <div class="box merke">
+    <h2>Was ist eine chemische Reaktion?</h2>
+    <p>Bei einer chemischen Reaktion passieren immer zwei Dinge:</p>
+    <ul>
+      <li><b>Stoffumwandlung:</b> Die Ausgangsstoffe (<b>Edukte</b>) werden verbraucht. Es entstehen neue Stoffe (<b>Produkte</b>) mit neuen Eigenschaften.</li>
+      <li><b>Energieumwandlung:</b> Energie wird aufgenommen oder abgegeben, zum Beispiel als Wärme oder Licht.</li>
+    </ul>
+    <p><b>Merke:</b> Entscheidend ist der neue Stoff. Wärme oder Licht allein beweisen keine Reaktion: Eine LED leuchtet und wird warm, aber es entsteht kein neuer Stoff.</p>
+  </div>
+
+  <div class="box">
+    <h2>Ja oder nein?</h2>
+    <div class="tbl"><table>
+      <tr><th>Chemische Reaktion</th><th>Keine chemische Reaktion</th></tr>
+      <tr><td>Holz, Kerze oder Gas verbrennt</td><td>Eis schmilzt</td></tr>
+      <tr><td>Zucker karamellisiert</td><td>Wasser verdampft</td></tr>
+      <tr><td>Holzkohle wird aus Holz hergestellt</td><td>Eine LED oder Glühlampe leuchtet</td></tr>
+      <tr><td>Eisen rostet</td><td>Glas zerbricht</td></tr>
+      <tr><td>Toast wird im Toaster schwarz</td><td>Butter schmilzt</td></tr>
+    </table></div>
+    <p class="meta">Schmelzen, Verdampfen oder Zerbrechen ändern nur Zustand oder Form. Der Stoff bleibt derselbe.</p>
+  </div>
+
+  <div class="box">
+    <h2>Wortschema</h2>
+    <p>Links stehen die Edukte, rechts die Produkte. Den Pfeil liest man „reagiert zu“ oder „reagieren zu“. Das Plus liest man „und“.</p>
+    <p>Zustandsangaben: (s) fest, (l) flüssig, (g) gasförmig.</p>
+    <div class="schema">Holz<sub>(s)</sub> → Holzkohle<sub>(s)</sub> + Teer<sub>(l)</sub> + Holzgas<sub>(g)</sub> + Holzflüssigkeit<sub>(l)</sub></div>
+    <div class="schema">Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser</div>
+    <div class="schema">Holzkohle<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Kohlenstoffdioxid<sub>(g)</sub></div>
+    <h3>Holzkohle-Herstellung: die Produkte</h3>
+    <div class="tbl"><table>
+      <tr><th>Produkt</th><th>Eigenschaften</th></tr>
+      <tr><td>Holzkohle</td><td>fest, schwarz, Brennstoff</td></tr>
+      <tr><td>Teer</td><td>flüssig, schwarz, für Straßenbau und zum Abdichten im Schiffsbau</td></tr>
+      <tr><td>Holzgas</td><td>gasförmig, riecht stark nach Rauch, brennbar</td></tr>
+      <tr><td>Holzflüssigkeit</td><td>bräunlich, nicht brennbar</td></tr>
+    </table></div>
+  </div>
+
+  <div class="box">
+    <h2>Energieformen erkennen</h2>
+    <div class="tbl"><table>
+      <tr><th>Beobachtung</th><th>Energieform</th></tr>
+      <tr><td>wird warm oder heiß</td><td><span class="tag e-th" style="padding:0 .4rem">thermische Energie (Wärme)</span></td></tr>
+      <tr><td>leuchtet, Lichtblitz, Flamme</td><td><span class="tag e-st" style="padding:0 .4rem">Strahlungsenergie (Licht)</span></td></tr>
+      <tr><td>Knall, Zischen, Knistern</td><td><span class="tag e-sc" style="padding:0 .4rem">Schallenergie</span></td></tr>
+      <tr><td>etwas fliegt weg oder bewegt sich</td><td><span class="tag e-be" style="padding:0 .4rem">Bewegungsenergie</span></td></tr>
+      <tr><td>Strom aus Steckdose oder Batterie</td><td><span class="tag e-el" style="padding:0 .4rem">elektrische Energie</span></td></tr>
+      <tr><td>in den Stoffen gespeichert</td><td><span class="tag e-chem" style="padding:0 .4rem">chemische Energie = Enthalpie</span></td></tr>
+    </table></div>
+  </div>
+
+  <div class="box">
+    <h2>Energieflussdiagramm</h2>
+    <p>Links stehen die Energieformen <b>vorher</b>, in der Mitte der Vorgang (der Energiewandler), rechts die Energieformen <b>nachher</b>.</p>
+    <h3>Lagerfeuer <span class="badge b-exo">exotherm</span></h3>
+    <div id="d-feuer"></div>
+    <p class="meta">Zum Anzünden braucht man etwas Wärme. Trotzdem ist die Verbrennung exotherm, weil viel mehr Energie als Wärme und Licht abgegeben wird.</p>
+    <h3>Luminol leuchtet <span class="badge b-exo">exotherm</span></h3>
+    <div id="d-luminol"></div>
+    <p class="meta">Die Energie wird als Licht abgegeben. Es wird nicht wärmer, deshalb steht rechts keine thermische Energie.</p>
+    <h3>Kaliumiodid in Wasser lösen <span class="badge b-endo">endotherm</span></h3>
+    <div id="d-ki"></div>
+    <p class="meta">Die Lösung wird kälter, weil Wärme aus der Umgebung aufgenommen wird.</p>
+    <h3>Knalldose <span class="badge b-exo">exotherm</span></h3>
+    <div id="d-knall"></div>
+    <h3>LED-Lampe (keine chemische Reaktion)</h3>
+    <div id="d-led"></div>
+  </div>
+
+  <div class="box merke">
+    <h2>Exotherm und endotherm</h2>
+    <p><b>exotherm</b> (exo = hinaus, therm = Wärme): Energie wird an die Umgebung <b>abgegeben</b>, zum Beispiel als Wärme oder Licht. Beispiele: alle Verbrennungen, Luminol, Knalldose.</p>
+    <p><b>endotherm</b> (endo = hinein): Energie wird aus der Umgebung <b>aufgenommen</b>. Man merkt es daran, dass es kälter wird oder dass man ständig Energie zuführen muss. Beispiel: Kaliumiodid in Wasser lösen.</p>
+  </div>
+
+  <div class="box">
+    <h2>Nachweise</h2>
+    <div class="tbl"><table>
+      <tr><th>Stoff</th><th>Nachweis</th><th>Positives Ergebnis</th></tr>
+      <tr><td>Kohlenstoffdioxid</td><td>Kalkwasserprobe: Gas in Kalkwasser einleiten</td><td>Kalkwasser wird trüb (milchig)</td></tr>
+      <tr><td>Wasser</td><td>weißes, wasserfreies Kupfersulfat oder Watesmo-Papier</td><td>färbt sich blau</td></tr>
+    </table></div>
+    <h3>Ergebnisse auswerten</h3>
+    <ul>
+      <li>Kalkwasser wird trüb → Kohlenstoffdioxid ist nachgewiesen.</li>
+      <li>Kalkwasser bleibt klar → Es ist kein Kohlenstoffdioxid nachweisbar.</li>
+      <li>Ein kaltes Glas über einer Flamme beschlägt. Das ist nur ein Hinweis auf Wasser. Nachgewiesen ist Wasser erst, wenn sich Kupfersulfat oder Watesmo-Papier blau färbt.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- KARTEIKARTEN -->
+<section id="karten">
+  <p class="meta" id="k-meta"></p>
+  <div class="box card" id="k-card" role="button" tabindex="0" aria-live="polite"></div>
+  <div class="row" id="k-btns">
+    <button class="btn ghost" id="k-again">Nochmal üben</button>
+    <button class="btn" id="k-ok">Gewusst</button>
+  </div>
+  <div class="row"><button class="btn ghost" id="k-reset">Alle Karten neu mischen</button></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div id="q-area"></div>
+</section>
+
+<!-- BAUKASTEN -->
+<section id="bau">
+  <p>Wähle die Energieformen vorher und nachher und entscheide, ob der Vorgang exotherm oder endotherm ist.</p>
+  <div class="picker" id="b-pick"></div>
+  <div class="box" id="b-area"></div>
+</section>
+
+<!-- ÜBUNGSBLATT -->
+<section id="ub">
+  <div class="row noprint" style="margin-top:0;margin-bottom:1rem">
+    <button class="btn ghost" data-sol>Lösungen zeigen</button>
+    <button class="btn" data-print="ub" data-withsol="0">Drucken</button>
+    <button class="btn ghost" data-print="ub" data-withsol="1">Mit Lösungen drucken</button>
+  </div>
+  <div class="box">
+    <h2>Übungsblatt: Chemische Reaktionen</h2>
+    <div class="task"><h3>1. Lückentext</h3>
+      <p>Bei einer chemischen Reaktion werden die ________ in ________ umgewandelt. Die Produkte haben ________ Eigenschaften. Bei einer ________ Reaktion wird Energie an die Umgebung abgegeben, bei einer ________ Reaktion wird Energie aus der Umgebung aufgenommen. Die chemische Energie, die in Stoffen gespeichert ist, heißt ________.</p>
+      <div class="sol">Edukte – Produkte – neue – exothermen – endothermen – Enthalpie</div>
+    </div>
+    <div class="task"><h3>2. Chemische Reaktion: ja oder nein? Begründe.</h3>
+      <p>a) Eine Kerze brennt. b) Butter schmilzt in der Pfanne. c) Toast wird im Toaster schwarz. d) Wasser kocht. e) Ein Eisennagel rostet. f) Eine Glühlampe leuchtet.</p>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) Ja: Es entstehen neue Stoffe (Kohlenstoffdioxid und Wasser), Wärme und Licht werden abgegeben.<br>b) Nein: Nur der Zustand ändert sich von fest zu flüssig, es bleibt Butter.<br>c) Ja: Es entsteht ein neuer, schwarzer Stoff (das Brot verkohlt).<br>d) Nein: Wasser wird nur gasförmig, es bleibt Wasser.<br>e) Ja: Rost ist ein neuer Stoff mit neuen Eigenschaften.<br>f) Nein: Elektrische Energie wird in Licht und Wärme umgewandelt, aber es entsteht kein neuer Stoff.</div>
+    </div>
+    <div class="task"><h3>3. Welche Energieform erkennst du?</h3>
+      <p>a) Die Dose wird wärmer. b) Ein Lichtblitz. c) Ein lauter Knall. d) Der Deckel fliegt weg. e) Eine Batterie bringt eine Lampe zum Leuchten (Energieform vorher).</p>
+      <div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) thermische Energie b) Strahlungsenergie c) Schallenergie d) Bewegungsenergie e) elektrische Energie</div>
+    </div>
+    <div class="task"><h3>4. Wortschemas</h3>
+      <p>a) Schreibe das Wortschema für die Herstellung von Holzkohle mit Zustandsangaben.<br>b) Holzkohle verbrennt mit Sauerstoff zu Kohlenstoffdioxid. Schreibe das Wortschema und markiere Edukte und Produkte.</p>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) Holz(s) → Holzkohle(s) + Teer(l) + Holzgas(g) + Holzflüssigkeit(l)<br>b) Holzkohle(s) + Sauerstoff(g) → Kohlenstoffdioxid(g). Edukte: Holzkohle und Sauerstoff. Produkt: Kohlenstoffdioxid.</div>
+    </div>
+    <div class="task"><h3>5. Nachweise</h3>
+      <p>a) Wie weist man Kohlenstoffdioxid nach, und was beobachtet man?<br>b) Wie weist man Wasser nach, und was beobachtet man?<br>c) Ein Gas wird in Kalkwasser geleitet. Das Kalkwasser bleibt klar. Was folgt daraus?</p>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) Mit der Kalkwasserprobe: Das Gas wird in Kalkwasser geleitet, das Kalkwasser wird trüb.<br>b) Mit weißem, wasserfreiem Kupfersulfat oder Watesmo-Papier: Es färbt sich blau.<br>c) Im Gas ist kein Kohlenstoffdioxid nachweisbar.</div>
+    </div>
+    <div class="task"><h3>6. Exotherm oder endotherm?</h3>
+      <p>a) Ein Lagerfeuer brennt. b) Kaliumiodid wird in Wasser gelöst, die Lösung wird kälter. c) Luminol leuchtet, die Temperatur bleibt gleich.</p>
+      <div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) exotherm: Wärme und Licht werden abgegeben.<br>b) endotherm: Wärme wird aus der Umgebung aufgenommen.<br>c) exotherm: Energie wird als Licht abgegeben.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBEKLAUSUR -->
+<section id="pk">
+  <div class="row noprint" style="margin-top:0;margin-bottom:1rem">
+    <button class="btn ghost" data-sol>Lösungen zeigen</button>
+    <button class="btn" data-print="pk" data-withsol="0">Drucken</button>
+    <button class="btn ghost" data-print="pk" data-withsol="1">Mit Lösungen drucken</button>
+  </div>
+  <div class="box">
+    <h2>Probeklausur Chemie 7</h2>
+    <p class="meta">Zeit: 45 Minuten · 32 Punkte</p>
+    <div class="task"><h3>1. Erkläre, was eine chemische Reaktion ist. <b class="pts">3 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">Bei einer chemischen Reaktion werden Ausgangsstoffe (Edukte) verbraucht, und es entstehen neue Stoffe (Produkte) mit neuen Eigenschaften (Stoffumwandlung). Dabei wird Energie umgewandelt, also aufgenommen oder abgegeben (Energieumwandlung).</div>
+    </div>
+    <div class="task"><h3>2. Entscheide mithilfe von Stoff- und Energieumwandlung, ob eine chemische Reaktion vorliegt. <b class="pts">4 P.</b></h3>
+      <p>a) Zucker wird in einer Pfanne erhitzt und wird zu braunem Karamell.<br>b) Ein Eiswürfel schmilzt in der Hand.</p>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">a) Ja: Es entsteht ein neuer Stoff (Karamell) mit neuer Farbe und neuem Geschmack. Dafür wird Wärme aufgenommen.<br>b) Nein: Es wird zwar Wärme aufgenommen, aber es entsteht kein neuer Stoff. Aus festem Wasser wird flüssiges Wasser.</div>
+    </div>
+    <div class="task"><h3>3. Beim Verbrennen einer Kerze reagiert Kerzenwachs mit Sauerstoff zu Kohlenstoffdioxid und Wasser. Formuliere das Wortschema und benenne Edukte und Produkte. <b class="pts">3 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div>
+      <div class="sol">Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser. Edukte: Kerzenwachs und Sauerstoff. Produkte: Kohlenstoffdioxid und Wasser.</div>
+    </div>
+    <div class="task"><h3>4. Eine Wunderkerze wird mit einem Feuerzeug angezündet. Sie sprüht helle Funken, wird heiß und knistert. Nenne die Energieformen, die du an den Beobachtungen erkennst. <b class="pts">3 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div>
+      <div class="sol">helle Funken → Strahlungsenergie; wird heiß → thermische Energie; knistert → Schallenergie</div>
+    </div>
+    <div class="task"><h3>5. Zeichne für die Wunderkerze ein Energieflussdiagramm. Entscheide, ob die Reaktion exotherm oder endotherm ist, und begründe. <b class="pts">6 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol"><div id="d-wunder"></div>Die Reaktion ist exotherm, weil Energie als Wärme, Licht und Schall an die Umgebung abgegeben wird. Die Wärme vom Feuerzeug braucht man nur zum Starten.</div>
+    </div>
+    <div class="task"><h3>6. In einem Kühlpack für die Erste Hilfe löst sich beim Draufdrücken ein Salz in Wasser. Das Kühlpack wird kalt. Ist der Vorgang exotherm oder endotherm? Begründe und zeichne das Energieflussdiagramm. <b class="pts">5 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">Endotherm: Beim Lösen wird Wärme aus der Umgebung aufgenommen, deshalb wird das Kühlpack kalt.<div id="d-kuehl"></div></div>
+    </div>
+    <div class="task"><h3>7. Über einer brennenden Kerze werden die entstehenden Gase aufgefangen und in Kalkwasser geleitet. Das Kalkwasser wird trüb. Ein kaltes Glas über der Flamme beschlägt, und Watesmo-Papier färbt sich an dem Beschlag blau. Werte die Ergebnisse aus. <b class="pts">4 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">Das trübe Kalkwasser weist Kohlenstoffdioxid nach. Das blaue Watesmo-Papier weist Wasser nach. Beim Verbrennen der Kerze entstehen also Kohlenstoffdioxid und Wasser als Produkte.</div>
+    </div>
+    <div class="task"><h3>8. Erkläre die Begriffe exotherm und endotherm. Gehe auch auf die Wortbedeutung ein. <b class="pts">4 P.</b></h3>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+      <div class="sol">Exotherm (exo = hinaus, therm = Wärme): Bei der Reaktion wird Energie an die Umgebung abgegeben, zum Beispiel als Wärme. Endotherm (endo = hinein): Bei der Reaktion wird Energie aus der Umgebung aufgenommen.</div>
+    </div>
+  </div>
+</section>
+
+</div></main>
+
+<script>
+const E={ed:["Enthalpie der Edukte","chem"],pr:["Enthalpie der Produkte","chem"],th:["thermische Energie","th"],st:["Strahlungsenergie","st"],el:["elektrische Energie","el"],be:["Bewegungsenergie","be"],sc:["Schallenergie","sc"]};
+const ORDER=["ed","pr","th","st","el","be","sc"];
+function diag(pre,mid,post){
+  const a=k=>`<div class="arrow e-${E[k][1]}">${E[k][0]}</div>`;
+  return `<div class="diag"><div class="col">${pre.map(a).join("")}</div><div class="mid">${mid}</div><div class="col">${post.map(a).join("")}</div></div>`;
+}
+const SC=[
+ {id:"feuer",name:"Lagerfeuer",text:"Holz brennt in einem Lagerfeuer. Es wurde mit einem Streichholz angezündet. Das Feuer leuchtet und gibt Wärme ab.",mid:"Chemische Reaktion (Verbrennung)",pre:["ed","th"],post:["pr","th","st"],typ:"exo",why:"Zum Anzünden wird etwas Wärme zugeführt. Abgegeben werden viel Wärme und Licht. Deshalb ist die Verbrennung exotherm."},
+ {id:"luminol",name:"Luminol",text:"Luminol reagiert und leuchtet blau. Die Temperatur ändert sich dabei nicht.",mid:"Chemische Reaktion",pre:["ed"],post:["pr","st"],typ:"exo",why:"Die Energie wird als Licht abgegeben, also exotherm. Weil es nicht wärmer wird, steht rechts keine thermische Energie."},
+ {id:"ki",name:"Kaliumiodid lösen",text:"Kaliumiodid wird in Wasser gelöst. Die Lösung ist danach kälter als die Ausgangsstoffe.",mid:"Lösevorgang",pre:["ed","th"],post:["pr"],typ:"endo",why:"Wärme wird aus der Umgebung aufgenommen, deshalb wird die Lösung kälter. Das ist endotherm."},
+ {id:"knall",name:"Knalldose",text:"In der Knalldose wird ein Gasgemisch angezündet. Es gibt einen Lichtblitz und einen Knall, der Deckel fliegt weg, und die Dose wird wärmer.",mid:"Chemische Reaktion (Explosion)",pre:["ed","th"],post:["pr","th","st","be","sc"],typ:"exo",why:"Energie wird als Wärme, Licht, Bewegung des Deckels und Schall abgegeben. Das ist exotherm."},
+ {id:"hand",name:"Handwärmer",text:"In einem Einmal-Handwärmer rostet Eisenpulver, sobald man die Packung öffnet. Der Handwärmer wird warm.",mid:"Chemische Reaktion (Rosten)",pre:["ed"],post:["pr","th"],typ:"exo",why:"Energie wird als Wärme abgegeben. Das ist exotherm."},
+ {id:"led",name:"LED-Lampe",text:"Eine LED-Lampe ist eingeschaltet. Sie leuchtet und wird etwas warm.",mid:"Lampe (LED)",pre:["el"],post:["st","th"],typ:null,why:"Die LED ist ein Energiewandler. Es entsteht kein neuer Stoff, deshalb ist das keine chemische Reaktion."}
+];
+const byId=Object.fromEntries(SC.map(s=>[s.id,s]));
+["feuer","luminol","ki","knall","led"].forEach(id=>{const s=byId[id];document.getElementById("d-"+id).innerHTML=diag(s.pre,s.mid,s.post)});
+document.getElementById("d-wunder").innerHTML=diag(["ed","th"],"Chemische Reaktion (Verbrennung)",["pr","th","st","sc"]);
+document.getElementById("d-kuehl").innerHTML=diag(["ed","th"],"Lösevorgang",["pr"]);
+
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* Tabs */
+const tabs=document.querySelectorAll("nav button");
+tabs.forEach(b=>b.addEventListener("click",()=>{
+  tabs.forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll("main>.wrap>section").forEach(s=>s.classList.toggle("on",s.id===b.dataset.tab));
+  window.scrollTo(0,0);
+}));
+
+/* Karteikarten */
+const CARDS=[
+ ["Was ist eine chemische Reaktion?","Ein Vorgang, bei dem aus Edukten neue Stoffe mit neuen Eigenschaften entstehen (Produkte). Dabei wird Energie umgewandelt."],
+ ["Edukt","Ausgangsstoff einer chemischen Reaktion. Steht im Wortschema links vom Pfeil."],
+ ["Produkt","Stoff, der bei der Reaktion neu entsteht. Steht im Wortschema rechts vom Pfeil."],
+ ["Stoffumwandlung","Die Edukte werden verbraucht, und Produkte mit neuen Eigenschaften entstehen."],
+ ["Energieumwandlung","Eine Energieform wird in eine andere umgewandelt, z. B. chemische Energie in Wärme und Licht."],
+ ["exotherm","Energie wird an die Umgebung abgegeben (exo = hinaus, therm = Wärme). Beispiel: jede Verbrennung."],
+ ["endotherm","Energie wird aus der Umgebung aufgenommen (endo = hinein). Beispiel: Kaliumiodid lösen, die Lösung wird kälter."],
+ ["Enthalpie","Die chemische Energie, die in Stoffen gespeichert ist."],
+ ["Aufbau eines Energieflussdiagramms","Links die Energieformen vorher, in der Mitte der Vorgang (Energiewandler), rechts die Energieformen nachher."],
+ ["Nachweis von Kohlenstoffdioxid","Kalkwasserprobe: Kalkwasser wird trüb."],
+ ["Nachweis von Wasser","Weißes, wasserfreies Kupfersulfat oder Watesmo-Papier färbt sich blau."],
+ ["(s), (l), (g)","fest, flüssig, gasförmig"],
+ ["Wie liest man den Pfeil im Wortschema?","„reagiert zu“ oder „reagieren zu“"],
+ ["Beobachtung: Knall","Schallenergie"],
+ ["Beobachtung: Lichtblitz","Strahlungsenergie"],
+ ["Beobachtung: Deckel fliegt weg","Bewegungsenergie"],
+ ["Ist Eisschmelzen eine chemische Reaktion?","Nein. Es entsteht kein neuer Stoff, nur der Zustand ändert sich."],
+ ["Wortschema: Herstellung von Holzkohle","Holz(s) → Holzkohle(s) + Teer(l) + Holzgas(g) + Holzflüssigkeit(l)"],
+ ["Warum ist ein Lagerfeuer exotherm, obwohl man es anzünden muss?","Zum Anzünden braucht man nur wenig Energie. Abgegeben wird viel mehr Energie als Wärme und Licht."],
+ ["Warum ist Luminol exotherm, obwohl es nicht warm wird?","Die Energie wird als Licht (Strahlungsenergie) an die Umgebung abgegeben."]
+];
+let kq=[],kBack=false,kDone=0;
+function kStart(){kq=shuffle(CARDS.map((_,i)=>i));kDone=0;kBack=false;kRender()}
+function kRender(){
+  const c=document.getElementById("k-card"),m=document.getElementById("k-meta"),btns=document.getElementById("k-btns");
+  if(!kq.length){c.className="box card";c.innerHTML="<div><b>Alle Karten gewusst!</b><br>Misch sie neu, um noch eine Runde zu machen.</div>";m.textContent="";btns.style.display="none";return}
+  btns.style.display=kBack?"flex":"none";
+  const [f,b]=CARDS[kq[0]];
+  c.className="box card"+(kBack?" back":"");
+  c.innerHTML=kBack?`<div class="side">Antwort</div><div>${b}</div>`:`<div class="side">Antippen zum Umdrehen</div><div><b>${f}</b></div>`;
+  m.textContent=`Noch ${kq.length} Karten · ${kDone} gewusst`;
+}
+const kFlip=()=>{if(kq.length){kBack=!kBack;kRender()}};
+document.getElementById("k-card").addEventListener("click",kFlip);
+document.getElementById("k-card").addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();kFlip()}});
+document.getElementById("k-ok").addEventListener("click",()=>{kq.shift();kDone++;kBack=false;kRender()});
+document.getElementById("k-again").addEventListener("click",()=>{kq.push(kq.shift());kBack=false;kRender()});
+document.getElementById("k-reset").addEventListener("click",kStart);
+kStart();
+
+/* Quiz: erste Antwort ist jeweils die richtige, wird gemischt */
+const QZ=[
+ ["Woran erkennt man sicher eine chemische Reaktion?",["Es entsteht ein neuer Stoff mit neuen Eigenschaften.","Es wird warm.","Etwas leuchtet.","Etwas ändert seine Form."],"Wärme und Licht gibt es auch ohne Reaktion, zum Beispiel bei einer Lampe. Entscheidend ist der neue Stoff."],
+ ["Welcher Vorgang ist eine chemische Reaktion?",["Zucker karamellisiert.","Eis schmilzt.","Wasser verdampft.","Eine LED leuchtet."],"Beim Karamellisieren entsteht ein neuer Stoff. Schmelzen und Verdampfen ändern nur den Zustand."],
+ ["Welcher Vorgang ist keine chemische Reaktion?",["Glas zerbricht.","Holz verbrennt.","Eisen rostet.","Eine Kerze brennt."],"Beim Zerbrechen bleibt es Glas. Es ändert sich nur die Form."],
+ ["Was sind Edukte?",["die Ausgangsstoffe einer Reaktion","die Stoffe, die neu entstehen","die Energieformen nach der Reaktion","die Geräte im Versuch"],"Edukte sind die Ausgangsstoffe. Sie stehen im Wortschema links vom Pfeil."],
+ ["Wo stehen im Wortschema die Produkte?",["rechts vom Pfeil","links vom Pfeil","über dem Pfeil","unter dem Pfeil"],"Edukte links, Produkte rechts."],
+ ["Was bedeutet die Angabe (g)?",["gasförmig","fest","flüssig","gefärbt"],"(s) fest, (l) flüssig, (g) gasförmig."],
+ ["Was passiert bei einer Reaktion mit den Edukten?",["Sie werden verbraucht und in Produkte umgewandelt.","Sie verschwinden einfach spurlos.","Sie bleiben unverändert.","Sie werden komplett zu Energie."],"Stoffe werden nicht vernichtet. Aus den Edukten werden neue Stoffe."],
+ ["Was bedeutet exotherm?",["Energie wird an die Umgebung abgegeben.","Energie wird aus der Umgebung aufgenommen.","Es wird gar keine Energie umgewandelt.","Es entsteht kein neuer Stoff."],"exo = hinaus, therm = Wärme."],
+ ["Kaliumiodid wird in Wasser gelöst, die Lösung wird kälter. Der Vorgang ist …",["endotherm","exotherm"],"Wärme wird aus der Umgebung aufgenommen, deshalb wird es kälter."],
+ ["Luminol leuchtet, aber die Temperatur bleibt gleich. Die Reaktion ist …",["exotherm, weil Energie als Licht abgegeben wird.","endotherm, weil es nicht warm wird.","endotherm, weil Licht aufgenommen wird.","weder exotherm noch endotherm."],"Auch Licht ist abgegebene Energie. Exotherm heißt nicht nur „wird warm“."],
+ ["Ein Lagerfeuer muss man erst anzünden. Die Verbrennung ist trotzdem …",["exotherm","endotherm"],"Zum Anzünden braucht man nur wenig Energie. Abgegeben wird viel mehr Energie als Wärme und Licht."],
+ ["Knalldose: Der Deckel fliegt weg. Welche Energieform ist das?",["Bewegungsenergie","Schallenergie","Strahlungsenergie","elektrische Energie"],"Alles, was sich bewegt, hat Bewegungsenergie."],
+ ["Knalldose: Es gibt einen lauten Knall. Welche Energieform ist das?",["Schallenergie","Bewegungsenergie","thermische Energie","Strahlungsenergie"],"Ein Knall ist Schall."],
+ ["Wie heißt die chemische Energie, die in Stoffen gespeichert ist?",["Enthalpie","Temperatur","Strahlung","Masse"],"Im Unterricht: Enthalpie = chemische Energie."],
+ ["Eine LED-Lampe wandelt elektrische Energie um in …",["Strahlungsenergie und thermische Energie","Enthalpie","Bewegungsenergie","Schallenergie"],"Die LED leuchtet und wird etwas warm."],
+ ["Was steht in der Mitte eines Energieflussdiagramms?",["der Vorgang bzw. der Energiewandler","die Energieformen vorher","die Energieformen nachher","die Temperatur"],"Links vorher, Mitte Vorgang, rechts nachher."],
+ ["Wie weist man Kohlenstoffdioxid nach?",["Kalkwasser wird trüb.","Weißes Kupfersulfat wird blau.","Watesmo-Papier wird blau.","Ein glimmender Span flammt auf."],"Kalkwasserprobe. Der aufflammende Span weist Sauerstoff nach."],
+ ["Wie weist man Wasser nach?",["Weißes, wasserfreies Kupfersulfat wird blau.","Kalkwasser wird trüb.","Ein glimmender Span flammt auf.","Kalkwasser bleibt klar."],"Auch Watesmo-Papier färbt sich blau."],
+ ["Ein Gas wird in Kalkwasser geleitet. Das Kalkwasser bleibt klar. Was folgt daraus?",["Im Gas ist kein Kohlenstoffdioxid nachweisbar.","Das Gas ist Kohlenstoffdioxid.","Das Gas ist Wasser.","Das Kalkwasser ist kaputt."],"Nur trübes Kalkwasser zeigt Kohlenstoffdioxid an."],
+ ["Welches Wortschema beschreibt die Herstellung von Holzkohle?",["Holz → Holzkohle + Teer + Holzgas + Holzflüssigkeit","Holzkohle → Holz + Teer + Holzgas","Holz + Teer → Holzkohle + Holzgas","Holz → Holzkohle"],"Das Edukt ist Holz. Es entstehen vier Produkte."],
+ ["Welches Wortschema beschreibt eine brennende Kerze?",["Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser","Kohlenstoffdioxid + Wasser → Kerzenwachs + Sauerstoff","Kerzenwachs → Sauerstoff + Wasser","Kerzenwachs + Wasser → Kohlenstoffdioxid"],"Wachs reagiert mit Sauerstoff aus der Luft."]
+];
+let qs=[],qi=0,qScore=0,qWrong=[];
+function qStart(list){qs=shuffle(list||QZ.map((_,i)=>i));qi=0;qScore=0;qWrong=[];qRender()}
+function qRender(){
+  const area=document.getElementById("q-area");
+  if(qi>=qs.length){
+    const best=Math.max(store("chem-best")||0,qScore);store("chem-best",best);
+    area.innerHTML=`<div class="box"><h2>${qScore} von ${qs.length} richtig</h2><p class="meta">Bestes Ergebnis bisher: ${best}</p><div class="row">${qWrong.length?'<button class="btn" id="q-retry">Falsche nochmal</button>':""}<button class="btn ghost" id="q-new">Neues Quiz</button></div></div>`;
+    const r=document.getElementById("q-retry");if(r)r.onclick=()=>qStart(qWrong.slice());
+    document.getElementById("q-new").onclick=()=>qStart();return;
+  }
+  const [q,opts,ex]=QZ[qs[qi]];
+  const order=shuffle(opts.map((_,i)=>i));
+  area.innerHTML=`<p class="meta">Frage ${qi+1} von ${qs.length} · ${qScore} richtig</p><div class="bar"><i style="width:${qi/qs.length*100}%"></i></div><div class="box"><h3 style="margin-top:0">${q}</h3><div id="q-opts">${order.map(i=>`<button class="opt" data-i="${i}">${opts[i]}</button>`).join("")}</div><div id="q-fb"></div></div>`;
+  area.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.i==="0";
+    area.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.i==="0")x.classList.add("right")});
+    if(!ok){b.classList.add("wrong");qWrong.push(qs[qi])}else qScore++;
+    document.getElementById("q-fb").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"Richtig.":"Nicht ganz."}</b> ${ex}</div><div class="row"><button class="btn" id="q-next">Weiter</button></div>`;
+    document.getElementById("q-next").onclick=()=>{qi++;qRender()};
+  });
+}
+qStart();
+
+/* Diagramm-Baukasten */
+let bCur=0,bSel={pre:new Set(),post:new Set(),typ:null};const bDone=new Set(store("chem-bau")||[]);
+function bPick(){
+  document.getElementById("b-pick").innerHTML=SC.map((s,i)=>`<button class="${i===bCur?"cur":""} ${bDone.has(s.id)?"done":""}" data-i="${i}">${s.name}</button>`).join("");
+  document.querySelectorAll("#b-pick button").forEach(b=>b.onclick=()=>{bCur=+b.dataset.i;bSel={pre:new Set(),post:new Set(),typ:null};bRender()});
+}
+function bRender(){
+  bPick();const s=SC[bCur];
+  const chips=side=>ORDER.map(k=>`<button class="chip e-${E[k][1]}" data-side="${side}" data-k="${k}" aria-pressed="${bSel[side].has(k)}">${E[k][0]}</button>`).join("");
+  document.getElementById("b-area").innerHTML=`<h2>${s.name}</h2><p>${s.text}</p>
+   <h3>Energieformen vorher</h3><div class="chips">${chips("pre")}</div>
+   <h3>Energieformen nachher</h3><div class="chips">${chips("post")}</div>
+   ${s.typ?`<h3>Der Vorgang ist …</h3><div class="seg"><button data-t="exo" aria-pressed="${bSel.typ==="exo"}">exotherm</button><button data-t="endo" aria-pressed="${bSel.typ==="endo"}">endotherm</button></div>`:""}
+   <div class="row"><button class="btn" id="b-check">Prüfen</button></div><div id="b-fb"></div>`;
+  document.querySelectorAll("#b-area .chip").forEach(c=>c.onclick=()=>{const set=bSel[c.dataset.side],k=c.dataset.k;set.has(k)?set.delete(k):set.add(k);c.setAttribute("aria-pressed",set.has(k))});
+  document.querySelectorAll("#b-area .seg button").forEach(b=>b.onclick=()=>{bSel.typ=b.dataset.t;document.querySelectorAll("#b-area .seg button").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  document.getElementById("b-check").onclick=bCheck;
+}
+function bCheck(){
+  const s=SC[bCur],msgs=[];
+  const cmp=(side,want,label)=>{const sel=bSel[side];
+    const miss=want.filter(k=>!sel.has(k)),extra=[...sel].filter(k=>!want.includes(k));
+    if(miss.length)msgs.push(`${label} fehlt: ${miss.map(k=>E[k][0]).join(", ")}`);
+    if(extra.length)msgs.push(`${label} gehört nicht dazu: ${extra.map(k=>E[k][0]).join(", ")}`);};
+  cmp("pre",s.pre,"Vorher");cmp("post",s.post,"Nachher");
+  if(s.typ&&bSel.typ!==s.typ)msgs.push(bSel.typ?`Der Vorgang ist ${s.typ==="exo"?"exotherm":"endotherm"}.`:"Entscheide noch: exotherm oder endotherm?");
+  const ok=!msgs.length;
+  if(ok){bDone.add(s.id);store("chem-bau",[...bDone]);bPick()}
+  document.getElementById("b-fb").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"Alles richtig.":"Noch nicht ganz."}</b>${ok?"":"<ul>"+msgs.map(m=>`<li>${m}</li>`).join("")+"</ul>"}<p style="margin-bottom:0">${s.why}</p></div>${diag(s.pre,s.mid,s.post)}${s.typ?`<p><span class="badge b-${s.typ}">${s.typ==="exo"?"exotherm":"endotherm"}</span></p>`:""}${bCur<SC.length-1?'<div class="row"><button class="btn" id="b-next">Nächster Vorgang</button></div>':""}`;
+  const n=document.getElementById("b-next");if(n)n.onclick=()=>{bCur++;bSel={pre:new Set(),post:new Set(),typ:null};bRender();window.scrollTo(0,0)};
+}
+bRender();
+
+/* Lösungen und Drucken */
+document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=()=>{
+  const on=document.body.classList.toggle("showsol");
+  document.querySelectorAll("[data-sol]").forEach(x=>x.textContent=on?"Lösungen verstecken":"Lösungen zeigen");
+});
+document.querySelectorAll("[data-print]").forEach(b=>b.onclick=()=>{
+  document.body.dataset.print=b.dataset.print;document.body.dataset.sol=b.dataset.withsol;window.print();
+});
+window.addEventListener("afterprint",()=>{delete document.body.dataset.print;delete document.body.dataset.sol});
+</script>
+</body>
+</html>
