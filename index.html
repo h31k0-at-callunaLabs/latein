@@ -26,17 +26,18 @@ a.fach:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
 .t{font:800 1.25rem "Bricolage Grotesque",sans-serif}
 .d{color:var(--muted);font-size:.95rem}
 .when{display:inline-block;margin-top:.3rem;font-size:.85rem;font-weight:700;padding:.1rem .5rem;border-radius:4px;background:var(--soonbg);color:var(--ink);border-left:3px solid var(--soon)}
+.go{display:block;margin-top:.7rem;background:var(--violet);color:var(--surface);font-weight:700;text-align:center;padding:.6rem;border-radius:10px}
 .past{opacity:.75}
 .past .when{background:transparent;border-left-color:var(--line);color:var(--muted)}
 </style>
 </head>
 <body>
 <main>
-  <h1>Schule</h1>
-  <p class="sub">Lern-Apps für die nächsten Arbeiten</p>
-  <h2>Als Nächstes</h2>
+  <h1>Hallo! 👋</h1>
+  <p class="sub">Tippe auf das Fach, für das du lernen willst.</p>
+  <h2>Diese Arbeit kommt als Nächstes</h2>
   <div id="next"></div>
-  <h2 id="h-past">Schon geschrieben</h2>
+  <h2 id="h-past">Schon geschrieben (zum Wiederholen)</h2>
   <div id="past"></div>
 </main>
 <script>
@@ -50,7 +51,7 @@ const fmt=d=>d.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"n
 function karte(f,vorbei){
   const d=new Date(f.datum+"T00:00:00");const tage=Math.round((d-heute)/864e5);
   const wann=vorbei?`geschrieben am ${fmt(d)}`:tage===0?"Arbeit heute":tage===1?"Arbeit morgen":`Arbeit am ${fmt(d)} · noch ${tage} Tage`;
-  return `<a class="fach${vorbei?" past":""}" href="${f.pfad}" style="--c:${f.farbe}"><span class="ic" aria-hidden="true">${f.icon}</span><span class="t">${f.fach}</span><span><span class="d">${f.thema}</span><br><span class="when">${wann}</span></span></a>`;
+  return `<a class="fach${vorbei?" past":""}" href="${f.pfad}" style="--c:${f.farbe}"><span class="ic" aria-hidden="true">${f.icon}</span><span class="t">${f.fach}</span><span><span class="d">${f.thema}</span><br><span class="when">${wann}</span>${vorbei?"":"<span class=\"go\">Hier tippen zum Lernen →</span>"}</span></a>`;
 }
 const kommend=FAECHER.filter(f=>new Date(f.datum+"T00:00:00")>=heute).sort((a,b)=>a.datum.localeCompare(b.datum));
 const alt=FAECHER.filter(f=>new Date(f.datum+"T00:00:00")<heute).sort((a,b)=>b.datum.localeCompare(a.datum));

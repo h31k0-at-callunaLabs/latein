@@ -104,6 +104,12 @@ button:focus-visible{outline:3px solid var(--th);outline-offset:2px}
 .picker button{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:.4rem .7rem;font:700 .9rem "Atkinson Hyperlegible",sans-serif;cursor:pointer}
 .picker button.cur{border-color:var(--violet);box-shadow:inset 0 0 0 1px var(--violet)}
 .picker button.done::after{content:" ✓";color:var(--ok)}
+.step{display:flex;gap:.9rem;align-items:flex-start}
+.step .num{flex:none;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--violet);color:var(--surface);display:grid;place-items:center;font:800 1.3rem "Bricolage Grotesque",sans-serif}
+.step.done{opacity:.6}.step.done .num{background:var(--ok)}.step.done .num::after{content:"✓"}.step.done .num span{display:none}
+.step p{margin:.3rem 0 0}
+.howto{background:var(--violetbg);border-radius:12px;padding:.8rem 1rem;margin:0 0 1rem;font-size:1.05rem}
+.nextrow .btn{width:100%;font-size:1.05rem;padding:.9rem}
 /* Blätter */
 .task{margin:0 0 1.1rem}
 .task b.pts{float:right;color:var(--muted);font-weight:400;font-size:.9rem}
@@ -132,23 +138,35 @@ body.showsol .sol{display:block}
 <a href="../index.html" class="noprint" style="position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:20;background:#4E3D96;color:#fff;font:700 15px system-ui,sans-serif;text-decoration:none;padding:10px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle Fächer</a>
 <header><div class="wrap">
   <h1>Chemische Reaktionen</h1>
-  <p>Lernen für die Chemiearbeit am Dienstag, 17.11.</p>
+  <p>Chemie-Arbeit am Dienstag, 17.11. Fang bei 🏠 Start an.</p>
   <div class="ribbon" aria-label="Energieformen und ihre Farben">
     <span class="tag e-chem">Enthalpie</span><span class="tag e-th">thermisch</span><span class="tag e-st">Strahlung</span><span class="tag e-el">elektrisch</span><span class="tag e-be">Bewegung</span><span class="tag e-sc">Schall</span>
   </div>
 </div></header>
 <nav><div class="wrap" role="tablist">
-  <button role="tab" data-tab="lernen" aria-selected="true">Zusammenfassung</button>
-  <button role="tab" data-tab="karten">Karteikarten</button>
-  <button role="tab" data-tab="quiz">Quiz</button>
-  <button role="tab" data-tab="bau">Diagramme üben</button>
-  <button role="tab" data-tab="ub">Übungsblatt</button>
-  <button role="tab" data-tab="pk">Probeklausur</button>
+  <button role="tab" data-tab="start" aria-selected="true">🏠 Start</button>
+  <button role="tab" data-tab="lernen">1 Lesen</button>
+  <button role="tab" data-tab="karten">2 Karten</button>
+  <button role="tab" data-tab="quiz">3 Quiz</button>
+  <button role="tab" data-tab="bau">4 Pfeile</button>
+  <button role="tab" data-tab="pk">5 Probe-Arbeit</button>
+  <button role="tab" data-tab="ub">Extra: Blatt</button>
 </div></nav>
 <main><div class="wrap">
 
 <!-- ZUSAMMENFASSUNG -->
-<section id="lernen" class="on">
+<section id="start" class="on">
+  <div class="box merke"><h2>So lernst du</h2><p>Mach die Schritte <b>der Reihe nach</b>. Tippe auf einen Schritt, um anzufangen. Wenn du fertig bist, tippe auf <b>„Fertig ✓“</b>.</p><p class="meta" id="st-left"></p></div>
+  <div class="box step" data-step="lernen"><div class="num"><span>1</span></div><div class="stxt"><b>Lesen</b><span class="meta"> · ca. 15 Minuten</span><p>Lies die Seite einmal ganz durch. Das ist alles, was in der Arbeit drankommt.</p><div class="row" style="margin-top:.4rem"><button class="btn" data-go="lernen">Los geht's</button><button class="btn ghost" data-done="lernen">Fertig ✓</button></div></div></div>
+  <div class="box step" data-step="karten"><div class="num"><span>2</span></div><div class="stxt"><b>Karteikarten</b><span class="meta"> · ca. 10 Minuten</span><p>Tippe auf die Karte. Wusstest du es? Dann „Gewusst“. Sonst „Nochmal üben“. Mach weiter, bis alle weg sind.</p><div class="row" style="margin-top:.4rem"><button class="btn" data-go="karten">Los geht's</button><button class="btn ghost" data-done="karten">Fertig ✓</button></div></div></div>
+  <div class="box step" data-step="quiz"><div class="num"><span>3</span></div><div class="stxt"><b>Quiz</b><span class="meta"> · ca. 10 Minuten</span><p>Tippe auf die richtige Antwort. Am Ende übst du die falschen nochmal. Ziel: 18 von 21 richtig.</p><div class="row" style="margin-top:.4rem"><button class="btn" data-go="quiz">Los geht's</button><button class="btn ghost" data-done="quiz">Fertig ✓</button></div></div></div>
+  <div class="box step" data-step="bau"><div class="num"><span>4</span></div><div class="stxt"><b>Pfeil-Bilder</b><span class="meta"> · ca. 10 Minuten</span><p>Das sind die Energieflussdiagramme. Tippe an, welche Energie vorher und nachher da ist. Dann „Prüfen“.</p><div class="row" style="margin-top:.4rem"><button class="btn" data-go="bau">Los geht's</button><button class="btn ghost" data-done="bau">Fertig ✓</button></div></div></div>
+  <div class="box step" data-step="pk"><div class="num"><span>5</span></div><div class="stxt"><b>Probe-Arbeit</b><span class="meta"> · 45 Minuten</span><p>Am Montag: Drucke sie aus oder schreib auf einen Zettel. Danach „Lösungen zeigen“ und vergleichen.</p><div class="row" style="margin-top:.4rem"><button class="btn" data-go="pk">Los geht's</button><button class="btn ghost" data-done="pk">Fertig ✓</button></div></div></div>
+  <div class="box" id="st-all" hidden><h2>🎉 Super, alles geschafft!</h2><p>Du bist gut vorbereitet. Am Abend vor der Arbeit: nochmal die Karteikarten (Schritt 2).</p><button class="btn ghost" id="st-reset">Alles wieder auf Anfang</button></div>
+</section>
+
+<section id="lernen">
+  <div class="howto noprint"><b>Schritt 1: Lesen</b><br>Lies die Seite einmal ganz durch. Das ist alles, was in der Arbeit drankommt.</div>
   <div class="box merke">
     <h2>Was ist eine chemische Reaktion?</h2>
     <p>Bei einer chemischen Reaktion passieren immer zwei Dinge:</p>
@@ -240,10 +258,13 @@ body.showsol .sol{display:block}
       <li>Ein kaltes Glas über einer Flamme beschlägt. Das ist nur ein Hinweis auf Wasser. Nachgewiesen ist Wasser erst, wenn sich Kupfersulfat oder Watesmo-Papier blau färbt.</li>
     </ul>
   </div>
+
+  <div class="row noprint nextrow"><button class="btn" data-finish="lernen" data-next="karten">Fertig ✓ – weiter zu 2 Karteikarten →</button></div>
 </section>
 
 <!-- KARTEIKARTEN -->
 <section id="karten">
+  <div class="howto noprint"><b>Schritt 2: Karteikarten</b><br>Tippe auf die Karte. Wusstest du es? Dann „Gewusst“. Sonst „Nochmal üben“. Mach weiter, bis alle weg sind.</div>
   <p class="meta" id="k-meta"></p>
   <div class="box card" id="k-card" role="button" tabindex="0" aria-live="polite"></div>
   <div class="row" id="k-btns">
@@ -251,22 +272,31 @@ body.showsol .sol{display:block}
     <button class="btn" id="k-ok">Gewusst</button>
   </div>
   <div class="row"><button class="btn ghost" id="k-reset">Alle Karten neu mischen</button></div>
+
+  <div class="row noprint nextrow"><button class="btn" data-finish="karten" data-next="quiz">Fertig ✓ – weiter zu 3 Quiz →</button></div>
 </section>
 
 <!-- QUIZ -->
 <section id="quiz">
+  <div class="howto noprint"><b>Schritt 3: Quiz</b><br>Tippe auf die richtige Antwort. Am Ende übst du die falschen nochmal. Ziel: 18 von 21 richtig.</div>
   <div id="q-area"></div>
+
+  <div class="row noprint nextrow"><button class="btn" data-finish="quiz" data-next="bau">Fertig ✓ – weiter zu 4 Pfeil-Bilder →</button></div>
 </section>
 
 <!-- BAUKASTEN -->
 <section id="bau">
+  <div class="howto noprint"><b>Schritt 4: Pfeil-Bilder</b><br>Das sind die Energieflussdiagramme. Tippe an, welche Energie vorher und nachher da ist. Dann „Prüfen“.</div>
   <p>Wähle die Energieformen vorher und nachher und entscheide, ob der Vorgang exotherm oder endotherm ist.</p>
   <div class="picker" id="b-pick"></div>
   <div class="box" id="b-area"></div>
+
+  <div class="row noprint nextrow"><button class="btn" data-finish="bau" data-next="pk">Fertig ✓ – weiter zu 5 Probe-Arbeit →</button></div>
 </section>
 
 <!-- ÜBUNGSBLATT -->
 <section id="ub">
+  <div class="howto noprint"><b>Extra:</b> Noch mehr Übung zum Ausdrucken, wenn du Lust hast.</div>
   <div class="row noprint" style="margin-top:0;margin-bottom:1rem">
     <button class="btn ghost" data-sol>Lösungen zeigen</button>
     <button class="btn" data-print="ub" data-withsol="0">Drucken</button>
@@ -308,6 +338,7 @@ body.showsol .sol{display:block}
 
 <!-- PROBEKLAUSUR -->
 <section id="pk">
+  <div class="howto noprint"><b>Schritt 5: Probe-Arbeit</b><br>Am Montag: Drucke sie aus oder schreib auf einen Zettel. Danach „Lösungen zeigen“ und vergleichen.</div>
   <div class="row noprint" style="margin-top:0;margin-bottom:1rem">
     <button class="btn ghost" data-sol>Lösungen zeigen</button>
     <button class="btn" data-print="pk" data-withsol="0">Drucken</button>
@@ -350,6 +381,8 @@ body.showsol .sol{display:block}
       <div class="sol">Exotherm (exo = hinaus, therm = Wärme): Bei der Reaktion wird Energie an die Umgebung abgegeben, zum Beispiel als Wärme. Endotherm (endo = hinein): Bei der Reaktion wird Energie aus der Umgebung aufgenommen.</div>
     </div>
   </div>
+
+  <div class="row noprint nextrow"><button class="btn" data-finish="pk" data-next="start">Fertig ✓ – zurück zum Start</button></div>
 </section>
 
 </div></main>
@@ -379,12 +412,23 @@ function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor
 
 /* Tabs */
 const tabs=document.querySelectorAll("nav button");
+function show(id){const b=[...tabs].find(x=>x.dataset.tab===id);if(b)b.click()}
+const DONE=new Set(store("chem-steps")||[]);
+function stRender(){document.querySelectorAll(".step").forEach(s=>s.classList.toggle("done",DONE.has(s.dataset.step)));
+  const left=5-DONE.size;document.getElementById("st-left").textContent=left?`Noch ${left} von 5 Schritten.`:"";
+  document.getElementById("st-all").hidden=left>0}
+function markDone(t){DONE.add(t);store("chem-steps",[...DONE]);stRender()}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+document.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>markDone(b.dataset.done));
+document.querySelectorAll("[data-finish]").forEach(b=>b.onclick=()=>{markDone(b.dataset.finish);show(b.dataset.next)});
+document.getElementById("st-reset").onclick=()=>{DONE.clear();store("chem-steps",[]);stRender()};
 tabs.forEach(b=>b.addEventListener("click",()=>{
   tabs.forEach(x=>x.setAttribute("aria-selected",x===b));
   document.querySelectorAll("main>.wrap>section").forEach(s=>s.classList.toggle("on",s.id===b.dataset.tab));
   window.scrollTo(0,0);
 }));
 
+stRender();
 /* Karteikarten */
 const CARDS=[
  ["Was ist eine chemische Reaktion?","Ein Vorgang, bei dem aus Edukten neue Stoffe mit neuen Eigenschaften entstehen (Produkte). Dabei wird Energie umgewandelt."],
