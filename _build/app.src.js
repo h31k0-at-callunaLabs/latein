@@ -86,30 +86,87 @@ function mountQuiz(el,QZ,key){
   start();
 }
 
-/* Pfeil-Bilder bauen */
+/* Pfeil-Bilder bauen: Pfeile mit dem Finger ins Bild ziehen */
 function mountBau(){
-  let cur=0,sel;const done=new Set(store("chem-bau")||[]);
-  const reset=()=>{sel={pre:new Set(),post:new Set(),typ:null}};reset();
+  let cur=0,sel,picked=null,checked=false;const done=new Set(store("chem-bau")||[]);
+  const reset=()=>{sel={pre:new Set(),post:new Set(),typ:null};picked=null;checked=false};reset();
+  const A=$("#b-area");
+  /* Tippen sicher erkennen: Nach einem Zieh-Vorgang verschluckt der Browser manchmal den nächsten Klick. */
+  function onTap(el,fn){let t=null,last=0;const run=e=>{const n=Date.now();if(n-last<450)return;last=n;fn(e)};
+    el.addEventListener("click",e=>{clearTimeout(t);run(e)});
+    el.addEventListener("pointerup",e=>{if(e.pointerType==="mouse")return;clearTimeout(t);t=setTimeout(()=>run(e),280)})}
   function pick(){$("#b-pick").innerHTML=SC.map((s,i)=>`<button class="${i===cur?"cur":""} ${done.has(s.id)?"done":""}" data-i="${i}">${s.name}</button>`).join("");
-    $$("#b-pick button").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;reset();render()})}
+    $$("#b-pick button").forEach(b=>onTap(b,()=>{cur=+b.dataset.i;reset();render()}))}
+  const zones=()=>[...A.querySelectorAll(".zone")];
+  function zoneAt(x,y){return zones().find(z=>{const r=z.getBoundingClientRect();return x>=r.left-14&&x<=r.right+14&&y>=r.top-14&&y<=r.bottom+14})}
+  function unmark(){if(checked){checked=false;A.querySelector("[data-fb]").innerHTML=""}}
+  function paintZones(){
+    const s=SC[cur];
+    zones().forEach(z=>{const side=z.dataset.zone,keys=ORDER.filter(k=>sel[side].has(k));
+      z.querySelector(".slots").innerHTML=keys.length?keys.map(k=>{const st=checked?(s[side].includes(k)?" ok":" no"):"";
+        return `<button class="arrow e-${E[k][1]} placed${st}" data-k="${k}" data-from="${side}" aria-label="${E[k][0].replace(/­/g,"")} entfernen">${E[k][0]}<i aria-hidden="true">${st===" ok"?"✓":st===" no"?"falsch ✕":"✕"}</i></button>`}).join(""):'<div class="empty">Pfeil hierhin ziehen</div>';
+      z.classList.toggle("armed",!!picked)});
+    A.querySelectorAll(".placed").forEach(bindDrag);
+    A.querySelectorAll(".tray .arrow").forEach(t=>t.classList.toggle("picked",t.dataset.k===picked));
+    const tip=A.querySelector("[data-tip]");if(tip)tip.textContent=picked?"Tippe jetzt auf „Vorher“ oder „Nachher“.":"";
+  }
+  function place(k,to,from){if(from&&from!==to)sel[from].delete(k);sel[to].add(k);picked=null;unmark();paintZones()}
+  function bindDrag(el){
+    el.addEventListener("pointerdown",e=>{
+      if(e.button>0)return;
+      const k=el.dataset.k,from=el.dataset.from||null,sx=e.clientX,sy=e.clientY;let moved=false,ghost=null;
+      try{el.setPointerCapture(e.pointerId)}catch(_){}
+      const over=z=>zones().forEach(x=>x.classList.toggle("over",x===z));
+      const move=ev=>{
+        if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)<8)return;
+        if(!moved){moved=true;ghost=el.cloneNode(true);ghost.classList.add("ghost");ghost.style.width=el.offsetWidth+"px";document.body.appendChild(ghost);el.classList.add("dragging")}
+        ghost.style.left=ev.clientX+"px";ghost.style.top=ev.clientY+"px";over(zoneAt(ev.clientX,ev.clientY));ev.preventDefault()};
+      const end=ev=>{
+        el.removeEventListener("pointermove",move);el.removeEventListener("pointerup",end);el.removeEventListener("pointercancel",end);
+        if(ghost)ghost.remove();el.classList.remove("dragging");over(null);
+        if(ev.type==="pointercancel")return;
+        if(!moved){if(from){sel[from].delete(k);unmark();paintZones()}else{picked=picked===k?null:k;paintZones()}return}
+        const z=zoneAt(ev.clientX,ev.clientY);
+        if(z)place(k,z.dataset.zone,from);else if(from){sel[from].delete(k);unmark();paintZones()}};
+      el.addEventListener("pointermove",move);el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);
+    });
+    /* Tastatur: Enter/Leertaste */
+    el.addEventListener("click",e=>{if(e.detail!==0)return;const k=el.dataset.k,from=el.dataset.from;
+      if(from){sel[from].delete(k);unmark()}else picked=picked===k?null:k;paintZones()});
+  }
   function render(){
-    pick();const s=SC[cur],A=$("#b-area");
-    const chips=side=>ORDER.map(k=>`<button class="chip e-${E[k][1]}" data-side="${side}" data-k="${k}" aria-pressed="${sel[side].has(k)}">${E[k][0]}</button>`).join("");
-    A.innerHTML=`<h3>${s.name}</h3><p>${s.text}</p><p><b>Vorher (links):</b></p><div class="chips">${chips("pre")}</div><p><b>Nachher (rechts):</b></p><div class="chips">${chips("post")}</div>${s.typ?`<p><b>Der Vorgang ist …</b></p><div class="seg"><button data-t="exo" aria-pressed="false">exotherm</button><button data-t="endo" aria-pressed="false">endotherm</button></div>`:""}<div class="row"><button class="btn" data-check>Prüfen</button></div><div data-fb></div>`;
-    A.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const set=sel[c.dataset.side],k=c.dataset.k;set.has(k)?set.delete(k):set.add(k);c.setAttribute("aria-pressed",set.has(k))});
-    A.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{sel.typ=b.dataset.t;A.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-    A.querySelector("[data-check]").onclick=check;
+    pick();const s=SC[cur];
+    A.innerHTML=`<h3>${s.name}</h3><p>${s.text}</p>
+<p class="hint">👆 <b>Zieh die Pfeile mit dem Finger ins Bild.</b> Links kommt hin, was vorher da ist. Rechts kommt hin, was nachher da ist. Falsch gesetzt? Tippe den Pfeil an, dann ist er wieder weg.</p>
+<div class="diag build">
+ <div class="zone" data-zone="pre" role="button" tabindex="0" aria-label="Feld Vorher"><div class="zl">Vorher</div><div class="col slots"></div></div>
+ <div class="mid">${s.mid}</div>
+ <div class="zone" data-zone="post" role="button" tabindex="0" aria-label="Feld Nachher"><div class="zl">Nachher</div><div class="col slots"></div></div>
+</div>
+<p class="meta" data-tip aria-live="polite"></p>
+<div class="tray" aria-label="Pfeile zum Ziehen">${ORDER.map(k=>`<button class="arrow e-${E[k][1]}" data-k="${k}">${E[k][0]}</button>`).join("")}</div>
+${s.typ?`<p><b>Der Vorgang ist …</b></p><div class="seg"><button data-t="exo" aria-pressed="false">exotherm</button><button data-t="endo" aria-pressed="false">endotherm</button></div>`:""}
+<div class="row"><button class="btn" data-check>Prüfen</button><button class="btn ghost" data-clear>Alles leeren</button></div><div data-fb></div>`;
+    A.querySelectorAll(".tray .arrow").forEach(bindDrag);
+    zones().forEach(z=>{const go=()=>{if(picked)place(picked,z.dataset.zone,null)};
+      onTap(z,e=>{if(e.target.closest&&e.target.closest(".placed"))return;go()});
+      z.addEventListener("keydown",e=>{if(e.target===z&&(e.key==="Enter"||e.key===" ")){e.preventDefault();go()}})});
+    A.querySelectorAll(".seg button").forEach(b=>onTap(b,()=>{sel.typ=b.dataset.t;A.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b))}));
+    onTap(A.querySelector("[data-check]"),check);
+    onTap(A.querySelector("[data-clear]"),()=>{sel.pre.clear();sel.post.clear();picked=null;unmark();paintZones()});
+    paintZones();
   }
   function check(){
-    const s=SC[cur],msgs=[],A=$("#b-area");
+    const s=SC[cur],msgs=[];
     const cmp=(side,want,label)=>{const miss=want.filter(k=>!sel[side].has(k)),extra=[...sel[side]].filter(k=>!want.includes(k));
-      if(miss.length)msgs.push(`${label} fehlt: ${miss.map(k=>E[k][0]).join(", ")}`);
-      if(extra.length)msgs.push(`${label} gehört nicht dazu: ${extra.map(k=>E[k][0]).join(", ")}`)};
-    cmp("pre",s.pre,"Vorher");cmp("post",s.post,"Nachher");
+      if(miss.length)msgs.push(`${label} ${miss.length===1?"fehlt noch 1 Pfeil":"fehlen noch "+miss.length+" Pfeile"}.`);
+      if(extra.length)msgs.push(`${label}: ${extra.length===1?"Der rote Pfeil gehört":"Die roten Pfeile gehören"} nicht dazu. Tippe ${extra.length===1?"ihn":"sie"} an, dann ${extra.length===1?"ist er":"sind sie"} weg.`)};
+    cmp("pre",s.pre,"Links (vorher)");cmp("post",s.post,"Rechts (nachher)");
     if(s.typ&&sel.typ!==s.typ)msgs.push(sel.typ?`Der Vorgang ist ${s.typ==="exo"?"exotherm":"endotherm"}.`:"Entscheide noch: exotherm oder endotherm?");
     const ok=!msgs.length;if(ok){done.add(s.id);store("chem-bau",[...done]);pick()}
-    A.querySelector("[data-fb]").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"Alles richtig.":"Noch nicht ganz."}</b>${ok?"":"<ul>"+msgs.map(m=>`<li>${m}</li>`).join("")+"</ul>"}<p style="margin-bottom:0">${s.why}</p></div><p class="meta">So sieht es richtig aus:</p>${diag(s.pre,s.mid,s.post)}${s.typ?`<p><span class="badge b-${s.typ}">${s.typ==="exo"?"exotherm":"endotherm"}</span></p>`:""}${cur<SC.length-1?'<div class="row"><button class="btn" data-nextb>Nächstes Pfeil-Bild</button></div>':'<p><b>Das war das letzte Pfeil-Bild.</b> Weiter geht es unten mit dem Quiz.</p>'}`;
-    const n=A.querySelector("[data-nextb]");if(n)n.onclick=()=>{cur++;reset();render();$("#b-pick").scrollIntoView&&$("#b-pick").scrollIntoView({block:"start"})};
+    checked=true;picked=null;paintZones();
+    A.querySelector("[data-fb]").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"Alles richtig! 🎉":"Noch nicht ganz."}</b>${ok?"":"<ul>"+msgs.map(m=>`<li>${m}</li>`).join("")+"</ul>"}${ok?`<p style="margin-bottom:0">${s.why}</p>`:""}</div>${ok?"":`<details class="loes"><summary>Ich komme nicht weiter: Lösung ansehen</summary>${diag(s.pre,s.mid,s.post)}<p>${s.why}</p>${s.typ?`<p><span class="badge b-${s.typ}">${s.typ==="exo"?"exotherm":"endotherm"}</span></p>`:""}</details>`}${ok?(cur<SC.length-1?'<div class="row"><button class="btn" data-nextb>Nächstes Pfeil-Bild →</button></div>':'<p><b>Das war das letzte Pfeil-Bild.</b> Weiter geht es unten mit dem Quiz.</p>'):'<p class="meta">Verbessere dein Bild und tippe nochmal auf „Prüfen“.</p>'}`;
+    const n=A.querySelector("[data-nextb]");if(n)onTap(n,()=>{cur++;reset();render();const t=$("#b-pick");if(t.scrollIntoView)t.scrollIntoView({block:"start"})});
   }
   render();
 }

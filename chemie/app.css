@@ -91,7 +91,27 @@ a.step.extra .num{background:var(--line);color:var(--ink)}
 .lines{border-bottom:1px solid var(--line);height:1.9rem}
 .sol{display:none;margin-top:.4rem;padding:.6rem .8rem;background:var(--okbg);border-radius:8px}
 body.showsol .sol{display:block}
-@media (max-width:420px){.box{padding:.9rem .75rem}.diag{gap:.25rem}.mid{max-width:5.2rem;font-size:.72rem;padding:.3rem}.arrow{font-size:.72rem}}
+/* Pfeil-Bilder zum Ziehen */
+.build{align-items:stretch;gap:.5rem}
+.build .mid{align-self:center}
+.zone{border:2px dashed var(--line);border-radius:12px;padding:.4rem;min-height:8.5rem;background:var(--bg);display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.zone.armed,.zone.over{border-color:var(--violet);background:var(--violetbg)}
+.zone.over{border-style:solid}
+.zl{font-weight:700;font-size:.85rem;color:var(--muted);text-align:center}
+.zone .empty{flex:1;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.85rem;padding:.5rem}
+.zone .slots{flex:1}
+button.arrow{border:0;border-left:4px solid var(--c);color:var(--ink);font-family:inherit;text-align:left;cursor:grab;min-height:44px;font-size:.9rem;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;display:flex;align-items:center;gap:.3rem;width:100%}
+button.arrow i{margin-left:auto;font-style:normal;opacity:.55;font-size:.8rem;padding-right:.2rem}
+.tray{display:grid;grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr));gap:.5rem;margin:.6rem 0 1rem;padding:.6rem;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.arrow.picked{background:var(--violet);color:var(--surface)}
+.arrow.dragging{opacity:.35}
+.arrow.ghost{position:fixed;z-index:50;pointer-events:none;transform:translate(-50%,-50%) scale(1.06);box-shadow:0 6px 18px rgba(0,0,0,.3);opacity:.95;margin:0}
+.placed.ok{border-left-color:var(--ok);background:var(--okbg)}
+.placed.ok i{color:var(--ok);opacity:1;font-size:1.1rem;font-weight:700}
+.placed.no{border-left-color:var(--bad);background:var(--badbg)}
+.placed.no i{color:var(--bad);opacity:1;font-weight:700;white-space:nowrap;padding-right:.5rem}
+details.loes{margin:.8rem 0}details.loes summary{cursor:pointer;font-weight:700;color:var(--violet);padding:.4rem 0}
+@media (max-width:420px){.box{padding:.9rem .75rem}.diag{gap:.25rem}.mid{max-width:5.2rem;font-size:.72rem;padding:.3rem}.arrow{font-size:.72rem}button.arrow{font-size:.78rem}.tray{grid-template-columns:1fr 1fr}}
 @media print{
   body{background:#fff;color:#000;font-size:11.5pt}
   .noprint{display:none!important}

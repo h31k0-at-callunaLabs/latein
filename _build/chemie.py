@@ -245,7 +245,7 @@ FOOT = """
 </body>
 </html>
 """
-VER = "8"
+VER = "11"
 
 def nav(cur):
     items = [("../index.html", "← Fächer", None), ("index.html", "🏠 Start", "start")]
@@ -293,7 +293,7 @@ def main():
         b += part(2, "Karten", "Überleg dir die Antwort. Dann tippe auf die Karte.") + '<div id="cards"></div>\n'
         n = 3
         if t == "t5":
-            b += part(3, "Pfeil-Bilder bauen", "Tippe an, welche Energie vorher und nachher da ist. Dann tippe auf „Prüfen“.") + '<div class="picker" id="b-pick"></div>\n<div class="box" id="b-area"></div>\n'
+            b += part(3, "Pfeil-Bilder bauen", "Bau das Pfeil-Bild selbst: Zieh die Pfeile mit dem Finger an die richtige Stelle. Dann tippe auf „Prüfen“.") + '<div class="picker" id="b-pick"></div>\n<div class="box" id="b-area"></div>\n'
             n = 4
         b += part(n, "Quiz", "Tippe auf die richtige Antwort.") + '<div id="quiz"></div>\n'
         b += nextbtn(i)
