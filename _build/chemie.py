@@ -11,7 +11,7 @@ TOPICS = [
  dict(id="t3", file="energieformen.html", nav="3 Energie", title="Energieformen erkennen", dur="10 Minuten", desc="Wärme, Licht, Knall: Welche Energie ist das?"),
  dict(id="t4", file="exo-endo.html", nav="4 exo/endo", title="Exotherm und endotherm", dur="10 Minuten", desc="Wird Energie abgegeben oder aufgenommen?"),
  dict(id="t5", file="diagramme.html", nav="5 Pfeil-Bilder", title="Energieflussdiagramme (Pfeil-Bilder)", dur="15 Minuten", desc="Energie vorher, Vorgang, Energie nachher."),
- dict(id="t6", file="nachweise.html", nav="6 Nachweise", title="Kohlenstoffdioxid und Wasser nachweisen", dur="5 Minuten", desc="Kalkwasser und weißes Kupfersulfat."),
+ dict(id="t6", file="nachweise.html", nav="6 Nachweise", title="Kohlenstoffdioxid und Wasser nachweisen", dur="5 Minuten", desc="Kalkwasserprobe und Watesmopapier."),
 ]
 EXTRA = [
  dict(id="gem", file="gemischt.html", nav="7 Großes Quiz", title="Großes Quiz: alles gemischt", dur="15 Minuten", desc="Alle Fragen aus allen Themen durcheinander."),
@@ -25,6 +25,10 @@ LESEN = {
 <p>Eine chemische Reaktion erkennst du an zwei Dingen:</p>
 <ul><li><b>Stoffumwandlung (immer):</b> Die Ausgangsstoffe werden vernichtet (verbraucht). Es entstehen <b>neue Stoffe mit neuen Eigenschaften</b>.</li>
 <li><b>Energieumwandlung (meistens):</b> Energie wird aufgenommen oder abgegeben, zum Beispiel als Wärme oder Licht.</li></ul></div>
+<div class="box"><h3>So steht es im Buch (Seite 85)</h3>
+<p>Einen Vorgang, bei dem aus einem oder mehreren Ausgangsstoffen (Edukten) neue Stoffe, die Reaktionsprodukte, entstehen, bezeichnet man als <b>chemische Reaktion</b>.</p>
+<p>Chemische Reaktionen unterscheiden sich von <b>physikalischen Vorgängen</b> wie den Aggregatzustandsänderungen dadurch, dass ein Stoffumsatz und ein Energieumsatz stattfinden.</p>
+<p><b>Beispiel:</b> Holz verbrennt: Es entstehen neue Stoffe mit völlig anderen Eigenschaften. Das ist eine chemische Reaktion. Lötzinn schmilzt: Es bleibt Lötzinn, nur flüssig. Das ist ein physikalischer Vorgang.</p></div>
 <div class="box"><h3>Zwei wichtige Wörter</h3>
 <p><b>Edukte</b> sind die Ausgangsstoffe. Sie sind <b>vorher</b> da.</p>
 <p><b>Produkte</b> sind die neuen Stoffe. Sie sind <b>nachher</b> da.</p>
@@ -43,7 +47,8 @@ LESEN = {
 <tr><td>Holz, Kerze oder Gas verbrennt</td><td>Eis schmilzt</td></tr>
 <tr><td>Zucker karamellisiert</td><td>Wasser verdampft</td></tr>
 <tr><td>Holzkohle wird aus Holz hergestellt</td><td>Eine LED leuchtet</td></tr>
-<tr><td>Eisen rostet</td><td>Glas bleibt Glas (Station 2a)</td></tr></table></div>
+<tr><td>Eisen rostet</td><td>Glas bleibt Glas (Station 2a)</td></tr>
+<tr><td>Magnesium verbrennt</td><td>Lötzinn schmilzt</td></tr></table></div>
 <p><b>Frag dich immer: Ist ein neuer Stoff entstanden?</b> Beim Schmelzen oder Verdampfen bleibt der Stoff derselbe. Wärme oder Licht allein reichen nicht: Eine LED leuchtet und wird warm, aber es entsteht kein neuer Stoff.</p>
 <p>Beispiele für die Arbeit: <b>alle Verbrennungen</b> und <b>Karamellisieren</b>.</p></div>
 """,
@@ -57,11 +62,13 @@ LESEN = {
 <div class="box"><h3>Beispiele</h3>
 <div class="schema">Holz<sub>(s)</sub> → Holzkohle<sub>(s)</sub> + Teer<sub>(l)</sub> + Holzgas<sub>(g)</sub> + Holzflüssigkeit<sub>(l)</sub></div>
 <p class="meta">Gelesen: Holz reagiert zu Holzkohle und Teer und Holzgas und Holzflüssigkeit.</p>
+<div class="schema">Magnesium<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Magnesiumoxid<sub>(s)</sub></div>
+<p class="meta">Aus dem Buch (Seite 114). Lies: „Magnesium und Sauerstoff reagieren zu Magnesiumoxid.“ Edukte: Magnesium und Sauerstoff. Produkt: Magnesiumoxid.</p>
 <div class="schema">Zucker → karamellisierter Zucker</div>
 <p class="meta">Aus dem Heft (Station 1). Über dem Pfeil steht dort: konstante Energiezufuhr.</p>
 <div class="schema">Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser</div>
 <div class="schema">Kohlenstoff<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Kohlenstoffdioxid<sub>(g)</sub></div>
-<p class="meta">So steht es im Buch. Holzkohle besteht fast nur aus Kohlenstoff.</p></div>
+<p class="meta">So steht es im Buch (Seite 94). Holzkohle besteht fast nur aus Kohlenstoff.</p></div>
 <div class="box"><h3>Aus dem Heft: Herstellung von Holzkohle</h3>
 <div class="tbl"><table><tr><th>Produkt</th><th>Eigenschaften</th></tr>
 <tr><td>Holzkohle</td><td>fest, schwarz, Brennstoff</td></tr>
@@ -126,20 +133,20 @@ LESEN = {
 "t6": """
 <div class="box merke"><h3>Das musst du wissen</h3>
 <div class="tbl"><table><tr><th>Stoff</th><th>So weist man ihn nach</th><th>Das sieht man</th></tr>
-<tr><td><b>Kohlenstoffdioxid</b></td><td><b>Kalkwasserprobe:</b> Kalkwasser zum Gas geben und schütteln</td><td>Es bildet sich eine <b>weiße Trübung</b></td></tr>
-<tr><td><b>Wasser</b></td><td><b>Weißes Kupfersulfat</b> (oder Wassertestpapier)</td><td>Es wird <b>blau</b></td></tr></table></div>
-<p class="meta">So steht es im Chemiebuch auf Seite 94 und Seite 146.</p></div>
-<div class="box"><h3>Merksätze aus dem Buch</h3>
-<ul><li>Die Trübung von Kalkwasser ist ein Nachweis für Kohlenstoffdioxid.</li>
-<li>Ein einfacher und schneller Nachweis für Wasser kann mit weißem Kupfersulfat durchgeführt werden.</li></ul>
-<p>Kohlenstoffdioxid ist ein farbloses, geruchloses Gas. Es ist nicht brennbar. Es entsteht zum Beispiel, wenn Holzkohle verbrennt.</p>
-<p>Auch Wasser entsteht bei Verbrennungen, zum Beispiel in der Flamme des Gasbrenners.</p></div>
+<tr><td><b>Kohlenstoffdioxid</b></td><td><b>Kalkwasserprobe:</b> Das Gas kommt in Kalkwasser</td><td>Das Kalkwasser wird <b>trüb</b> (weiße Trübung)</td></tr>
+<tr><td><b>Wasser</b></td><td><b>Watesmopapier</b></td><td>Es wird <b>blau</b></td></tr></table></div>
+<p>Merksatz aus dem Buch (Seite 83): Zum Nachweis von Wasser wird Watesmopapier verwendet. Kohlenstoffdioxid lässt sich mit der Kalkwasserprobe nachweisen.</p>
+<p class="meta">Wasser kann man auch mit weißem Kupfersulfat nachweisen. Es wird mit Wasser blau.</p></div>
+<div class="box"><h3>Der Versuch mit der Kerze (Buch Seite 83)</h3>
+<ol><li>Über der Kerzenflamme werden die unsichtbaren Verbrennungsgase mit einem Trichter aufgefangen.</li>
+<li>Die Gase strömen durch ein U-Rohr, das in kaltem Wasser steht. Dort bildet sich eine klare Flüssigkeit. Watesmopapier zeigt: Das ist <b>Wasser</b>.</li>
+<li>Das restliche Gas wird in Kalkwasser geleitet. Das Kalkwasser trübt sich. Das Gas ist also <b>Kohlenstoffdioxid</b>.</li></ol>
+<p><b>Ergebnis:</b> Bei der Verbrennung einer Kerze entstehen die beiden Verbrennungsprodukte Wasser und Kohlenstoffdioxid.</p></div>
 <div class="box"><h3>Ergebnisse auswerten</h3>
 <ul><li>Kalkwasser wird trüb → Kohlenstoffdioxid ist nachgewiesen.</li>
 <li>Kalkwasser bleibt klar → Es ist kein Kohlenstoffdioxid nachweisbar.</li>
-<li>Weißes Kupfersulfat wird blau → Wasser ist nachgewiesen.</li>
-<li>Kupfersulfat bleibt weiß → Es ist kein Wasser nachweisbar.</li></ul>
-<p>Beispiel: Die Verbrennungsgase einer Kerze trüben Kalkwasser und färben weißes Kupfersulfat blau. Also entstehen beim Verbrennen Kohlenstoffdioxid und Wasser.</p></div>
+<li>Watesmopapier wird blau → Wasser ist nachgewiesen.</li></ul>
+<p>Kohlenstoffdioxid ist ein farbloses, geruchloses Gas. Es ist nicht brennbar.</p></div>
 """,
 }
 
@@ -152,6 +159,7 @@ CARDS = {
  ["Station 1: Warum ist Zucker erhitzen eine chemische Reaktion?", "Das Edukt Zucker wurde vernichtet, und neue Stoffe sind als Produkte entstanden: Karamell (bräunlich) und Zuckerkohle (schwarz)."],
  ["Station 2a: Warum gab es beim Glas keine chemische Reaktion?", "Es hat keine Stoffvernichtung stattgefunden. Das Glas hat nachher dieselben Eigenschaften und ist immer noch Glas."],
  ["Energieumwandlung", "Eine Energieform wird in eine andere umgewandelt, z. B. chemische Energie in Wärme und Licht."],
+ ["Lötzinn schmilzt. Chemische Reaktion oder physikalischer Vorgang?", "Physikalischer Vorgang. Es bleibt Lötzinn, nur der Aggregatzustand ändert sich."],
  ["Ist Eisschmelzen eine chemische Reaktion?", "Nein. Es entsteht kein neuer Stoff, nur der Zustand ändert sich."],
  ["Nenne zwei Beispiele für chemische Reaktionen.", "Alle Verbrennungen (z. B. Holz, Kerze) und Karamellisieren."],
 ],
@@ -163,6 +171,7 @@ CARDS = {
  ["(s), (l), (g)", "fest, flüssig, gasförmig"],
  ["Wortschema: Herstellung von Holzkohle", "Holz(s) → Holzkohle(s) + Teer(l) + Holzgas(g) + Holzflüssigkeit(l)"],
  ["Wortschema: Zucker wird erhitzt (Station 1)", "Zucker → karamellisierter Zucker (mit konstanter Energiezufuhr)"],
+ ["Lies vor: Magnesium(s) + Sauerstoff(g) → Magnesiumoxid(s)", "„Magnesium und Sauerstoff reagieren zu Magnesiumoxid.“"],
  ["Wortschema: Eine Kerze brennt", "Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser"],
 ],
 "t3": [
@@ -189,9 +198,10 @@ CARDS = {
 ],
 "t6": [
  ["Nachweis von Kohlenstoffdioxid", "Kalkwasserprobe: Kalkwasser wird trüb (weiße Trübung)."],
- ["Nachweis von Wasser", "Weißes Kupfersulfat wird blau. Es geht auch mit Wassertestpapier."],
+ ["Nachweis von Wasser", "Watesmopapier wird blau. (Es geht auch mit weißem Kupfersulfat.)"],
+ ["Welche zwei Verbrennungsprodukte entstehen bei einer Kerze?", "Wasser und Kohlenstoffdioxid."],
  ["Kalkwasser bleibt klar. Was bedeutet das?", "Es ist kein Kohlenstoffdioxid nachweisbar."],
- ["Weißes Kupfersulfat wird blau. Was ist nachgewiesen?", "Wasser."],
+ ["Watesmopapier wird blau. Was ist nachgewiesen?", "Wasser."],
  ["Wie heißt der Nachweis von Kohlenstoffdioxid?", "Kalkwasserprobe."],
 ],
 }
@@ -204,6 +214,7 @@ QUIZ = {
  ["Welcher Vorgang ist keine chemische Reaktion?", ["Eis schmilzt.", "Holz verbrennt.", "Eisen rostet.", "Eine Kerze brennt."], "Beim Schmelzen bleibt es Wasser. Es ändert sich nur der Zustand."],
  ["Station 1: Zucker wird erhitzt. Welche Produkte entstehen?", ["Karamell und Zuckerkohle", "Holzkohle und Teer", "Zucker bleibt Zucker", "Holzgas und Holzflüssigkeit"], "Aus weißem Zucker wird bräunliches Karamell und schwarze Zuckerkohle."],
  ["Station 2a: Das Glas ist vorher und nachher fest, transparent und nicht brennbar. Was folgt daraus?", ["Keine chemische Reaktion, weil keine Stoffvernichtung stattgefunden hat.", "Eine chemische Reaktion, weil es heiß war.", "Eine chemische Reaktion, weil Glas ein Produkt ist.", "Man kann es nicht entscheiden."], "Das Glas ist immer noch Glas. Es ist kein neuer Stoff entstanden."],
+ ["Wie nennt man Vorgänge wie Schmelzen oder Verdampfen, bei denen kein neuer Stoff entsteht?", ["physikalische Vorgänge", "chemische Reaktionen", "Verbrennungen", "Nachweise"], "Bei physikalischen Vorgängen ändert sich nur der Aggregatzustand. Der Stoff bleibt derselbe."],
  ["Was sind Edukte?", ["die Ausgangsstoffe einer Reaktion", "die Stoffe, die neu entstehen", "die Energieformen nach der Reaktion", "die Geräte im Versuch"], "Edukte sind die Ausgangsstoffe. Sie sind vorher da."],
  ["Was sind Produkte?", ["die Stoffe, die bei der Reaktion neu entstehen", "die Ausgangsstoffe einer Reaktion", "die Energieformen vor der Reaktion", "die Beobachtungen im Versuch"], "Produkte sind die neuen Stoffe. Sie sind nachher da."],
  ["Was passiert bei einer Reaktion mit den Edukten?", ["Sie werden vernichtet (verbraucht), und daraus entstehen die Produkte.", "Sie werden nur wärmer.", "Sie bleiben unverändert.", "Sie werden komplett zu Energie."], "Im Heft heißt das: Vernichtung der Edukte, Herstellung der Produkte."],
@@ -239,11 +250,11 @@ QUIZ = {
  ["Luminol: Warum steht rechts keine thermische Energie?", ["Weil sich die Temperatur nicht ändert.", "Weil Luminol kalt ist.", "Weil Licht keine Energie ist.", "Weil die Reaktion endotherm ist."], "Luminol leuchtet nur. Es wird nicht wärmer."],
 ],
 "t6": [
- ["Wie weist man Kohlenstoffdioxid nach?", ["Kalkwasser wird trüb.", "Weißes Kupfersulfat wird blau.", "Kalkwasser wird blau.", "Ein glimmender Span flammt auf."], "Das ist die Kalkwasserprobe. Der aufflammende Span weist Sauerstoff nach."],
- ["Wie weist man Wasser nach?", ["Weißes Kupfersulfat wird blau.", "Kalkwasser wird trüb.", "Ein glimmender Span flammt auf.", "Kalkwasser bleibt klar."], "Auch Wassertestpapier zeigt Wasser an."],
- ["Welche Farbe hat Kupfersulfat, bevor Wasser dazukommt?", ["weiß", "blau", "schwarz", "gelb"], "Weißes Kupfersulfat wird bei Berührung mit Wasser blau."],
+ ["Wie weist man Kohlenstoffdioxid nach?", ["Kalkwasser wird trüb.", "Watesmopapier wird blau.", "Kalkwasser wird blau.", "Ein glimmender Span flammt auf."], "Das ist die Kalkwasserprobe. Der aufflammende Span (Glimmspanprobe) weist Sauerstoff nach."],
+ ["Wie weist man Wasser nach?", ["Watesmopapier wird blau.", "Kalkwasser wird trüb.", "Ein glimmender Span flammt auf.", "Kalkwasser bleibt klar."], "Auch weißes Kupfersulfat wird mit Wasser blau."],
+ ["Kerzenversuch: Im kalten U-Rohr bildet sich eine klare Flüssigkeit. Womit prüft man, ob es Wasser ist?", ["mit Watesmopapier", "mit Kalkwasser", "mit einem Streichholz", "mit einem Magneten"], "Watesmopapier wird mit Wasser blau."],
  ["Ein Gas wird in Kalkwasser geleitet. Das Kalkwasser bleibt klar. Was folgt daraus?", ["Im Gas ist kein Kohlenstoffdioxid nachweisbar.", "Das Gas ist Kohlenstoffdioxid.", "Das Gas ist Wasser.", "Das Kalkwasser ist kaputt."], "Nur trübes Kalkwasser zeigt Kohlenstoffdioxid an."],
- ["Die Verbrennungsgase einer Kerze trüben Kalkwasser und färben weißes Kupfersulfat blau. Was entsteht beim Verbrennen?", ["Kohlenstoffdioxid und Wasser", "nur Kohlenstoffdioxid", "nur Wasser", "Sauerstoff und Wasser"], "Trübes Kalkwasser zeigt Kohlenstoffdioxid, blaues Kupfersulfat zeigt Wasser."],
+ ["Die Verbrennungsgase einer Kerze trüben Kalkwasser und färben Watesmopapier blau. Was entsteht beim Verbrennen?", ["Kohlenstoffdioxid und Wasser", "nur Kohlenstoffdioxid", "nur Wasser", "Sauerstoff und Wasser"], "Trübes Kalkwasser zeigt Kohlenstoffdioxid, blaues Watesmopapier zeigt Wasser."],
 ],
 }
 
@@ -271,7 +282,7 @@ FOOT = """
 </body>
 </html>
 """
-VER = "13"
+VER = "14"
 
 def nav(cur):
     items = [("../index.html", "← Fächer", None), ("index.html", "🏠 Start", "start")]
