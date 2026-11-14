@@ -11,7 +11,7 @@ TOPICS = [
  dict(id="t3", file="energieformen.html", nav="3 Energie", title="Energieformen erkennen", dur="10 Minuten", desc="Wärme, Licht, Knall: Welche Energie ist das?"),
  dict(id="t4", file="exo-endo.html", nav="4 exo/endo", title="Exotherm und endotherm", dur="10 Minuten", desc="Wird Energie abgegeben oder aufgenommen?"),
  dict(id="t5", file="diagramme.html", nav="5 Pfeil-Bilder", title="Energieflussdiagramme (Pfeil-Bilder)", dur="15 Minuten", desc="Energie vorher, Vorgang, Energie nachher."),
- dict(id="t6", file="nachweise.html", nav="6 Nachweise", title="Kohlenstoffdioxid und Wasser nachweisen", dur="5 Minuten", desc="Kalkwasser und Watesmo-Papier."),
+ dict(id="t6", file="nachweise.html", nav="6 Nachweise", title="Kohlenstoffdioxid und Wasser nachweisen", dur="5 Minuten", desc="Kalkwasser und weißes Kupfersulfat."),
 ]
 EXTRA = [
  dict(id="gem", file="gemischt.html", nav="7 Großes Quiz", title="Großes Quiz: alles gemischt", dur="15 Minuten", desc="Alle Fragen aus allen Themen durcheinander."),
@@ -60,7 +60,8 @@ LESEN = {
 <div class="schema">Zucker → karamellisierter Zucker</div>
 <p class="meta">Aus dem Heft (Station 1). Über dem Pfeil steht dort: konstante Energiezufuhr.</p>
 <div class="schema">Kerzenwachs + Sauerstoff → Kohlenstoffdioxid + Wasser</div>
-<div class="schema">Holzkohle<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Kohlenstoffdioxid<sub>(g)</sub></div></div>
+<div class="schema">Kohlenstoff<sub>(s)</sub> + Sauerstoff<sub>(g)</sub> → Kohlenstoffdioxid<sub>(g)</sub></div>
+<p class="meta">So steht es im Buch. Holzkohle besteht fast nur aus Kohlenstoff.</p></div>
 <div class="box"><h3>Aus dem Heft: Herstellung von Holzkohle</h3>
 <div class="tbl"><table><tr><th>Produkt</th><th>Eigenschaften</th></tr>
 <tr><td>Holzkohle</td><td>fest, schwarz, Brennstoff</td></tr>
@@ -125,13 +126,20 @@ LESEN = {
 "t6": """
 <div class="box merke"><h3>Das musst du wissen</h3>
 <div class="tbl"><table><tr><th>Stoff</th><th>So weist man ihn nach</th><th>Das sieht man</th></tr>
-<tr><td><b>Kohlenstoffdioxid</b></td><td>Gas in Kalkwasser leiten (Kalkwasserprobe)</td><td>Kalkwasser wird <b>trüb</b></td></tr>
-<tr><td><b>Wasser</b></td><td>Watesmo-Papier oder weißes Kupfersulfat</td><td>färbt sich <b>blau</b></td></tr></table></div></div>
+<tr><td><b>Kohlenstoffdioxid</b></td><td><b>Kalkwasserprobe:</b> Kalkwasser zum Gas geben und schütteln</td><td>Es bildet sich eine <b>weiße Trübung</b></td></tr>
+<tr><td><b>Wasser</b></td><td><b>Weißes Kupfersulfat</b> (oder Wassertestpapier)</td><td>Es wird <b>blau</b></td></tr></table></div>
+<p class="meta">So steht es im Chemiebuch auf Seite 94 und Seite 146.</p></div>
+<div class="box"><h3>Merksätze aus dem Buch</h3>
+<ul><li>Die Trübung von Kalkwasser ist ein Nachweis für Kohlenstoffdioxid.</li>
+<li>Ein einfacher und schneller Nachweis für Wasser kann mit weißem Kupfersulfat durchgeführt werden.</li></ul>
+<p>Kohlenstoffdioxid ist ein farbloses, geruchloses Gas. Es ist nicht brennbar. Es entsteht zum Beispiel, wenn Holzkohle verbrennt.</p>
+<p>Auch Wasser entsteht bei Verbrennungen, zum Beispiel in der Flamme des Gasbrenners.</p></div>
 <div class="box"><h3>Ergebnisse auswerten</h3>
 <ul><li>Kalkwasser wird trüb → Kohlenstoffdioxid ist nachgewiesen.</li>
 <li>Kalkwasser bleibt klar → Es ist kein Kohlenstoffdioxid nachweisbar.</li>
-<li>Watesmo-Papier wird blau → Wasser ist nachgewiesen.</li></ul>
-<p>Beispiel: Über einer brennenden Kerze wird Kalkwasser trüb und Watesmo-Papier blau. Also entstehen beim Verbrennen Kohlenstoffdioxid und Wasser.</p></div>
+<li>Weißes Kupfersulfat wird blau → Wasser ist nachgewiesen.</li>
+<li>Kupfersulfat bleibt weiß → Es ist kein Wasser nachweisbar.</li></ul>
+<p>Beispiel: Die Verbrennungsgase einer Kerze trüben Kalkwasser und färben weißes Kupfersulfat blau. Also entstehen beim Verbrennen Kohlenstoffdioxid und Wasser.</p></div>
 """,
 }
 
@@ -180,10 +188,11 @@ CARDS = {
  ["LED-Lampe: Was ist vorher, was nachher?", "Vorher: elektrische Energie. Nachher: Wärme und Strahlungsenergie."],
 ],
 "t6": [
- ["Nachweis von Kohlenstoffdioxid", "Kalkwasserprobe: Kalkwasser wird trüb."],
- ["Nachweis von Wasser", "Watesmo-Papier oder weißes Kupfersulfat färbt sich blau."],
+ ["Nachweis von Kohlenstoffdioxid", "Kalkwasserprobe: Kalkwasser wird trüb (weiße Trübung)."],
+ ["Nachweis von Wasser", "Weißes Kupfersulfat wird blau. Es geht auch mit Wassertestpapier."],
  ["Kalkwasser bleibt klar. Was bedeutet das?", "Es ist kein Kohlenstoffdioxid nachweisbar."],
- ["Watesmo-Papier wird blau. Was ist nachgewiesen?", "Wasser."],
+ ["Weißes Kupfersulfat wird blau. Was ist nachgewiesen?", "Wasser."],
+ ["Wie heißt der Nachweis von Kohlenstoffdioxid?", "Kalkwasserprobe."],
 ],
 }
 
@@ -230,10 +239,11 @@ QUIZ = {
  ["Luminol: Warum steht rechts keine thermische Energie?", ["Weil sich die Temperatur nicht ändert.", "Weil Luminol kalt ist.", "Weil Licht keine Energie ist.", "Weil die Reaktion endotherm ist."], "Luminol leuchtet nur. Es wird nicht wärmer."],
 ],
 "t6": [
- ["Wie weist man Kohlenstoffdioxid nach?", ["Kalkwasser wird trüb.", "Watesmo-Papier wird blau.", "Weißes Kupfersulfat wird blau.", "Ein glimmender Span flammt auf."], "Das ist die Kalkwasserprobe. Der aufflammende Span weist Sauerstoff nach."],
- ["Wie weist man Wasser nach?", ["Watesmo-Papier wird blau.", "Kalkwasser wird trüb.", "Ein glimmender Span flammt auf.", "Kalkwasser bleibt klar."], "Auch weißes Kupfersulfat färbt sich mit Wasser blau."],
+ ["Wie weist man Kohlenstoffdioxid nach?", ["Kalkwasser wird trüb.", "Weißes Kupfersulfat wird blau.", "Kalkwasser wird blau.", "Ein glimmender Span flammt auf."], "Das ist die Kalkwasserprobe. Der aufflammende Span weist Sauerstoff nach."],
+ ["Wie weist man Wasser nach?", ["Weißes Kupfersulfat wird blau.", "Kalkwasser wird trüb.", "Ein glimmender Span flammt auf.", "Kalkwasser bleibt klar."], "Auch Wassertestpapier zeigt Wasser an."],
+ ["Welche Farbe hat Kupfersulfat, bevor Wasser dazukommt?", ["weiß", "blau", "schwarz", "gelb"], "Weißes Kupfersulfat wird bei Berührung mit Wasser blau."],
  ["Ein Gas wird in Kalkwasser geleitet. Das Kalkwasser bleibt klar. Was folgt daraus?", ["Im Gas ist kein Kohlenstoffdioxid nachweisbar.", "Das Gas ist Kohlenstoffdioxid.", "Das Gas ist Wasser.", "Das Kalkwasser ist kaputt."], "Nur trübes Kalkwasser zeigt Kohlenstoffdioxid an."],
- ["Über einer Kerze wird Kalkwasser trüb und Watesmo-Papier blau. Was entsteht beim Verbrennen?", ["Kohlenstoffdioxid und Wasser", "nur Kohlenstoffdioxid", "nur Wasser", "Sauerstoff und Wasser"], "Trübes Kalkwasser zeigt Kohlenstoffdioxid, blaues Watesmo-Papier zeigt Wasser."],
+ ["Die Verbrennungsgase einer Kerze trüben Kalkwasser und färben weißes Kupfersulfat blau. Was entsteht beim Verbrennen?", ["Kohlenstoffdioxid und Wasser", "nur Kohlenstoffdioxid", "nur Wasser", "Sauerstoff und Wasser"], "Trübes Kalkwasser zeigt Kohlenstoffdioxid, blaues Kupfersulfat zeigt Wasser."],
 ],
 }
 
@@ -261,7 +271,7 @@ FOOT = """
 </body>
 </html>
 """
-VER = "12"
+VER = "13"
 
 def nav(cur):
     items = [("../index.html", "← Fächer", None), ("index.html", "🏠 Start", "start")]
