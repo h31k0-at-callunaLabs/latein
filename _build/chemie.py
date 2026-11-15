@@ -282,7 +282,7 @@ FOOT = """
 </body>
 </html>
 """
-VER = "15"
+VER = "16"
 
 def nav(cur):
     items = [("../index.html", "← Fächer", None), ("index.html", "🏠 Start", "start")]
