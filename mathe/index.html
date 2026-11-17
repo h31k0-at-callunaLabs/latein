@@ -375,7 +375,9 @@ const TAB=[ // [xs, ys, hx, hy, src]
  [['1','2','3','4','5'],['2500','2000','1500','1000','500'],'Zeit (Tage)','Fläche (m²)','Arbeitsheft Nr. 20 b'],
  [['40','38','32','35'],['60,8','57,76','49,28','53,2'],'Tankmenge (l)','Kosten (€)','Arbeitsheft Nr. 25 a'],
  [['80','25','48','32','125'],['30','96','50','75','20'],'Länge (m)','Breite (m)','Arbeitsheft Nr. 27'],
- [['20','10','5','25'],['5','10','20','4'],'Helfer','Zeit (Tage)','Arbeitsheft Nr. 20 a']
+ [['20','10','5','25'],['5','10','20','4'],'Helfer','Zeit (Tage)','Arbeitsheft Nr. 20 a'],
+ [['240','180','150','330'],['655,2','491,4','409,5','900,9'],'Stückzahl','Preis (€)','Buch S. 42 Nr. 4 (4)'],
+ [['48','35','31','25'],['27,5','35,72','43,1','52,8'],'Personen','Anteil pro Person (€)','Buch S. 46 Nr. 7 c']
 ];
 const GRAPHS=[['line0','p','Gerade Linie, die bei 0 anfängt → proportional.'],['hyper','a','Kurve, die immer flacher wird und die Achsen nicht berührt → antiproportional.'],['lineOff','k','Gerade Linie, aber sie fängt nicht bei 0 an → keins von beiden.'],['decLine','k','Die Linie fällt gerade nach unten und trifft die Achse. Das ist keine Hyperbel → keins von beiden.'],['curveUp','k','Steigt, ist aber keine gerade Linie → keins von beiden.']];
 
@@ -726,8 +728,8 @@ function pruefCard(P,uid){
   }
   return card;
 }
-const PBUCH=[0,1,2,3,4,5,6,7,11,9,8,12].map(i=>TAB[i]);
-const PNOTE={'Buch S. 46 Nr. 7 a':'G = 2052 m² ist die Fläche des Feldes.','Buch S. 46 Nr. 7 b':'G = 1344 sind die „Personentage“: So viel Arbeit muss insgesamt gemacht werden.','Buch S. 49 Nr. 2 a':'p = 25 ist der Preis für 1 m³.','Buch S. 49 Nr. 2 c':'G = 240 Maschinenstunden ist die ganze Arbeit.','Buch S. 42 Nr. 4 (1)':'p = 4 ist der Preis für 1 kg.'};
+const PBUCH=[0,1,2,13,3,4,14,5,6,7,11,9,8,12].map(i=>TAB[i]);
+const PNOTE={'Buch S. 46 Nr. 7 a':'G = 2052 m² ist die Fläche des Feldes.','Buch S. 46 Nr. 7 b':'G = 1344 sind die „Personentage“: So viel Arbeit muss insgesamt gemacht werden.','Buch S. 49 Nr. 2 a':'p = 25 ist der Preis für 1 m³.','Buch S. 49 Nr. 2 c':'G = 240 Maschinenstunden ist die ganze Arbeit.','Buch S. 42 Nr. 4 (1)':'p = 4 ist der Preis für 1 kg.','Buch S. 42 Nr. 4 (4)':'p = 2,73 € ist der Preis für 1 Stück.'};
 let pMode='neu',pCount=0;
 document.querySelectorAll('#pSub button').forEach(b=>b.onclick=()=>{pMode=b.dataset.m;document.querySelectorAll('#pSub button').forEach(x=>x.classList.toggle('on',x===b));pRender();});
 function pRender(){
@@ -862,15 +864,24 @@ const LS=[
    <p><b>Antwortsatz:</b> Jedes Kind bekommt 2 Gummibärchen.</p>`,
    ask:{q:'2 Kugeln Eis kosten 3 €. Was kosten 5 Kugeln? (in €)',a:'7,5'}},
  {h:'Rechnen ohne Taschenrechner',b:()=>`<p>Im Test hast du keinen Taschenrechner. Diese Tricks helfen:</p>
-   <div class="boxk"><b>Durch eine Kommazahl teilen:</b> Schiebe bei <b>beiden</b> Zahlen das Komma gleich weit nach rechts.<br>
-   16 : 0,8 = 160 : 8 = <b>20</b><br>3,6 : 0,4 = 36 : 4 = <b>9</b><br>36 : 0,36 = 3600 : 36 = <b>100</b></div>
+   <div class="boxk"><b>Durch eine Kommazahl teilen – in 3 Schritten:</b><br>
+   Beispiel: <b>16 : 0,8</b><br>
+   ① Schau auf die Zahl <b>hinter</b> dem „:“. 0,8 hat <b>1 Stelle</b> nach dem Komma.<br>
+   ② Schiebe bei <b>beiden</b> Zahlen das Komma um 1 Stelle nach rechts (also beide mal 10):<br>
+   &nbsp;&nbsp;&nbsp;16 → 160 &nbsp;und&nbsp; 0,8 → 8<br>
+   ③ Jetzt ohne Komma rechnen: 160 : 8 = <b>20</b><br>
+   <span class="small">Warum darf man das? Wenn beide Zahlen gleich viel größer werden, bleibt das Ergebnis gleich. Probe: 20 · 0,8 = 16 ✔ und 20 · 8 = 160 ✔. Beide Rechnungen haben das Ergebnis 20.</span><br><br>
+   Mehr Beispiele:<br>
+   3,6 : 0,4 → 36 : 4 = <b>9</b> (1 Stelle)<br>
+   3 : 0,25 → 300 : 25 = <b>12</b> (2 Stellen, also 2-mal schieben)<br>
+   36 : 0,36 → 3600 : 36 = <b>100</b> (2 Stellen)</div>
    <div class="boxk"><b>Abkürzungen:</b><br>
    : 0,5 → mal 2 &nbsp;(10 : 0,5 = 20)<br>
    : 0,1 → mal 10 &nbsp;(36 : 0,1 = 360)<br>
    : 0,25 oder : 1/4 → mal 4 &nbsp;(8 : 0,25 = 32)<br>
    · 0,5 → halbieren &nbsp;(16 · 0,5 = 8)</div>
    <div class="boxk"><b>Mal-Trick zum Prüfen:</b> Du glaubst, p = 3? Dann muss bei jedem Paar x · 3 = y sein.<br>Stimmt das bei einer Zeile nicht, ist es nicht proportional.</div>`,
-   ask:{q:'16 : 0,8 = ?',a:'20'}},
+   asks:[{q:'16 : 0,8 = ?',a:'20'},{q:'4,8 : 0,6 = ?',a:'8'},{q:'12 : 0,5 = ?',a:'24'},{q:'2 : 0,25 = ?',a:'8'},{q:'7,2 : 0,9 = ?',a:'8'},{q:'45 : 1,5 = ?',a:'30'}]},
  {h:'Typische Fallen',b:()=>`<ul>
    <li><b>Durch 0,5 teilen heißt verdoppeln:</b> 10 : 0,5 = 20 (nicht 2!)</li>
    <li><b>Durch eine Kommazahl teilen:</b> Schiebe bei beiden Zahlen das Komma gleich weit. 36 : 0,36 = 3600 : 36 = 100.</li>
@@ -897,6 +908,8 @@ function lShow(){
   const s=LS[lI];$('#lStep').textContent='Schritt '+(lI+1)+' von '+LS.length;$('#lBar').style.width=(100*(lI+1)/LS.length)+'%';
   const box=$('#lBox');box.innerHTML='<h2>'+s.h+'</h2>'+s.b();
   $('#lPrev').disabled=lI===0;$('#lNext').textContent=lI===LS.length-1?'Zum Üben →':'Weiter →';
+  if(s.asks){s.asks.forEach(a=>{const p=document.createElement('div');p.className='fb info';p.innerHTML='<b>Üben:</b> '+esc(a.q)+'<br>';
+    p.appendChild(numAsk(parse(a.a),ok=>{p.insertAdjacentHTML('beforeend',ok?'<div class="fb ok">Richtig! 👍</div>':'');}));box.appendChild(p);});}
   if(s.ask){const p=document.createElement('div');p.className='fb info';p.innerHTML='<b>Kurze Frage:</b> '+esc(s.ask.q)+'<br>';
     p.appendChild(numAsk(parse(s.ask.a),ok=>{p.insertAdjacentHTML('beforeend',ok?'<div class="fb ok">Richtig! 👍</div>':'');}));box.appendChild(p);}
   if(s.choose){const fb=document.createElement('div');
