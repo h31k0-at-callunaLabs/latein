@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mathe: Zuordnungen</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mathe">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1f1b2e; --muted:#5d5873; --bg:#f6f4fb; --card:#ffffff; --line:#dcd7ea;
+  --lila:#4E3D96; --lila2:#ece8f8;
+  --p:#1d6fb8; --p2:#e3f0fb;      /* proportional = blau */
+  --a:#c2410c; --a2:#fdeee4;      /* antiproportional = orange */
+  --k:#5d5873; --k2:#eeedf2;      /* keins = grau */
+  --ok:#15803d; --ok2:#e3f6e9; --no:#b91c1c; --no2:#fde8e8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",-apple-system,system-ui,sans-serif;font-size:19px;line-height:1.45;-webkit-text-size-adjust:100%}
+header{background:var(--lila);color:#fff;padding:14px 18px 0}
+header h1{margin:0 0 10px;font-size:1.35rem}
+nav{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+nav button{flex:0 0 auto;border:0;border-radius:12px 12px 0 0;padding:11px 16px;font:inherit;font-size:1rem;background:rgba(255,255,255,.18);color:#fff;cursor:pointer}
+nav button.on{background:var(--bg);color:var(--lila);font-weight:700}
+main{max-width:860px;margin:0 auto;padding:18px 14px 90px}
+section{display:none} section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 16px}
+.card h2{margin:0 0 8px;font-size:1.2rem}
+.card h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.step{display:inline-block;background:var(--lila);color:#fff;border-radius:99px;min-width:30px;height:30px;line-height:30px;text-align:center;font-weight:700;margin-right:8px}
+.tagp{color:var(--p);font-weight:700}.taga{color:var(--a);font-weight:700}.tagk{color:var(--k);font-weight:700}
+.boxp{background:var(--p2);border-left:6px solid var(--p);border-radius:10px;padding:10px 14px;margin:10px 0}
+.boxa{background:var(--a2);border-left:6px solid var(--a);border-radius:10px;padding:10px 14px;margin:10px 0}
+.boxk{background:var(--k2);border-left:6px solid var(--k);border-radius:10px;padding:10px 14px;margin:10px 0}
+.merk{background:#fff8d6;border:2px solid #e8c94a;border-radius:12px;padding:10px 14px;margin:10px 0}
+.big{font-size:1.25rem;font-weight:700}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.row>*{flex:1 1 300px}
+button.btn{font:inherit;border:0;border-radius:12px;padding:12px 18px;background:var(--lila);color:#fff;font-weight:700;cursor:pointer;margin:4px 6px 4px 0;min-height:48px}
+button.btn.light{background:var(--lila2);color:var(--lila)}
+button.btn:disabled{opacity:.45}
+.choices{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.choices button{flex:1 1 180px;font:inherit;font-weight:700;border:3px solid transparent;border-radius:14px;padding:14px 10px;min-height:58px;cursor:pointer}
+.cp{background:var(--p2);color:var(--p)} .ca{background:var(--a2);color:var(--a)} .ck{background:var(--k2);color:var(--k)}
+.choices button.sel{border-color:var(--ink)}
+.choices button.right{background:var(--ok);color:#fff}
+.choices button.wrong{background:var(--no);color:#fff}
+.fb{border-radius:12px;padding:12px 14px;margin:10px 0}
+.fb.ok{background:var(--ok2);border:2px solid var(--ok)} .fb.no{background:var(--no2);border:2px solid var(--no)}
+.fb.info{background:var(--lila2);border:2px solid var(--lila)}
+table.zt{border-collapse:collapse;margin:8px 0;background:#fff}
+table.zt th,table.zt td{border:2px solid #b9b3cf;padding:6px 10px;text-align:center;min-width:72px}
+table.zt th{background:var(--lila2);font-size:.9rem;font-weight:700}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* Pfeil-Tabelle */
+.pt{display:grid;grid-template-columns:auto minmax(90px,auto) minmax(90px,auto) auto;align-items:center;justify-content:start;margin:10px 0}
+.pt .h{font-weight:700;font-size:.9rem;background:var(--lila2);padding:6px 10px;border:2px solid #b9b3cf;text-align:center}
+.pt .c{padding:8px 10px;border:2px solid #b9b3cf;border-top:0;text-align:center;background:#fff;font-size:1.1rem;min-height:46px;display:flex;align-items:center;justify-content:center}
+.pt .op{font-weight:700;padding:0 8px;font-size:1.05rem;white-space:nowrap;transform:translateY(23px)}
+.pt .op.l{text-align:right}.pt .op.r{text-align:left}
+.pt .op.blue{color:var(--p)} .pt .op.orange{color:var(--a)} .pt .op.gray{color:var(--k)}
+input.num{font:inherit;font-size:1.1rem;width:110px;padding:8px;border:2px solid #a9a2c4;border-radius:10px;text-align:center;background:#fffef7}
+input.num.ok{border-color:var(--ok);background:var(--ok2)} input.num.no{border-color:var(--no);background:var(--no2)}
+td.ok{background:var(--ok2)} td.no{background:var(--no2)}
+.small{font-size:.9rem;color:var(--muted)}
+.sol{font-size:.85rem;color:var(--no);font-weight:700;display:block}
+.progress{height:10px;background:var(--lila2);border-radius:99px;overflow:hidden;margin:6px 0 14px}
+.progress>div{height:100%;background:var(--lila);width:0;transition:width .3s}
+.qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.95rem}
+.sit{font-size:1.2rem;font-weight:700;text-align:center;padding:16px 8px;background:var(--lila2);border-radius:14px}
+.sit .arrow{color:var(--lila);margin:0 10px}
+.tabsub{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.tabsub button{font:inherit;border:2px solid var(--lila);background:#fff;color:var(--lila);border-radius:99px;padding:8px 14px;font-weight:700;cursor:pointer}
+.tabsub button.on{background:var(--lila);color:#fff}
+.typesel{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.typesel button{font:inherit;font-weight:700;border:3px solid transparent;border-radius:12px;padding:10px 12px;cursor:pointer;min-height:48px}
+.typesel button.sel{border-color:var(--ink)}
+.rechen{font-family:ui-monospace,Menlo,monospace;font-size:.95rem;background:#faf9fd;border-radius:10px;padding:8px 12px;margin:6px 0;white-space:pre-wrap}
+ol.flow{padding-left:22px} ol.flow li{margin:6px 0}
+.back{position:fixed;right:14px;bottom:14px;background:var(--lila);color:#fff;text-decoration:none;padding:12px 16px;border-radius:99px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.2);display:none}
+svg text{font-family:"Atkinson Hyperlegible",sans-serif}
+.score{font-size:2rem;font-weight:700;color:var(--lila);text-align:center;margin:8px 0}
+.hint{color:var(--muted);font-size:.95rem;margin:4px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Mathe: Zuordnungen</h1>
+  <nav id="nav">
+    <button data-s="verstehen" class="on">1 · Verstehen</button>
+    <button data-s="pruefen">2 · Prüfen</button>
+    <button data-s="tabellen">3 · Ergänzen</button>
+    <button data-s="test">4 · Probetest</button>
+    <button data-s="erkennen">Extra: Quiz</button>
+    <button data-s="dreisatz">Extra: Dreisatz</button>
+  </nav>
+</header>
+<main>
+
+<!-- ============ 1 VERSTEHEN ============ -->
+<section id="verstehen" class="on">
+  <div class="card" id="lernCard">
+    <div class="qhead"><span id="lStep"></span><span></span></div>
+    <div class="progress"><div id="lBar"></div></div>
+    <div id="lBox"></div>
+    <div style="margin-top:14px">
+      <button class="btn light" id="lPrev">← Zurück</button>
+      <button class="btn" id="lNext">Weiter →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRÜFEN ============ -->
+<section id="pruefen">
+  <div class="card">
+    <h2>Prüfen: proportional, antiproportional oder keins?</h2>
+    <p class="lead">So wie Buch S. 42 Nr. 4, S. 46 Nr. 7 und S. 49 Nr. 2. Du rechnest in jeder Zeile, entscheidest und schreibst p oder G auf.</p>
+    <div class="tabsub" id="pSub"><button data-m="neu" class="on">Neue Aufgaben</button><button data-m="buch">Aus dem Buch</button></div>
+  </div>
+  <div id="pBox"></div>
+</section>
+
+<!-- ============ 2 ERKENNEN ============ -->
+<section id="erkennen">
+  <div class="card">
+    <h2>Proportional, antiproportional oder keins?</h2>
+    <p class="lead">Tippe die richtige Antwort. Was du falsch hast, kommt später noch einmal dran.</p>
+    <div class="qhead"><span id="eCount"></span><span id="eScore"></span></div>
+    <div class="progress"><div id="eBar"></div></div>
+    <div id="eBox"></div>
+  </div>
+</section>
+
+<!-- ============ 3 DREISATZ ============ -->
+<section id="dreisatz">
+  <div class="card">
+    <h2>Dreisatz Schritt für Schritt</h2>
+    <p class="lead">Du rechnest erst auf 1 runter, dann auf die gesuchte Zahl hoch. Die App hilft dir bei jedem Schritt.</p>
+    <div class="qhead"><span id="dCount"></span><span></span></div>
+    <div id="dBox"></div>
+  </div>
+</section>
+
+<!-- ============ 4 TABELLEN ============ -->
+<section id="tabellen">
+  <div class="tabsub" id="tSub">
+    <button data-t="neu" class="on">Neue Aufgaben</button>
+    <button data-t="ab28">AH Nr. 28</button>
+    <button data-t="ab29">AH Nr. 29</button>
+    <button data-t="ab30">AH Nr. 30</button>
+    <button data-t="buch">Buch</button>
+  </div>
+  <p class="hint">Kommazahlen mit Komma, Brüche mit Schrägstrich, z. B. <b>1/6</b>.</p>
+  <div id="tBox"></div>
+</section>
+
+<!-- ============ 5 PROBETEST ============ -->
+<section id="test">
+  <div id="testSheet"></div>
+  <div class="card" id="testCard">
+    <h2>Probetest – wie morgen</h2>
+    <p class="lead">3 Aufgaben, 15 Minuten, ohne Taschenrechner. Rechne im Heft und tippe die Ergebnisse ein. Erst ganz am Ende drückst du auf „Abgeben“.</p>
+    <button class="btn" id="testStart">Test starten</button>
+  </div>
+</section>
+
+</main>
+<a class="back" id="back" href="../index.html">← Alle Fächer</a>
+
+<script id="logic">
+"use strict";
+/* ---------- Bruchrechnung (exakt) ---------- */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a||1;}
+function R(n,d){if(d===undefined)d=1;if(d<0){n=-n;d=-d;}const g=gcd(n,d);return{n:n/g,d:d/g};}
+function mul(a,b){return R(a.n*b.n,a.d*b.d);}
+function div(a,b){return R(a.n*b.d,a.d*b.n);}
+function eq(a,b){return a.n*b.d===b.n*a.d;}
+function val(a){return a.n/a.d;}
+function decR(s){ // "12,5" -> R
+  s=s.replace('.',',');const neg=s[0]==='-';if(neg)s=s.slice(1);
+  let [i,f]=s.split(',');i=i||'0';f=f||'';
+  const d=Math.pow(10,f.length);const n=parseInt(i,10)*d+(f?parseInt(f,10):0);
+  return R(neg?-n:n,d);
+}
+function parse(str){
+  if(str===null||str===undefined)return null;
+  let s=String(str).trim().replace(/\s+/g,' ').replace(/[€]/g,'').trim();
+  s=s.replace(/:/g,'/');
+  let m;
+  if((m=s.match(/^(\d+) (\d+)\/(\d+)$/))){const w=+m[1],a=+m[2],b=+m[3];if(!b)return null;return R(w*b+a,b);}
+  if((m=s.match(/^(-?\d*[.,]?\d+)\/(\d*[.,]?\d+)$/))){const a=decR(m[1]),b=decR(m[2]);if(!b.n)return null;return div(a,b);}
+  if(/^-?(\d+([.,]\d*)?|[.,]\d+)$/.test(s)){if(/[.,]$/.test(s))s=s.slice(0,-1);return decR(s);}
+  return null;
+}
+function only25(d){while(d%2===0)d/=2;while(d%5===0)d/=5;return d===1;}
+function decStr(r){ // exakt abbrechend
+  let d=r.d,k=0;while(Math.pow(10,k)%d!==0)k++;
+  const n=r.n*(Math.pow(10,k)/d);const neg=n<0;let s=String(Math.abs(n));
+  if(k>0){while(s.length<=k)s='0'+s;s=s.slice(0,s.length-k)+','+s.slice(s.length-k);}
+  return (neg?'-':'')+s;
+}
+function periodic(r){ // {pre:"1", digitsPre:"", period:"3"}
+  const neg=r.n<0;let n=Math.abs(r.n),d=r.d;const ip=Math.floor(n/d);let rem=n%d;
+  const seen={};let digits='';let i=0;
+  while(rem!==0&&seen[rem]===undefined){seen[rem]=i;rem*=10;digits+=Math.floor(rem/d);rem%=d;i++;}
+  if(rem===0)return{int:(neg?'-':'')+ip,pre:digits,per:''};
+  const st=seen[rem];return{int:(neg?'-':'')+ip,pre:digits.slice(0,st),per:digits.slice(st)};
+}
+function fmt(r){
+  if(only25(r.d))return decStr(r);
+  const p=periodic(r);
+  return p.int+','+p.pre+p.per.split('').map(c=>c+'̅').join('');
+}
+function fmtFull(r){ // mit Bruch, wenn periodisch
+  if(only25(r.d))return decStr(r);
+  return fmt(r)+' (= '+r.n+'/'+r.d+')';
+}
+function approx(r,dig){ // gerundet, für Erklärungen
+  if(only25(r.d)){const s=decStr(r);const k=(s.split(',')[1]||'').length;if(k<=dig)return s;}
+  return '≈ '+(Math.round(val(r)*Math.pow(10,dig))/Math.pow(10,dig)).toString().replace('.',',');
+}
+/* Antwort prüfen: exakt, oder bei Periode gerundet/abgeschnitten mit genug Stellen */
+function check(input,correct){
+  const u=parse(input);if(!u)return{ok:false,bad:true};
+  if(eq(u,correct))return{ok:true};
+  if(!only25(correct.d)){
+    const s=String(input).trim().replace('.',',');
+    const m=s.match(/^-?\d+,(\d+)$/);
+    if(m){const L=m[1].length;const p=periodic(correct);
+      if(L>=p.pre.length+1&&L<=10){
+        const v=val(correct),f=Math.pow(10,L);
+        const tr=Math.trunc(v*f)/f,ro=Math.round(v*f)/f,uv=val(u);
+        if(Math.abs(uv-tr)<1e-9||Math.abs(uv-ro)<1e-9)return{ok:true,note:'Genau ist es '+fmtFull(correct)+'. Im Heft schreibst du die Periode mit Strich.'};
+      }}
+  }
+  return{ok:false};
+}
+/* ---------- Tabellen-Logik ---------- */
+function solveTable(xs,ys,type){ // xs/ys: Strings oder null. type 'p'|'a'|null
+  const X=xs.map(parse),Y=ys.map(parse);
+  const pairs=[];X.forEach((x,i)=>{if(x&&Y[i])pairs.push([x,Y[i]]);});
+  const q=pairs.map(([x,y])=>div(y,x)),pr=pairs.map(([x,y])=>mul(x,y));
+  const allEq=a=>a.every(v=>eq(v,a[0]));
+  let t=type;
+  if(!t){if(pairs.length>=2&&allEq(q))t='p';else if(pairs.length>=2&&allEq(pr))t='a';else t='k';}
+  if(t==='k')return{type:'k'};
+  const k=t==='p'?q[0]:pr[0];
+  const res=X.map((x,i)=>{
+    if(x&&!Y[i])return{side:'y',v:t==='p'?mul(k,x):div(k,x),calc:t==='p'?(fmt(x)+' · '+fmt(k)):(fmt(k)+' : '+fmt(x))};
+    if(!x&&Y[i])return{side:'x',v:t==='p'?div(Y[i],k):div(k,Y[i]),calc:t==='p'?(fmt(Y[i])+' : '+fmt(k)):(fmt(k)+' : '+fmt(Y[i]))};
+    return null;});
+  return{type:t,k:k,res:res};
+}
+function classify(xs,ys){ // für Erkennen-Tabellen (alle Werte gegeben)
+  const X=xs.map(parse),Y=ys.map(parse);
+  const q=X.map((x,i)=>div(Y[i],x)),pr=X.map((x,i)=>mul(x,Y[i]));
+  const allEq=a=>a.every(v=>eq(v,a[0]));
+  if(allEq(q))return'p';if(allEq(pr))return'a';return'k';
+}
+/* ---------- Zufall ---------- */
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function nice(r){ // höchstens 2 Nachkommastellen und nicht riesig
+  if(!only25(r.d))return false;const s=decStr(r);const k=(s.split(',')[1]||'').length;return k<=2&&val(r)>0&&val(r)<10000;
+}
+const PK=['2','3','4','5','6','8','10','12','15','20','25','0,5','1,5','2,5'];
+const PX=['1','2','3','4','5','6','7','8','9','10','12','15','20','0,5','1,5','2,5','0,2','0,1'];
+const AG=['12','16','18','20','24','30','36','40','48','60','72','100','120'];
+const AX=['1','2','3','4','5','6','8','10','12','15','16','20','24','25','30','40','0,5','0,2','0,1','0,4','0,8','1,5','2,5'];
+function genPairs(type,count){
+  for(let tries=0;tries<500;tries++){
+    const k=parse(type==='p'?rnd(PK):rnd(AG));
+    const pool=shuffle(type==='p'?PX:AX);const out=[];
+    for(const xs of pool){const x=parse(xs);const y=type==='p'?mul(k,x):div(k,x);
+      if(nice(y)&&!out.some(o=>eq(o[1],y)))out.push([x,y]);if(out.length===count)break;}
+    if(out.length===count)return{k:k,pairs:out};
+  }
+  throw new Error('gen');
+}
+function genKeins(){
+  const kind=rnd(['plus','minus','ausreisser','ausreisserA']);
+  let xs=shuffle(['1','2','3','4','5','6','8','10']).slice(0,4).map(parse).sort((a,b)=>val(a)-val(b));
+  let ys;
+  if(kind==='plus'){const c=rnd([2,3,5,6,10,20]);ys=xs.map(x=>R(x.n+c*x.d,x.d));}
+  else if(kind==='minus'){const m=rnd([10,20,50,100,500]);const c=m*(val(xs[3])+rnd([1,2,4]));ys=xs.map(x=>R(c*x.d-m*x.n,x.d));}
+  else if(kind==='ausreisser'){const g=genPairs('p',4);xs=g.pairs.map(p=>p[0]);ys=g.pairs.map(p=>p[1]);const i=rnd([1,2,3]);ys[i]=R(ys[i].n+ys[i].d,ys[i].d);}
+  else{const g=genPairs('a',4);xs=g.pairs.map(p=>p[0]);ys=g.pairs.map(p=>p[1]);const i=rnd([1,2,3]);ys[i]=R(ys[i].n+ys[i].d,ys[i].d);}
+  return{xs:xs.map(fmt),ys:ys.map(fmt),kind:kind};
+}
+function genPruef(type){ // 4 Zeilen, alle Quotienten/Produkte "schön"
+  type=type||rnd(['p','a','k']);
+  if(type!=='k'){const g=genPairs(type,4);return{xs:g.pairs.map(p=>fmt(p[0])),ys:g.pairs.map(p=>fmt(p[1])),ans:type};}
+  const kind=rnd(['pOut','aOut','minus']);let xs,ys;
+  if(kind==='pOut'){const g=genPairs('p',4);xs=g.pairs.map(p=>p[0]);ys=g.pairs.map(p=>p[1]);const i=rnd([1,2,3]);ys[i]=R(2*ys[i].n*xs[i].d+xs[i].n*ys[i].d,2*ys[i].d*xs[i].d);}
+  else if(kind==='aOut'){const g=genPairs('a',4);xs=g.pairs.map(p=>p[0]);ys=g.pairs.map(p=>p[1]);const i=rnd([1,2,3]);ys[i]=R(ys[i].n+ys[i].d,ys[i].d);}
+  else{xs=shuffle(['1','2','3','4','5','6']).slice(0,4).map(parse);const m=rnd([10,20,50,100]);const c=m*rnd([7,8,10]);ys=xs.map(x=>R(c*x.d-m*x.n,x.d));}
+  const out={xs:xs.map(fmt),ys:ys.map(fmt),ans:'k',kind:kind};
+  // nur behalten, wenn die Richtung eindeutig ist und alle Zeilenwerte ohne Taschenrechner gehen
+  const tr=trend(out.xs,out.ys);const want=kind==='pOut'?'up':'down';
+  const op=want==='up'?'q':'m';
+  const okNice=xs.every((x,i)=>niceVal(op==='q'?div(ys[i],x):mul(x,ys[i])));
+  if(tr!==want||!okNice||classify(out.xs,out.ys)!=='k')return genPruef('k');
+  return out;
+}
+function niceVal(r){return only25(r.d)&&((decStr(r).split(',')[1]||'').length<=2);}
+function trend(xs,ys){const X=xs.map(parse),Y=ys.map(parse);const idx=X.map((x,i)=>i).sort((a,b)=>val(X[a])-val(X[b]));
+  let up=true,down=true;for(let j=1;j<idx.length;j++){const a=val(Y[idx[j-1]]),b=val(Y[idx[j]]);if(!(b>a))up=false;if(!(b<a))down=false;}
+  return up?'up':down?'down':'mixed';}
+/* ---------- Daten aus Buch & Arbeitsheft ---------- */
+const AB={
+ ab28:[
+  {t:'28 a)',lay:'h',xs:['5','0,5',null,'1/4'],ys:[null,'16','0,8','32']},
+  {t:'28 b)',lay:'h',xs:['17','34','0,2',null],ys:['59,5',null,'0,7','3,5']},
+  {t:'28 c)',lay:'h',xs:['100','140','8,5',null],ys:['2,5','3,5',null,'180']},
+  {t:'28 d)',lay:'h',xs:['10','2','25',null],ys:[null,'6,25','0,5','100']}],
+ ab29:[
+  {t:'29 a)',type:'p',xs:['1','4','1,5',null,null,'51'],ys:['3',null,null,'36','99',null]},
+  {t:'29 b)',type:'p',xs:['0,1','0,8','11','8',null,null],ys:[null,'16',null,null,'20','50']},
+  {t:'29 c)',type:'p',xs:['0,2','0,9','18',null,'101',null],ys:['1/5',null,null,'105',null,'63']},
+  {t:'29 d)',type:'p',xs:['1/3','2/5','0,3','40',null,'0,6'],ys:['2',null,null,null,'4,8',null]},
+  {t:'29 e)',type:'p',xs:['3','5','0,3','20','1/5',null],ys:['360',null,null,null,null,'1800']}],
+ ab30:[
+  {t:'30 a)',type:'a',xs:['1','2',null,'10',null,'4'],ys:['4',null,'16',null,'1/2',null]},
+  {t:'30 b)',type:'a',xs:['1/2','4',null,'2,5',null,'3/4'],ys:['2',null,'8',null,'0,1',null]},
+  {t:'30 c)',type:'a',xs:['4','0,2','5','20',null,'0,1'],ys:[null,null,'8',null,'40',null]},
+  {t:'30 d)',type:'a',xs:['2',null,'0,9','12',null,null],ys:[null,'0,36',null,'3','1,8','0,1']},
+  {t:'30 e)',type:'a',xs:[null,'0,1','5/3','2',null,'60'],ys:['1',null,null,'5','0,5',null]}],
+ buch:[
+  {t:'Buch S. 42 Nr. 6 – Birnen (1,98 € pro kg)',type:'p',hx:'Masse (kg)',hy:'Preis (€)',xs:['1','2','2,5','7','0,5','1,25'],ys:['1,98',null,null,null,null,null],note:'Beim Bezahlen rundet man auf ganze Cent: 1,25 kg kosten genau 2,475 €, also 2,48 €.'},
+  {t:'Buch S. 42 Nr. 8 – Rundeisen',type:'p',hx:'Länge (m)',hy:'Gewicht (kg)',xs:['7','5','2','8','13','17'],ys:['88,2','63','25,2',null,null,null]},
+  {t:'Buch S. 46 Nr. 8 – Lotto: 720 € werden geteilt',type:'a',hx:'Mitglieder',hy:'Gewinn pro Mitglied (€)',xs:['1','12','9','8','6'],ys:['720',null,null,null,null]},
+  {t:'Buch S. 46 Nr. 11 – 60 Mannjahre',type:'a',hx:'Jahre',hy:'Programmierer',xs:['1','3','2','1/2','1/4','1,5'],ys:['60',null,null,null,null,null]},
+  {t:'Arbeitsheft Nr. 19 – Kanarienvögel',type:'a',hx:'Anzahl Vögel',hy:'Zeit (Tage)',xs:['6','12','4','8','2','10'],ys:['12',null,null,null,null,null]},
+  {t:'Arbeitsheft Nr. 26 – Proportionalitätsfaktor',type:null,special:'ah26'}]
+};
+const AH26=[ // x, y, p  (null = gesucht)
+ ['8','32',null],['32','144',null],['20','90',null],['225','50',null],['8',null,'1,6'],['8',null,'3/4'],[null,'42','3'],[null,'30','2,5']];
+
+const SIT=[ // [x, y, ans, why]
+ ['Zahl der Arbeitskräfte','Dauer für den Bau eines Hauses','a','Doppelt so viele Arbeiter brauchen halb so lange.'],
+ ['Tageszeit','Außentemperatur','k','Die Temperatur steigt und fällt, das folgt keiner Regel.'],
+ ['Wasserhöhe im Aquarium','Füllmenge','p','Doppelt so hoch → doppelt so viel Wasser (bei einem Quader-Aquarium).'],
+ ['Fahrstrecke eines Autos','Benzinverbrauch','p','Doppelte Strecke → doppelter Verbrauch. Je mehr, desto mehr!'],
+ ['Körpergröße','Alter einer Person','k','Man wächst nicht gleichmäßig und hört irgendwann auf zu wachsen.'],
+ ['Anzahl der Eier','Kochzeit','k','1 Ei oder 4 Eier: beide brauchen gleich lange.'],
+ ['Zahl der Schneepflüge','Zeit zum Räumen der Straße','a','Doppelt so viele Schneepflüge → halb so viel Zeit.'],
+ ['Buttermenge','Menge an Fett','p','Doppelt so viel Butter → doppelt so viel Fett.'],
+ ['Länge einer Taxifahrt','Preis der Taxifahrt','k','Es kommt eine Grundgebühr dazu. Bei 0 km zahlt man schon etwas, also ist es nicht proportional.'],
+ ['Anzahl der Musiker','Dauer eines Musikstücks','k','10 Musiker spielen das Stück nicht schneller als 5.'],
+ ['Anzahl der Hunde','Anzahl der Hundebeine','p','Jeder Hund hat 4 Beine: p = 4.'],
+ ['Anzahl der Lottospieler','Gewinn pro Person','a','Der Gewinn wird geteilt: doppelt so viele Spieler → halb so viel pro Person.'],
+ ['Anzahl der Pferde','Tage, bis der Hafer aufgebraucht ist','a','Doppelt so viele Pferde fressen den Vorrat in der halben Zeit.'],
+ ['Arbeitsstunden','Arbeitslohn','p','Doppelt so viele Stunden → doppelt so viel Lohn.'],
+ ['Lernzeit für die Mathearbeit','Note','k','Schön wär’s, aber das kann man nicht ausrechnen.'],
+ ['Liter Speiseöl','Masse in Gramm','p','Doppelt so viel Öl wiegt doppelt so viel.'],
+ ['Anzahl der Mitglieder einer Tippgemeinschaft','Gewinn pro Mitglied','a','Der Gewinn wird durch alle geteilt.'],
+ ['Länge einer Eisenstange','Gewicht der Stange','p','Doppelt so lang → doppelt so schwer.'],
+ ['Breite eines Rechtecks mit gleichem Flächeninhalt','Länge des Rechtecks','a','Länge · Breite = Fläche bleibt gleich: G = Fläche.']
+];
+const TAB=[ // [xs, ys, hx, hy, src]
+ [['1,5','4,5','0,5','2'],['6','18','2','8'],'Masse (kg)','Preis (€)','Buch S. 42 Nr. 4 (1)'],
+ [['120','30','150','270'],['180','45','235','425'],'Volumen (cm³)','Masse (g)','Buch S. 42 Nr. 4 (2)'],
+ [['6','4','9','13'],['15,6','10,4','22,5','32,5'],'Länge (m)','Zeit (s)','Buch S. 42 Nr. 4 (3)'],
+ [['54','45','30','36'],['38','45,6','68,4','57'],'Länge (m)','Breite (m)','Buch S. 46 Nr. 7 a'],
+ [['56','42','48','21'],['24','32','28','64'],'Personen','Zeit (Tage)','Buch S. 46 Nr. 7 b'],
+ [['3','5','2,5','11','4,5'],['75','125','62,5','275','112,5'],'Volumen (m³)','Preis (€)','Buch S. 49 Nr. 2 a'],
+ [['178','158','185','170','166'],['76','36','105','70','65,2'],'Länge (cm)','Preis (€)','Buch S. 49 Nr. 2 b'],
+ [['5','12','8','6','4'],['48','20','30','40','60'],'Maschinen','Arbeitszeit (h)','Buch S. 49 Nr. 2 c'],
+ [['4','6','2'],['15','10','30'],'Fahrten pro Tag','Tage','Buch S. 46 Nr. 10'],
+ [['1','2','3','4','5'],['2500','2000','1500','1000','500'],'Zeit (Tage)','Fläche (m²)','Arbeitsheft Nr. 20 b'],
+ [['40','38','32','35'],['60,8','57,76','49,28','53,2'],'Tankmenge (l)','Kosten (€)','Arbeitsheft Nr. 25 a'],
+ [['80','25','48','32','125'],['30','96','50','75','20'],'Länge (m)','Breite (m)','Arbeitsheft Nr. 27'],
+ [['20','10','5','25'],['5','10','20','4'],'Helfer','Zeit (Tage)','Arbeitsheft Nr. 20 a']
+];
+const GRAPHS=[['line0','p','Gerade Linie, die bei 0 anfängt → proportional.'],['hyper','a','Kurve, die immer flacher wird und die Achsen nicht berührt → antiproportional.'],['lineOff','k','Gerade Linie, aber sie fängt nicht bei 0 an → keins von beiden.'],['decLine','k','Die Linie fällt gerade nach unten und trifft die Achse. Das ist keine Hyperbel → keins von beiden.'],['curveUp','k','Steigt, ist aber keine gerade Linie → keins von beiden.']];
+
+/* Dreisatz: links bekannte Größe. a1→b1, gesucht zu a2 */
+const DS=[
+ {txt:'4 Maler brauchen für eine Wohnung 6 Tage. Wie lange brauchen 3 Maler?',hl:'Maler',hr:'Tage',a1:'4',b1:'6',a2:'3',t:'a',unit:'Tage',satz:'3 Maler brauchen 8 Tage.'},
+ {txt:'12 Pflanzen kosten 93,60 €. Wie viel kosten 17 Pflanzen?',hl:'Pflanzen',hr:'Preis (€)',a1:'12',b1:'93,6',a2:'17',t:'p',unit:'€',satz:'17 Pflanzen kosten 132,60 €.'},
+ {txt:'6 Schüler brauchen für die Grünanlage 4 Stunden. Wie lange brauchen 12 Schüler? (AH 23a)',hl:'Schüler',hr:'Stunden',a1:'6',b1:'4',a2:'12',t:'a',unit:'Stunden',satz:'12 Schüler brauchen 2 Stunden.'},
+ {txt:'6 Schüler brauchen 4 Stunden. Wie viele Schüler braucht man, damit es in 3 Stunden fertig ist? (AH 23a)',hl:'Stunden',hr:'Schüler',a1:'4',b1:'6',a2:'3',t:'a',unit:'Schüler',satz:'Man braucht 8 Schüler.'},
+ {txt:'Das Futter für 4 Kaninchen reicht 12 Tage. Jetzt sind es 6 Kaninchen. Wie lange reicht es? (AH 23b)',hl:'Kaninchen',hr:'Tage',a1:'4',b1:'12',a2:'6',t:'a',unit:'Tage',satz:'Das Futter reicht 8 Tage.'},
+ {txt:'120 Helfer brauchen 6 Stunden. Es kommen 144 Helfer. Wie lange brauchen sie? (AH 23c)',hl:'Helfer',hr:'Stunden',a1:'120',b1:'6',a2:'144',t:'a',unit:'Stunden',satz:'144 Helfer brauchen 5 Stunden.'},
+ {txt:'120 Helfer brauchen 6 Stunden. Wie viele Helfer schaffen es in 4 Stunden? (AH 23c)',hl:'Stunden',hr:'Helfer',a1:'6',b1:'120',a2:'4',t:'a',unit:'Helfer',satz:'Man braucht 180 Helfer.'},
+ {txt:'Ein Auto verbraucht auf 300 km 24 Liter Benzin. Wie viel verbraucht es auf 60 km? (AH 24)',hl:'Strecke (km)',hr:'Benzin (l)',a1:'300',b1:'24',a2:'60',t:'p',unit:'Liter',satz:'Auf 60 km verbraucht es 4,8 Liter.'},
+ {txt:'Frau Jatzke zahlt für 22 Schüler 88 € Eintritt. Wie viel zahlt Herr Maaß für 28 Schüler? (AH 24)',hl:'Schüler',hr:'Eintritt (€)',a1:'22',b1:'88',a2:'28',t:'p',unit:'€',satz:'Herr Maaß zahlt 112 €.'},
+ {txt:'Für 10 Katzen reicht eine Futterpackung 8 Tage. Wie lange reicht sie für 4 Katzen? (AH 24)',hl:'Katzen',hr:'Tage',a1:'10',b1:'8',a2:'4',t:'a',unit:'Tage',satz:'Für 4 Katzen reicht das Futter 20 Tage.'},
+ {txt:'5 Pumpen leeren ein Becken in 9 Stunden. Wie lange brauchen 2 Pumpen?',hl:'Pumpen',hr:'Stunden',a1:'5',b1:'9',a2:'2',t:'a',unit:'Stunden',satz:'2 Pumpen brauchen 22,5 Stunden.'},
+ {txt:'10 Programmierer brauchen 35 Arbeitstage. Wie lange brauchen 7 Programmierer?',hl:'Programmierer',hr:'Arbeitstage',a1:'10',b1:'35',a2:'7',t:'a',unit:'Arbeitstage',satz:'7 Programmierer brauchen 50 Arbeitstage.'},
+ {txt:'1,5 kg Birnen kosten 2,97 €. Wie viel kosten 2 kg? (Buch S. 42 Nr. 6)',hl:'Masse (kg)',hr:'Preis (€)',a1:'1,5',b1:'2,97',a2:'2',t:'p',unit:'€',satz:'2 kg Birnen kosten 3,96 €.'},
+ {txt:'Eine 5 m lange Eisenstange wiegt 63 kg. Wie schwer ist eine 8 m lange Stange? (Buch S. 42 Nr. 8)',hl:'Länge (m)',hr:'Gewicht (kg)',a1:'5',b1:'63',a2:'8',t:'p',unit:'kg',satz:'Die 8 m lange Stange wiegt 100,8 kg.'},
+ {txt:'720 € Lottogewinn: Bei 12 Mitgliedern bekommt jeder 60 €. Wie viel bekommt jeder bei 9 Mitgliedern? (Buch S. 46 Nr. 8)',hl:'Mitglieder',hr:'Gewinn pro Person (€)',a1:'12',b1:'60',a2:'9',t:'a',unit:'€',satz:'Jedes Mitglied bekommt 80 €.'},
+ {txt:'Ein Acker ist 80 m lang und 30 m breit. Ein gleich großer Acker ist 48 m lang. Wie breit ist er? (AH 27)',hl:'Länge (m)',hr:'Breite (m)',a1:'80',b1:'30',a2:'48',t:'a',unit:'m',satz:'Der Acker ist 50 m breit.'},
+ {txt:'Ein Rechteck ist 12 cm lang und 7 cm breit. Wie lang ist ein gleich großes Rechteck, das 8 cm breit ist? (AH 32c)',hl:'Breite (cm)',hr:'Länge (cm)',a1:'7',b1:'12',a2:'8',t:'a',unit:'cm',satz:'Das Rechteck ist 10,5 cm lang.'}
+];
+function dsSolve(d){const a1=parse(d.a1),b1=parse(d.b1),a2=parse(d.a2);
+  const one=d.t==='p'?div(b1,a1):mul(b1,a1);
+  const res=d.t==='p'?mul(one,a2):div(one,a2);return{one:one,res:res};}
+if(typeof module!=='undefined')module.exports={genPruef,niceVal,trend,R,mul,div,eq,val,parse,fmt,fmtFull,check,solveTable,classify,genPairs,genKeins,AB,AH26,SIT,TAB,GRAPHS,DS,dsSolve,periodic,approx};
+</script>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const NAME={p:'proportional',a:'antiproportional',k:'keins von beiden'};
+const CLS={p:'cp',a:'ca',k:'ck'};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* Navigation */
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('main section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.s));
+  window.scrollTo(0,0);
+});
+$('#back').style.display='block';
+
+/* ---------- Pfeil-Tabelle ---------- */
+function arrowTable(hl,hr,rows,opsL,opsR,color){ // rows: [[l,r],...] (HTML), ops between rows
+  let h='<div class="pt"><div></div><div class="h">'+hl+'</div><div class="h">'+hr+'</div><div></div>';
+  rows.forEach((r,i)=>{
+    const ol=i<rows.length-1?(opsL[i]||''):'',or=i<rows.length-1?(opsR[i]||''):'';
+    h+='<div class="op l '+color+'">'+(ol?ol+' ↓':'')+'</div><div class="c">'+r[0]+'</div><div class="c">'+r[1]+'</div><div class="op r '+color+'">'+(or?'↓ '+or:'')+'</div>';
+  });
+  return h+'</div>';
+}
+/* Demo-Tabellen werden in den Lernschritten erzeugt */
+
+/* ---------- Graphen ---------- */
+function graph(kind,w){
+  w=w||260;const H=180,ox=34,oy=150,W=w-14;
+  let path='';const pts=[];
+  for(let i=0;i<=60;i++){const t=i/60;let x,y;
+    if(kind==='line0'){x=t;y=t*0.85;}
+    else if(kind==='hyper'){x=0.06+t*0.94;y=0.06/x;}
+    else if(kind==='lineOff'){x=t;y=0.3+t*0.55;}
+    else if(kind==='decLine'){x=t*0.8;y=0.9-t*1.1;if(y<0)y=0;}
+    else{x=t;y=0.85*t*t;}
+    pts.push([ox+x*(W-ox),oy-y*(oy-12)]);}
+  path='M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+  return '<svg viewBox="0 0 '+w+' '+H+'" width="100%" style="max-width:'+w+'px" role="img">'+
+   '<line x1="'+ox+'" y1="'+oy+'" x2="'+W+'" y2="'+oy+'" stroke="#1f1b2e" stroke-width="2"/>'+
+   '<line x1="'+ox+'" y1="'+oy+'" x2="'+ox+'" y2="8" stroke="#1f1b2e" stroke-width="2"/>'+
+   '<polygon points="'+W+','+(oy-5)+' '+(W+8)+','+oy+' '+W+','+(oy+5)+'" fill="#1f1b2e"/>'+
+   '<polygon points="'+(ox-5)+',10 '+ox+',2 '+(ox+5)+',10" fill="#1f1b2e"/>'+
+   '<text x="'+(ox-14)+'" y="'+(oy+16)+'" font-size="14">0</text>'+
+   '<text x="'+(W-6)+'" y="'+(oy+22)+'" font-size="14">x</text><text x="'+(ox-22)+'" y="16" font-size="14">y</text>'+
+   '<path d="'+path+'" fill="none" stroke="#4E3D96" stroke-width="4" stroke-linecap="round"/></svg>';
+}
+
+
+/* ---------- Erkennen ---------- */
+function makeTableQ(xs,ys,hx,hy,src){
+  const ans=classify(xs,ys);return{kind:'tab',xs,ys,hx,hy,src,ans};
+}
+function tableHTML(xs,ys,hx,hy){
+  let h='<div class="scroll"><table class="zt"><tr><th>'+esc(hx)+'</th>';xs.forEach(x=>h+='<td>'+x+'</td>');
+  h+='</tr><tr><th>'+esc(hy)+'</th>';ys.forEach(y=>h+='<td>'+y+'</td>');return h+'</tr></table></div>';
+}
+function explainTable(q){
+  const X=q.xs.map(parse),Y=q.ys.map(parse);
+  const n=X.length;let up=true,down=true;
+  // nach x sortiert prüfen
+  const idx=X.map((x,i)=>i).sort((a,b)=>val(X[a])-val(X[b]));
+  for(let j=1;j<n;j++){const a=Y[idx[j-1]],b=Y[idx[j]];if(!(val(b)>val(a)))up=false;if(!(val(b)<val(a)))down=false;}
+  let h='';
+  if(up||q.ans==='p'){h+='<b>Je mehr, desto mehr</b> → prüfe <b>y : x</b>:<div class="rechen">';
+    X.forEach((x,i)=>{h+=fmt(Y[i])+' : '+fmt(x)+' = '+approx(div(Y[i],x),3)+'\n';});h+='</div>';
+    h+=q.ans==='p'?'Immer gleich → <span class="tagp">proportional</span>, p = '+fmt(div(Y[0],X[0]))+'.':'Nicht immer gleich → <span class="tagk">keins von beiden</span>.';}
+  else if(down||q.ans==='a'){h+='<b>Je mehr, desto weniger</b> → prüfe <b>x · y</b>:<div class="rechen">';
+    X.forEach((x,i)=>{h+=fmt(x)+' · '+fmt(Y[i])+' = '+approx(mul(x,Y[i]),3)+'\n';});h+='</div>';
+    h+=q.ans==='a'?'Immer gleich → <span class="taga">antiproportional</span>, G = '+fmt(mul(X[0],Y[0]))+'.':'Nicht immer gleich → <span class="tagk">keins von beiden</span>.';}
+  else h+='Die Werte werden mal größer, mal kleiner → <span class="tagk">keins von beiden</span>.';
+  return h;
+}
+function buildPool(){
+  const pool=[];
+  TAB.forEach(t=>pool.push(makeTableQ(t[0],t[1],t[2],t[3],t[4])));
+  SIT.forEach(s=>pool.push({kind:'sit',x:s[0],y:s[1],ans:s[2],why:s[3]}));
+  GRAPHS.forEach(g=>pool.push({kind:'graph',g:g[0],ans:g[1],why:g[2]}));
+  for(let i=0;i<4;i++){const t=rnd(['p','a']);const g=genPairs(t,4);
+    pool.push(makeTableQ(g.pairs.map(p=>fmt(p[0])),g.pairs.map(p=>fmt(p[1])),'x','y','neue Aufgabe'));}
+  for(let i=0;i<4;i++){const k=genKeins();pool.push(makeTableQ(k.xs,k.ys,'x','y','neue Aufgabe'));}
+  return shuffle(pool);
+}
+function qHTML(q){
+  if(q.kind==='tab')return '<p><b>Welche Zuordnung liegt vor?</b> <span class="small">('+esc(q.src)+')</span></p>'+tableHTML(q.xs,q.ys,q.hx,q.hy);
+  if(q.kind==='sit')return '<p><b>Welche Zuordnung ist das?</b></p><div class="sit">'+esc(q.x)+'<span class="arrow">→</span>'+esc(q.y)+'</div>';
+  return '<p><b>Welche Zuordnung zeigt der Graph?</b></p><div style="text-align:center">'+graph(q.g,300)+'</div>';
+}
+function qWhy(q){return q.kind==='tab'?explainTable(q):esc(q.why);}
+function choiceButtons(onPick){
+  const d=document.createElement('div');d.className='choices';
+  ['p','a','k'].forEach(k=>{const b=document.createElement('button');b.className=CLS[k];b.textContent=NAME[k];b.dataset.k=k;b.onclick=()=>onPick(k,d);d.appendChild(b);});
+  return d;
+}
+const E={queue:[],done:0,right:0,total:0};
+function eStart(){E.queue=buildPool();E.total=E.queue.length;E.done=0;E.right=0;eShow();}
+function eShow(){
+  const box=$('#eBox');
+  if(!E.queue.length){box.innerHTML='<div class="fb ok"><b>Fertig!</b> Du hast alle Aufgaben geschafft. Beim ersten Versuch richtig: '+E.right+'.</div><button class="btn" id="eAgain">Neue Runde</button>';$('#eAgain').onclick=eStart;$('#eBar').style.width='100%';return;}
+  const q=E.queue[0];
+  $('#eCount').textContent='Noch '+E.queue.length+' Aufgaben';$('#eScore').textContent='✔ '+E.right;
+  $('#eBar').style.width=(100*E.done/E.total)+'%';
+  box.innerHTML=qHTML(q);
+  const fb=document.createElement('div');
+  box.appendChild(choiceButtons((k,d)=>{
+    d.querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.dataset.k===q.ans)b.classList.add('right');else if(b.dataset.k===k)b.classList.add('wrong');});
+    E.queue.shift();
+    if(k===q.ans){if(!q.retry){E.right++;}E.done++;fb.className='fb ok';fb.innerHTML='<b>Richtig!</b><br>'+qWhy(q);}
+    else{fb.className='fb no';fb.innerHTML='<b>Nicht ganz.</b> Richtig ist <b>'+NAME[q.ans]+'</b>.<br>'+qWhy(q)+'<br><span class="small">Diese Aufgabe kommt gleich noch einmal.</span>';
+      q.retry=true;E.queue.splice(Math.min(3,E.queue.length),0,q);}
+    const nb=document.createElement('button');nb.className='btn';nb.textContent='Weiter →';nb.onclick=eShow;fb.appendChild(document.createElement('br'));fb.appendChild(nb);
+  }));
+  box.appendChild(fb);
+}
+
+/* ---------- Dreisatz ---------- */
+const D={list:[],i:0};
+function dStart(){D.list=shuffle(DS);D.i=0;dShow();}
+function opBtns(opts,correct,onDone){
+  const d=document.createElement('div');d.className='typesel';
+  opts.forEach(o=>{const b=document.createElement('button');b.className='cp';b.style.background='var(--lila2)';b.style.color='var(--lila)';b.textContent=o;b.onclick=()=>{
+    if(o===correct){d.querySelectorAll('button').forEach(x=>x.disabled=true);b.style.background='var(--ok)';b.style.color='#fff';onDone();}
+    else{b.style.background='var(--no)';b.style.color='#fff';b.disabled=true;}};d.appendChild(b);});
+  return d;
+}
+function numAsk(correct,onDone,label){
+  const w=document.createElement('div');
+  w.innerHTML=(label||'')+' <input class="num" inputmode="decimal" autocomplete="off"> <button class="btn">Prüfen</button><div class="fbx"></div>';
+  const inp=w.querySelector('input'),b=w.querySelector('button'),f=w.querySelector('.fbx');let tries=0;
+  const go=()=>{const r=check(inp.value,correct);
+    if(r.bad){f.innerHTML='<div class="fb info">Bitte eine Zahl eingeben, z. B. 2,5 oder 4/3.</div>';return;}
+    if(r.ok){inp.classList.remove('no');inp.classList.add('ok');inp.disabled=true;b.disabled=true;f.innerHTML=r.note?'<div class="fb info">'+r.note+'</div>':'';onDone(true);}
+    else{tries++;inp.classList.add('no');f.innerHTML='<div class="fb no">Noch nicht. '+(tries>=2?'Richtig ist <b>'+fmtFull(correct)+'</b>.':'Rechne noch einmal nach.')+'</div>';
+      if(tries>=2){inp.value=fmt(correct);inp.disabled=true;b.disabled=true;onDone(false);}}};
+  b.onclick=go;inp.onkeydown=e=>{if(e.key==='Enter')go();};
+  return w;
+}
+function dShow(){
+  const d=D.list[D.i];const s=dsSolve(d);const box=$('#dBox');
+  $('#dCount').textContent='Aufgabe '+(D.i+1)+' von '+D.list.length;
+  const a1=parse(d.a1),a2=parse(d.a2),b1=parse(d.b1);
+  let col='gray';
+  const opL1=':'+fmt(a1),opL2='·'+fmt(a2);
+  const opR1=d.t==='p'?':'+fmt(a1):'·'+fmt(a1),opR2=d.t==='p'?'·'+fmt(a2):':'+fmt(a2);
+  const st={one:'?',res:'?',r1:'',r2:''};
+  box.innerHTML='<div class="sit" style="font-weight:400;text-align:left">'+esc(d.txt)+'</div><div id="dTab"></div><div id="dSteps"></div>';
+  const draw=()=>{$('#dTab').innerHTML=arrowTable(esc(d.hl),esc(d.hr),[[fmt(a1),fmt(b1)],['1',st.one],[fmt(a2),st.res]],[opL1,opL2],[st.r1,st.r2],col);};
+  draw();
+  const steps=$('#dSteps');
+  const add=(html)=>{const p=document.createElement('div');p.className='card';p.style.background='#faf9fd';p.innerHTML=html;steps.appendChild(p);return p;};
+  // Schritt 1: Art
+  const p1=add('<b>Schritt 1:</b> Mehr '+esc(d.hl)+' → was passiert mit '+esc(d.hr)+'?');
+  const ch=document.createElement('div');ch.className='typesel';
+  [['p','mehr (proportional)'],['a','weniger (antiproportional)']].forEach(([k,t])=>{const b=document.createElement('button');b.className=CLS[k];b.textContent=t;b.onclick=()=>{
+    if(k===d.t){col=d.t==='p'?'blue':'orange';draw();ch.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('sel');b.style.background='var(--ok)';b.style.color='#fff';
+      p1.insertAdjacentHTML('beforeend','<div class="fb ok">Richtig! '+(d.t==='p'?'Proportional: rechts machst du <b>das Gleiche</b> wie links.':'Antiproportional: rechts machst du <b>das Gegenteil</b> von links.')+'</div>');step2();}
+    else{b.disabled=true;b.style.background='var(--no)';b.style.color='#fff';
+      p1.insertAdjacentHTML('beforeend','<div class="fb no">Überleg noch mal: '+(d.t==='p'?'Mehr davon heißt hier auch mehr auf der anderen Seite.':'Mehr davon heißt hier weniger auf der anderen Seite (oder: es geht schneller).')+'</div>');}};ch.appendChild(b);});
+  p1.appendChild(ch);
+  function step2(){
+    const p=add('<b>Schritt 2: Auf 1 runterrechnen.</b> Links rechnest du <b>'+opL1+'</b> (von '+fmt(a1)+' auf 1). Was rechnest du rechts?');
+    p.appendChild(opBtns(shuffle([':'+fmt(a1),'·'+fmt(a1)]),opR1,()=>{st.r1=opR1;draw();
+      p.appendChild(numAsk(s.one,()=>{st.one=fmt(s.one);draw();step3();},fmt(b1)+' '+opR1.replace(':',' : ').replace('·',' · ')+' ='));}));
+  }
+  function step3(){
+    const p=add('<b>Schritt 3: Auf '+fmt(a2)+' hochrechnen.</b> Links rechnest du <b>'+opL2+'</b>. Was rechnest du rechts?');
+    p.appendChild(opBtns(shuffle([':'+fmt(a2),'·'+fmt(a2)]),opR2,()=>{st.r2=opR2;draw();
+      p.appendChild(numAsk(s.res,()=>{st.res=fmt(s.res);draw();fin();},fmt(s.one)+' '+opR2.replace(':',' : ').replace('·',' · ')+' ='));}));
+  }
+  function fin(){
+    const p=add('<div class="fb ok"><b>Antwortsatz:</b> '+esc(d.satz)+'</div>'+
+      '<p class="small">Schneller Weg: '+(d.t==='p'?'p = '+fmt(b1)+' : '+fmt(a1)+' = '+fmt(s.one)+', dann '+fmt(a2)+' · '+fmt(s.one)+' = '+fmt(s.res):'G = '+fmt(a1)+' · '+fmt(b1)+' = '+fmt(s.one)+', dann '+fmt(s.one)+' : '+fmt(a2)+' = '+fmt(s.res))+'</p>');
+    const nb=document.createElement('button');nb.className='btn';nb.textContent=D.i<D.list.length-1?'Nächste Aufgabe →':'Von vorn';
+    nb.onclick=()=>{if(D.i<D.list.length-1){D.i++;dShow();}else dStart();window.scrollTo(0,0);};p.appendChild(nb);
+  }
+}
+
+/* ---------- Tabellen ---------- */
+let tMode='neu';
+document.querySelectorAll('#tSub button').forEach(b=>b.onclick=()=>{tMode=b.dataset.t;document.querySelectorAll('#tSub button').forEach(x=>x.classList.toggle('on',x===b));tRender();});
+function cellIn(id){return '<input class="num" id="'+id+'" inputmode="decimal" autocomplete="off">';}
+function tableCard(T,uid){
+  // T: {t, type (p|a|null), lay, xs, ys, hx, hy, note}
+  const sol=solveTable(T.xs,T.ys,T.type||null);
+  const card=document.createElement('div');card.className='card';
+  const hx=T.hx||'1. Größe (x)',hy=T.hy||'2. Größe (y)';
+  let h='<h2>'+esc(T.t)+'</h2>';
+  if(!T.type)h+='<p>Kreuze an: Was liegt vor?</p><div class="typesel" data-role="type"><button data-k="p" class="cp">Quotientengleichheit (proportional)</button><button data-k="a" class="ca">Produktgleichheit (antiproportional)</button></div>';
+  else h+='<p>Die Größen sind <b class="'+(T.type==='p'?'tagp':'taga')+'">'+NAME[T.type]+'</b>. '+(T.type==='p'?'Tipp: Rechne zuerst p = y : x aus.':'Tipp: Rechne zuerst G = x · y aus.')+'</p>';
+  const ids=[];
+  const cell=(v,i,side)=>{if(v!==null)return '<td>'+fmt(parse(v))+'</td>';const id=uid+'_'+side+i;ids.push({id,i});return '<td id="td_'+id+'">'+cellIn(id)+'</td>';};
+  h+='<div class="scroll"><table class="zt">';
+  if(T.lay==='h'){
+    h+='<tr><th>'+esc(hx)+'</th>'+T.xs.map((v,i)=>cell(v,i,'x')).join('')+'</tr><tr><th>'+esc(hy)+'</th>'+T.ys.map((v,i)=>cell(v,i,'y')).join('')+'</tr>';
+  }else{
+    h+='<tr><th>'+esc(hx)+'</th><th>'+esc(hy)+'</th></tr>';
+    T.xs.forEach((v,i)=>{h+='<tr>'+cell(v,i,'x')+cell(T.ys[i],i,'y')+'</tr>';});
+  }
+  h+='</table></div><button class="btn" data-role="check">Prüfen</button><button class="btn light" data-role="show">Lösung zeigen</button><div data-role="fb"></div>';
+  card.innerHTML=h;
+  let chosen=T.type||null;
+  card.querySelectorAll('[data-role=type] button').forEach(b=>b.onclick=()=>{chosen=b.dataset.k;card.querySelectorAll('[data-role=type] button').forEach(x=>x.classList.toggle('sel',x===b));});
+  const fb=card.querySelector('[data-role=fb]');
+  const kTxt=sol.type==='p'?'p = y : x = '+fmt(sol.k):'G = x · y = '+fmt(sol.k);
+  card.querySelector('[data-role=check]').onclick=()=>{
+    let msgs=[],good=0,notes=[];
+    if(!T.type){if(!chosen){fb.innerHTML='<div class="fb info">Kreuze zuerst an, was vorliegt.</div>';return;}
+      const btns=card.querySelectorAll('[data-role=type] button');btns.forEach(b=>{b.style.outline='';});
+      if(chosen===sol.type)msgs.push('✔ Richtig angekreuzt: '+NAME[sol.type]+'.');else msgs.push('✘ Angekreuzt ist falsch. Es ist <b>'+NAME[sol.type]+'</b>.');}
+    ids.forEach(({id,i})=>{const inp=document.getElementById(id);const r=check(inp.value,sol.res[i].v);
+      inp.classList.remove('ok','no');if(inp.value.trim()==='')return;inp.classList.add(r.ok?'ok':'no');if(r.ok)good++;if(r.note)notes.push(r.note);});
+    const filled=ids.filter(({id})=>document.getElementById(id).value.trim()!=='').length;
+    msgs.push(good+' von '+ids.length+' Feldern richtig'+(filled<ids.length?' ('+(ids.length-filled)+' noch leer)':'')+'.');
+    if(good===ids.length&&(T.type||chosen===sol.type))msgs.unshift('<b>Super, alles richtig!</b>');
+    fb.innerHTML='<div class="fb '+(good===ids.length?'ok':'info')+'">'+msgs.join('<br>')+(notes.length?'<br>'+notes[0]:'')+'</div>';
+  };
+  card.querySelector('[data-role=show]').onclick=()=>{
+    let r='<div class="fb info"><b>'+NAME[sol.type]+'</b>, '+kTxt+'<div class="rechen">';
+    ids.forEach(({id,i})=>{const s=sol.res[i];r+=s.calc+' = '+fmtFull(s.v)+'\n';
+      const inp=document.getElementById(id);if(!inp.classList.contains('ok')){const td=document.getElementById('td_'+id);if(!td.querySelector('.sol'))td.insertAdjacentHTML('beforeend','<span class="sol">'+fmt(s.v)+'</span>');}});
+    r+='</div>'+(T.note?esc(T.note):'')+'</div>';fb.innerHTML=r;
+  };
+  return card;
+}
+function ah26Card(){
+  const card=document.createElement('div');card.className='card';
+  let h='<h2>Arbeitsheft Nr. 26 – Proportionalitätsfaktor</h2><p>Ergänze. Es gilt: <b>p = y : x</b>, <b>y = p · x</b>, <b>x = y : p</b>.</p><div class="scroll"><table class="zt"><tr><th></th><th>x</th><th>y</th><th>p</th></tr>';
+  const sols=[];
+  AH26.forEach((r,i)=>{const [x,y,p]=r.map(v=>v===null?null:parse(v));let s,where;
+    if(p===null){s=div(y,x);where=2;}else if(y===null){s=mul(p,x);where=1;}else{s=div(y,p);where=0;}
+    sols.push(s);const L='abcdefgh'[i];
+    h+='<tr><th>'+L+')</th>'+[0,1,2].map(j=>j===where?'<td id="td_ah26_'+i+'">'+cellIn('ah26_'+i)+'</td>':'<td>'+fmt(r.map(v=>v===null?null:parse(v))[j])+'</td>').join('')+'</tr>';});
+  h+='</table></div><button class="btn" data-r="c">Prüfen</button><button class="btn light" data-r="s">Lösung zeigen</button><div data-r="fb"></div>';
+  card.innerHTML=h;const fb=card.querySelector('[data-r=fb]');
+  card.querySelector('[data-r=c]').onclick=()=>{let g=0,n='';sols.forEach((s,i)=>{const inp=document.getElementById('ah26_'+i);inp.classList.remove('ok','no');if(!inp.value.trim())return;const r=check(inp.value,s);inp.classList.add(r.ok?'ok':'no');if(r.ok)g++;if(r.note)n=r.note;});
+    fb.innerHTML='<div class="fb '+(g===sols.length?'ok':'info')+'">'+g+' von '+sols.length+' richtig.'+(n?'<br>'+n:'')+'</div>';};
+  card.querySelector('[data-r=s]').onclick=()=>{sols.forEach((s,i)=>{const inp=document.getElementById('ah26_'+i);if(!inp.classList.contains('ok')){const td=document.getElementById('td_ah26_'+i);if(!td.querySelector('.sol'))td.insertAdjacentHTML('beforeend','<span class="sol">'+fmt(s)+'</span>');}});};
+  return card;
+}
+let genCount=0;
+function genTable(){
+  const t=rnd(['p','a']);const g=genPairs(t,6);
+  const xs=g.pairs.map(p=>fmt(p[0])),ys=g.pairs.map(p=>fmt(p[1]));
+  // Zeilen 0,1 voll; sonst abwechselnd x oder y leer
+  const order=shuffle([2,3,4,5]);
+  order.forEach((i,j)=>{if(j%2===0)ys[i]=null;else xs[i]=null;});
+  genCount++;
+  return{t:'Neue Aufgabe '+genCount,type:null,lay:'v',xs,ys};
+}
+function tRender(){
+  const box=$('#tBox');box.innerHTML='';
+  if(tMode==='neu'){
+    box.insertAdjacentHTML('beforeend','<p class="lead">Wie Nr. 28: Erst ankreuzen, was vorliegt (prüfe mit den beiden vollen Zeilen), dann die Lücken füllen.</p>');
+    box.appendChild(tableCard(genTable(),'g'+genCount));
+    const b=document.createElement('button');b.className='btn';b.textContent='Noch eine Tabelle';b.onclick=()=>{box.insertBefore(tableCard(genTable(),'g'+genCount),b);};box.appendChild(b);
+    return;}
+  const list=AB[tMode];
+  if(tMode==='ab28')box.insertAdjacentHTML('beforeend','<p class="lead">Kreuze an, ob Quotientengleichheit (proportional) oder Produktgleichheit (antiproportional) vorliegt. Prüfe dazu die beiden vollen Spalten. Dann ergänze die Tabelle.</p>');
+  list.forEach((T,i)=>{if(T.special==='ah26')box.appendChild(ah26Card());else box.appendChild(tableCard(Object.assign({lay:'v'},T),tMode+i));});
+}
+
+/* ---------- Prüfen (wie Buch A4 / A7 / A2) ---------- */
+function opOf(tr){return tr==='up'?'q':tr==='down'?'m':null;}
+function rowVal(op,x,y){return op==='q'?div(y,x):mul(x,y);}
+function begr(ans,op,X,Y){
+  const vals=X.map((x,i)=>rowVal(op,x,Y[i]));
+  const list=vals.map(v=>niceVal(v)?fmt(v):approx(v,2)).join('; ');
+  if(ans==='p')return 'Alle Quotienten y : x sind gleich ('+list+'). Also ist die Zuordnung <b>proportional</b> mit <b>p = '+fmt(vals[0])+'</b>.';
+  if(ans==='a')return 'Alle Produkte x · y sind gleich ('+list+'). Also ist die Zuordnung <b>antiproportional</b> mit <b>G = '+fmt(vals[0])+'</b>.';
+  if(op==='q')return 'Die Quotienten y : x sind nicht alle gleich ('+list+'). Also ist es nicht proportional. Antiproportional kann es auch nicht sein, weil beide Größen größer werden. → <b>keins von beiden</b>.';
+  return 'Die Produkte x · y sind nicht alle gleich ('+list+'). Also ist es nicht antiproportional. Proportional kann es auch nicht sein, weil die eine Größe kleiner wird. → <b>keins von beiden</b>.';
+}
+function pruefCard(P,uid){
+  const X=P.xs.map(parse),Y=P.ys.map(parse);const ans=classify(P.xs,P.ys);const tr=trend(P.xs,P.ys);
+  const need=opOf(tr)||(ans==='p'?'q':ans==='a'?'m':null);
+  const card=document.createElement('div');card.className='card';
+  let h='<h2>'+esc(P.t)+'</h2><div class="scroll"><table class="zt"><tr><th>'+esc(P.hx||'x')+'</th><th>'+esc(P.hy||'y')+'</th><th id="'+uid+'_h">?</th></tr>';
+  X.forEach((x,i)=>h+='<tr><td>'+fmt(x)+'</td><td>'+fmt(Y[i])+'</td><td id="'+uid+'_c'+i+'"></td></tr>');
+  h+='</table></div><div id="'+uid+'_s"></div>';card.innerHTML=h;
+  const S=card.querySelector('#'+uid+'_s');
+  const add=html=>{const d=document.createElement('div');d.className='fb info';d.innerHTML=html;S.appendChild(d);return d;};
+  // Schritt 1
+  const s1=add('<b>Schritt 1:</b> Schau in die Tabelle. Was rechnest du in jeder Zeile?');
+  const b1=document.createElement('div');b1.className='typesel';
+  [['q','y : x (Quotient)','cp'],['m','x · y (Produkt)','ca']].forEach(([k,t,c])=>{const b=document.createElement('button');b.className=c;b.textContent=t;b.onclick=()=>{
+    if(need===null||k===need){b1.querySelectorAll('button').forEach(z=>z.disabled=true);b.style.background='var(--ok)';b.style.color='#fff';
+      s1.insertAdjacentHTML('beforeend','<div class="fb ok">'+(tr==='up'?'Richtig: Beide Zahlen werden größer → y : x.':tr==='down'?'Richtig: Die eine Zahl wird größer, die andere kleiner → x · y.':'Die Zahlen gehen mal hoch, mal runter. Rechne trotzdem nach.')+'</div>');step2(k);}
+    else{b.disabled=true;b.style.background='var(--no)';b.style.color='#fff';
+      s1.insertAdjacentHTML('beforeend','<div class="fb no">'+(tr==='up'?'Beide Zahlen werden größer (je mehr, desto mehr). Dann prüfst du y : x.':'Die eine wird größer, die andere kleiner (je mehr, desto weniger). Dann prüfst du x · y.')+'</div>');}};b1.appendChild(b);});
+  s1.appendChild(b1);
+  function step2(op){
+    card.querySelector('#'+uid+'_h').textContent=op==='q'?'y : x':'x · y';
+    const vals=X.map((x,i)=>rowVal(op,x,Y[i]));const ids=[];
+    vals.forEach((v,i)=>{const td=card.querySelector('#'+uid+'_c'+i);
+      if(niceVal(v)){td.innerHTML=cellIn(uid+'_i'+i);ids.push(i);}else td.innerHTML='<span class="small">'+approx(v,2)+'</span>';});
+    const s2=add('<b>Schritt 2:</b> Rechne in jeder Zeile '+(op==='q'?'<b>y : x</b>':'<b>x · y</b>')+' und trage es ein.'+(ids.length<vals.length?'<br><span class="small">Schwere Werte sind schon eingetragen. Ohne Taschenrechner reicht der Mal-Trick: Stimmt '+(op==='q'?'x · p = y':'G : x = y')+'? Wenn nicht, ist es nicht gleich.</span>':''));
+    if(!ids.length){step3(op);return;}
+    const cb=document.createElement('button');cb.className='btn';cb.textContent='Prüfen';let tries=0;
+    cb.onclick=()=>{let good=0;ids.forEach(i=>{const inp=document.getElementById(uid+'_i'+i);const r=check(inp.value,vals[i]);inp.classList.remove('ok','no');inp.classList.add(r.ok?'ok':'no');if(r.ok)good++;});
+      tries++;if(good===ids.length||tries>=2){cb.disabled=true;
+        if(good<ids.length)ids.forEach(i=>{const inp=document.getElementById(uid+'_i'+i);if(!inp.classList.contains('ok')){inp.parentNode.insertAdjacentHTML('beforeend','<span class="sol">'+fmt(vals[i])+'</span>');}});
+        s2.insertAdjacentHTML('beforeend',good===ids.length?'<div class="fb ok">Alle Zeilen richtig gerechnet!</div>':'<div class="fb no">Die richtigen Werte stehen jetzt in Rot darunter.</div>');step3(op);}
+      else s2.insertAdjacentHTML('beforeend','<div class="fb no">'+(ids.length-good)+' Wert(e) stimmen noch nicht. Rechne die roten Felder noch mal.</div>');};
+    s2.appendChild(cb);
+  }
+  function step3(op){
+    const s3=add('<b>Schritt 3:</b> Sind alle Werte gleich? Was liegt also vor?');
+    s3.appendChild(choiceButtons((k,d)=>{d.querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.dataset.k===ans)b.classList.add('right');else if(b.dataset.k===k)b.classList.add('wrong');});
+      s3.insertAdjacentHTML('beforeend','<div class="fb '+(k===ans?'ok':'no')+'">'+(k===ans?'<b>Richtig!</b>':'<b>Nicht ganz.</b> Richtig ist <b>'+NAME[ans]+'</b>.')+'</div>');
+      if(ans==='k')fin(op);else step4(op);}));
+  }
+  function step4(op){
+    const v=rowVal(op,X[0],Y[0]);
+    const s4=add('<b>Schritt 4:</b> Schreib die feste Zahl auf. '+(ans==='p'?'<b>p = </b>':'<b>G = </b>'));
+    s4.appendChild(numAsk(v,()=>fin(op)));
+  }
+  function fin(op){
+    const d=add('<b>So schreibst du die Begründung:</b><br>'+begr(ans,need||op,X,Y)+(P.note?'<br><span class="small">'+esc(P.note)+'</span>':''));d.className='fb ok';
+  }
+  return card;
+}
+const PBUCH=[0,1,2,3,4,5,6,7,11,9,8,12].map(i=>TAB[i]);
+const PNOTE={'Buch S. 46 Nr. 7 a':'G = 2052 m² ist die Fläche des Feldes.','Buch S. 46 Nr. 7 b':'G = 1344 sind die „Personentage“: So viel Arbeit muss insgesamt gemacht werden.','Buch S. 49 Nr. 2 a':'p = 25 ist der Preis für 1 m³.','Buch S. 49 Nr. 2 c':'G = 240 Maschinenstunden ist die ganze Arbeit.','Buch S. 42 Nr. 4 (1)':'p = 4 ist der Preis für 1 kg.'};
+let pMode='neu',pCount=0;
+document.querySelectorAll('#pSub button').forEach(b=>b.onclick=()=>{pMode=b.dataset.m;document.querySelectorAll('#pSub button').forEach(x=>x.classList.toggle('on',x===b));pRender();});
+function pRender(){
+  const box=$('#pBox');box.innerHTML='';
+  if(pMode==='neu'){
+    const addOne=()=>{pCount++;const g=genPruef();box.insertBefore(pruefCard({t:'Aufgabe '+pCount,xs:g.xs,ys:g.ys},'pr'+pCount),more);};
+    const more=document.createElement('button');more.className='btn';more.textContent='Noch eine Aufgabe';more.onclick=addOne;box.appendChild(more);addOne();
+  }else PBUCH.forEach((t,i)=>box.appendChild(pruefCard({t:t[4],xs:t[0],ys:t[1],hx:t[2],hy:t[3],note:PNOTE[t[4]]},'pb'+i)));
+}
+
+/* ---------- Probetest (Testblatt) ---------- */
+let timerId=null;
+$('#testStart').onclick=startTest;
+function startTest(){
+  $('#testCard').style.display='none';
+  const sheet=$('#testSheet');sheet.innerHTML='';
+  // Aufgabe 1: wie AH 28
+  const t1=rnd(['p','a']);const g1=genPairs(t1,4);
+  const xs1=g1.pairs.map(p=>fmt(p[0])),ys1=g1.pairs.map(p=>fmt(p[1]));
+  const o=shuffle([0,1,2,3]);const fullA=o[0],fullB=o[1];const blankY=o[2],blankX=o[3];
+  ys1[blankY]=null;xs1[blankX]=null;
+  // Aufgabe 2: wie AH 29/30
+  const t2=t1==='p'?'a':'p';const g2=genPairs(t2,6);
+  const xs2=g2.pairs.map(p=>fmt(p[0])),ys2=g2.pairs.map(p=>fmt(p[1]));
+  [1,2,3,4,5].forEach(i=>{if(Math.random()<0.5)xs2[i]=null;else ys2[i]=null;});
+  // Aufgabe 3: wie Buch A4/A7/A2
+  const g3=genPruef();
+  const T={a1:{type:t1,xs:xs1,ys:ys1,sol:solveTable(xs1,ys1,null)},a2:{type:t2,xs:xs2,ys:ys2,sol:solveTable(xs2,ys2,t2)},a3:g3};
+  let h='<div class="card" style="position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center"><b>Probetest</b><span id="timer" class="big">15:00</span></div>';
+  // A1
+  h+='<div class="card"><h2>Aufgabe 1</h2><p>Kreuze an, ob eine proportionale Zuordnung (Quotientengleichheit) oder eine antiproportionale Zuordnung (Produktgleichheit) vorliegt. Vervollständige die Tabelle.</p>';
+  h+='<div class="typesel" id="a1type"><button data-k="p" class="cp">Quotientengleichheit</button><button data-k="a" class="ca">Produktgleichheit</button></div>';
+  h+='<div class="scroll"><table class="zt"><tr><th>Ausgangsgröße</th>'+xs1.map((v,i)=>v===null?'<td id="td_a1x'+i+'">'+cellIn('a1x'+i)+'</td>':'<td>'+v+'</td>').join('')+'</tr><tr><th>zugeordnete Größe</th>'+ys1.map((v,i)=>v===null?'<td id="td_a1y'+i+'">'+cellIn('a1y'+i)+'</td>':'<td>'+v+'</td>').join('')+'</tr></table></div><div id="a1fb"></div></div>';
+  // A2
+  h+='<div class="card"><h2>Aufgabe 2</h2><p>Ergänze die Tabelle so, dass die Größen <b>'+NAME[t2]+'</b> zueinander sind.</p><table class="zt"><tr><th>1. Größe</th><th>2. Größe</th></tr>';
+  xs2.forEach((x,i)=>{h+='<tr>'+(x===null?'<td id="td_a2x'+i+'">'+cellIn('a2x'+i)+'</td>':'<td>'+x+'</td>')+(ys2[i]===null?'<td id="td_a2y'+i+'">'+cellIn('a2y'+i)+'</td>':'<td>'+ys2[i]+'</td>')+'</tr>';});
+  h+='</table><div id="a2fb"></div></div>';
+  // A3
+  h+='<div class="card"><h2>Aufgabe 3</h2><p>Ist die Zuordnung proportional, antiproportional oder keins von beiden? Rechne in der dritten Spalte und gib p bzw. G an.</p>';
+  h+='<div class="typesel" id="a3op"><span style="align-self:center">Dritte Spalte:</span><button data-k="q" class="cp">y : x</button><button data-k="m" class="ca">x · y</button></div>';
+  h+='<table class="zt"><tr><th>x</th><th>y</th><th id="a3h">?</th></tr>';
+  g3.xs.forEach((x,i)=>h+='<tr><td>'+x+'</td><td>'+g3.ys[i]+'</td><td id="td_a3c'+i+'">'+cellIn('a3c'+i)+'</td></tr>');
+  h+='</table><div class="choices" id="a3ans"><button data-k="p" class="cp">proportional</button><button data-k="a" class="ca">antiproportional</button><button data-k="k" class="ck">keins von beiden</button></div>';
+  h+='<p>p bzw. G = '+cellIn('a3k')+' <span class="small">(leer lassen bei „keins“)</span></p><div id="a3fb"></div></div>';
+  h+='<button class="btn" id="abgeben" style="width:100%;font-size:1.15rem">Abgeben</button><div id="result"></div>';
+  sheet.innerHTML=h;
+  const sel=(id)=>{let v=null;document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{v=b.dataset.k;document.querySelectorAll('#'+id+' button').forEach(z=>z.classList.toggle('sel',z===b));if(id==='a3op')$('#a3h').textContent=v==='q'?'y : x':'x · y';});return()=>v;};
+  const g1t=sel('a1type'),g3op=sel('a3op'),g3a=sel('a3ans');
+  let left=15*60;clearInterval(timerId);
+  timerId=setInterval(()=>{left--;if(left<0){clearInterval(timerId);$('#timer').textContent='Zeit um!';return;}$('#timer').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');},1000);
+  $('#abgeben').onclick=()=>{
+    clearInterval(timerId);let pts=0,max=0;
+    const mark=(id,correct)=>{max++;const inp=document.getElementById(id);const r=check(inp.value,correct);inp.disabled=true;inp.classList.add(r.ok?'ok':'no');
+      if(r.ok)pts++;else inp.parentNode.insertAdjacentHTML('beforeend','<span class="sol">'+fmt(correct)+'</span>');return r.ok;};
+    // A1
+    max++;const c1=g1t()===t1;if(c1)pts++;
+    T.a1.sol.res.forEach((r,i)=>{if(r)mark('a1'+r.side+i,r.v);});
+    $('#a1fb').innerHTML='<div class="fb '+(c1?'ok':'no')+'">'+(c1?'✔':'✘')+' Ankreuzen: <b>'+(t1==='p'?'Quotientengleichheit':'Produktgleichheit')+'</b>, '+(t1==='p'?'p = '+fmt(g1.k):'G = '+fmt(g1.k))+'.<div class="rechen">'+T.a1.sol.res.filter(Boolean).map(r=>r.calc+' = '+fmt(r.v)).join('\n')+'</div></div>';
+    // A2
+    T.a2.sol.res.forEach((r,i)=>{if(r)mark('a2'+r.side+i,r.v);});
+    $('#a2fb').innerHTML='<div class="fb info">'+(t2==='p'?'p = '+fmt(g2.k):'G = '+fmt(g2.k))+'<div class="rechen">'+T.a2.sol.res.filter(Boolean).map(r=>r.calc+' = '+fmt(r.v)).join('\n')+'</div></div>';
+    // A3
+    const X=g3.xs.map(parse),Y=g3.ys.map(parse);const tr=trend(g3.xs,g3.ys);const need=opOf(tr)||(g3.ans==='p'?'q':'m');
+    max++;const opOK=g3op()===need;if(opOK)pts++;
+    X.forEach((x,i)=>mark('a3c'+i,rowVal(need,x,Y[i])));
+    max++;const aOK=g3a()===g3.ans;if(aOK)pts++;
+    if(g3.ans!=='k')mark('a3k',rowVal(need,X[0],Y[0]));else document.getElementById('a3k').disabled=true;
+    $('#a3fb').innerHTML='<div class="fb '+(opOK&&aOK?'ok':'no')+'">'+(opOK?'✔':'✘')+' Dritte Spalte: <b>'+(need==='q'?'y : x':'x · y')+'</b><br>'+(aOK?'✔':'✘')+' '+begr(g3.ans,need,X,Y)+'</div>';
+    $('#abgeben').style.display='none';
+    const note=pts===max?'Perfekt! Du bist bereit. 🎉':pts>=max*0.75?'Gut! Schau dir die roten Stellen an.':'Schau dir die roten Stellen an und üb noch einmal Reiter 2 und 3.';
+    $('#result').innerHTML='<div class="card"><div class="score">'+pts+' von '+max+' Punkten</div><p style="text-align:center">'+note+'</p><button class="btn" id="again" style="width:100%">Neuen Test machen</button></div>';
+    $('#again').onclick=()=>{startTest();window.scrollTo(0,0);};
+    window.scrollTo(0,0);
+  };
+}
+
+/* ---------- Lernschritte (Verstehen) ---------- */
+const AT=arrowTable;
+const LS=[
+ {h:'Worum geht es?',b:()=>`<p class="big">Zwei Zahlen gehören zusammen.</p>
+   <p>Zum Beispiel: <b>Wie viele Kugeln Eis</b> → <b>was kostet das?</b></p>
+   <p>In der Arbeit musst du zwei Dinge können:</p>
+   <ol><li><b>Erkennen</b>, welche Sorte es ist.</li><li><b>Fehlende Zahlen</b> ausrechnen.</li></ol>
+   <p>Es gibt nur <b>3 Sorten</b>. Wir schauen sie uns nacheinander an. Tippe auf „Weiter“.</p>
+   <div class="merk"><b>Dein Test am Mittwoch:</b> 15 Minuten, 3 Aufgaben, <b>ohne Taschenrechner</b>, einfache Zahlen. Die Aufgaben sind so wie Arbeitsheft Nr. 28, 29, 30 und Buch S. 42 Nr. 4, S. 46 Nr. 7, S. 49 Nr. 2.</div>`},
+ {h:'Sorte 1: <span class="tagp">proportional</span>',b:()=>`<p>Eine Kugel Eis kostet 1,50 €.</p>
+   ${AT('Kugeln','Preis (€)',[['1','1,50'],['2','3,00'],['4','6,00']],['·2','·2'],['·2','·2'],'blue')}
+   <div class="boxp"><p class="big">Doppelt so viel Eis → doppelt so teuer.</p>
+   Links mal 2, rechts <b>auch</b> mal 2.<br>Auf beiden Seiten passiert <b>das Gleiche</b>.</div>`,
+   ask:{q:'Was kosten 3 Kugeln? (in €)',a:'4,5'}},
+ {h:'Sorte 2: <span class="taga">antiproportional</span>',b:()=>`<p>Du hast eine Tüte mit <b>12 Gummibärchen</b> und teilst sie gerecht auf.</p>
+   ${AT('Kinder','Gummibärchen pro Kind',[['1','12'],['2','6'],['4','3']],['·2','·2'],[':2',':2'],'orange')}
+   <div class="boxa"><p class="big">Doppelt so viele Kinder → jedes bekommt nur halb so viel.</p>
+   Links mal 2, rechts <b>geteilt</b> durch 2.<br>Auf beiden Seiten passiert <b>das Gegenteil</b>.</div>`,
+   ask:{q:'6 Kinder teilen die 12 Gummibärchen. Wie viele bekommt jedes?',a:'2'}},
+ {h:'Sorte 3: <span class="tagk">keins von beiden</span>',b:()=>`<p>Manchmal passt keine Regel.</p>
+   <div class="boxk"><p class="big">1 Ei hart kochen dauert 5 Minuten.<br>4 Eier hart kochen dauert … auch 5 Minuten!</p>
+   Nicht doppelt, nicht halb. Das ist <b>keins von beiden</b>.</div>
+   <p>Noch ein Beispiel: Mit 10 Jahren ist man vielleicht 1,40 m groß. Mit 20 Jahren ist man aber nicht 2,80 m groß. 😄</p>`,
+   ask:{q:'1 Ei braucht 5 Minuten. Wie viele Minuten brauchen 2 Eier?',a:'5'}},
+ {h:'Die Zahl, die immer gleich bleibt: p',b:()=>`<p>Bei <span class="tagp">proportional</span> gibt es eine Zahl, die sich nie ändert. Du rechnest <b>rechts geteilt durch links</b>:</p>
+   <div class="rechen">1,50 : 1 = 1,50\n3,00 : 2 = 1,50\n6,00 : 4 = 1,50</div>
+   <div class="boxp">Immer 1,50! Das ist der <b>Preis für 1 Kugel</b>.<br>
+   Diese Zahl heißt <b>Proportionalitätsfaktor p</b>.<br><span class="big">p = y : x</span> &nbsp;(rechts geteilt durch links)</div>`,
+   ask:{q:'8 Hefte kosten 6,40 €. Wie groß ist p, also der Preis für 1 Heft?',a:'0,8'}},
+ {h:'Die Zahl, die immer gleich bleibt: G',b:()=>`<p>Bei <span class="taga">antiproportional</span> rechnest du <b>links mal rechts</b>:</p>
+   <div class="rechen">1 · 12 = 12\n2 · 6 = 12\n4 · 3 = 12</div>
+   <div class="boxa">Immer 12! Das sind <b>alle Gummibärchen zusammen</b>. Die Tüte wird ja nicht größer, egal wie viele Kinder teilen.<br>
+   Diese Zahl heißt <b>Gesamtgröße G</b>.<br><span class="big">G = x · y</span> &nbsp;(links mal rechts)</div>`,
+   ask:{q:'5 Freunde teilen die Rechnung, jeder zahlt 8 €. Wie viel kostet alles zusammen (G)?',a:'40'}},
+ {h:'So erkennst du die Sorte',b:()=>`<div class="boxp"><b>Werden beide Zahlen größer?</b><br>
+   → Rechne bei <b>allen</b> Paaren <b>rechts : links</b>.<br>Immer gleich → <span class="tagp">proportional</span>. Sonst → <span class="tagk">keins</span>.</div>
+   <div class="boxa"><b>Wird die eine größer und die andere kleiner?</b><br>
+   → Rechne bei <b>allen</b> Paaren <b>links · rechts</b>.<br>Immer gleich → <span class="taga">antiproportional</span>. Sonst → <span class="tagk">keins</span>.</div>
+   <div class="merk">⚠️ Nur hinschauen reicht nicht. <b>Immer bei allen Zeilen nachrechnen!</b><br>
+   Herr Hammerschick will sehen, dass du <b>p (= y : x)</b> oder <b>G (= x · y)</b> ausrechnest.</div>
+   <p><b>So schreibst du die Begründung:</b> „Alle Produkte x · y sind gleich (20). Also ist die Zuordnung antiproportional mit G = 20.“</p>
+   <p><b>Probier es:</b></p>${tableHTML(['2','4','5'],['10','5','4'],'x','y')}`,
+   choose:{ans:'a',why:'Die eine Zahl wird größer, die andere kleiner. Also links · rechts: 2 · 10 = 20, 4 · 5 = 20, 5 · 4 = 20. Immer 20 → antiproportional, G = 20.'}},
+ {h:'Fehlende Zahlen ausrechnen',b:()=>`<div class="boxp"><b>proportional</b> (Beispiel p = 1,50)<br>
+   Rechts fehlt → <b>links · p</b> &nbsp; (4 Kugeln: 4 · 1,50 = 6)<br>
+   Links fehlt → <b>rechts : p</b> &nbsp; (9 €: 9 : 1,50 = 6 Kugeln)</div>
+   <div class="boxa"><b>antiproportional</b> (Beispiel G = 12)<br>
+   Egal, welche Seite fehlt: <b>G geteilt durch die Zahl, die da ist.</b><br>
+   3 Kinder: 12 : 3 = 4 Gummibärchen &nbsp;·&nbsp; 2 Gummibärchen: 12 : 2 = 6 Kinder</div>`,
+   ask:{q:'Antiproportional, G = 12. Zu x = 3 gehört y = ?',a:'4'}},
+ {h:'Textaufgaben: Dreisatz mit Pfeilen',b:()=>`<p>3 Kinder bekommen je 4 Gummibärchen. Wie viele bekommt jedes, wenn 6 Kinder teilen?</p>
+   <p><b>Trick: Erst auf 1 runterrechnen, dann hoch.</b></p>
+   ${AT('Kinder','Gummibärchen',[['3','4'],['1','12'],['6','2']],[':3','·6'],['·3',':6'],'orange')}
+   <p>Antiproportional → rechts immer <b>das Gegenteil</b> von links.<br>
+   Bei proportional machst du rechts <b>das Gleiche</b> wie links.</p>
+   <p><b>Antwortsatz:</b> Jedes Kind bekommt 2 Gummibärchen.</p>`,
+   ask:{q:'2 Kugeln Eis kosten 3 €. Was kosten 5 Kugeln? (in €)',a:'7,5'}},
+ {h:'Rechnen ohne Taschenrechner',b:()=>`<p>Im Test hast du keinen Taschenrechner. Diese Tricks helfen:</p>
+   <div class="boxk"><b>Durch eine Kommazahl teilen:</b> Schiebe bei <b>beiden</b> Zahlen das Komma gleich weit nach rechts.<br>
+   16 : 0,8 = 160 : 8 = <b>20</b><br>3,6 : 0,4 = 36 : 4 = <b>9</b><br>36 : 0,36 = 3600 : 36 = <b>100</b></div>
+   <div class="boxk"><b>Abkürzungen:</b><br>
+   : 0,5 → mal 2 &nbsp;(10 : 0,5 = 20)<br>
+   : 0,1 → mal 10 &nbsp;(36 : 0,1 = 360)<br>
+   : 0,25 oder : 1/4 → mal 4 &nbsp;(8 : 0,25 = 32)<br>
+   · 0,5 → halbieren &nbsp;(16 · 0,5 = 8)</div>
+   <div class="boxk"><b>Mal-Trick zum Prüfen:</b> Du glaubst, p = 3? Dann muss bei jedem Paar x · 3 = y sein.<br>Stimmt das bei einer Zeile nicht, ist es nicht proportional.</div>`,
+   ask:{q:'16 : 0,8 = ?',a:'20'}},
+ {h:'Typische Fallen',b:()=>`<ul>
+   <li><b>Durch 0,5 teilen heißt verdoppeln:</b> 10 : 0,5 = 20 (nicht 2!)</li>
+   <li><b>Durch eine Kommazahl teilen:</b> Schiebe bei beiden Zahlen das Komma gleich weit. 36 : 0,36 = 3600 : 36 = 100.</li>
+   <li><b>„Je mehr, desto weniger“</b> heißt noch nicht antiproportional. Rechne nach!</li>
+   <li><b>Zeit:</b> 1 Minute 20 Sekunden schreibst du 1:20 min oder 80 s, nicht 1,20 min.</li>
+   <li><b>Periode:</b> 4 : 3 = 1,333… schreibst du 1,3̅ mit Strich.</li>
+   <li><b>Antwortsatz</b> mit Einheit nicht vergessen.</li></ul>`,
+   ask:{q:'10 : 0,5 = ?',a:'20'}},
+ {h:'So sehen die Graphen aus',b:()=>`<div class="row">
+   <div>${graph('line0')}<p><span class="tagp">proportional</span>: <b>gerade Linie, die bei 0 anfängt</b>.</p></div>
+   <div>${graph('hyper')}<p><span class="taga">antiproportional</span>: <b>Kurve, die immer flacher wird</b> und die Achsen nie berührt.</p></div></div>`},
+ {h:'Spickzettel',b:()=>`<div class="scroll"><table class="zt" style="width:100%">
+   <tr><th></th><th><span class="tagp">proportional</span></th><th><span class="taga">antiproportional</span></th></tr>
+   <tr><th>Merksatz</th><td>doppelt → doppelt</td><td>doppelt → halb</td></tr>
+   <tr><th>Pfeile</th><td>rechts das Gleiche</td><td>rechts das Gegenteil</td></tr>
+   <tr><th>Prüfen</th><td>y : x immer gleich<br>(Quotientengleichheit)</td><td>x · y immer gleich<br>(Produktgleichheit)</td></tr>
+   <tr><th>Die feste Zahl</th><td>p = y : x</td><td>G = x · y</td></tr>
+   <tr><th>Ausrechnen</th><td>y = p · x</td><td>y = G : x</td></tr>
+   <tr><th>Graph</th><td>gerade Linie ab 0</td><td>Kurve (Hyperbel)</td></tr></table></div>
+   <div class="fb ok"><b>Geschafft!</b> Jetzt übst du im Reiter <b>2 · Prüfen</b>, dann <b>3 · Ergänzen</b> und am Ende den <b>4 · Probetest</b>.</div>`}
+];
+let lI=0;
+function lShow(){
+  const s=LS[lI];$('#lStep').textContent='Schritt '+(lI+1)+' von '+LS.length;$('#lBar').style.width=(100*(lI+1)/LS.length)+'%';
+  const box=$('#lBox');box.innerHTML='<h2>'+s.h+'</h2>'+s.b();
+  $('#lPrev').disabled=lI===0;$('#lNext').textContent=lI===LS.length-1?'Zum Üben →':'Weiter →';
+  if(s.ask){const p=document.createElement('div');p.className='fb info';p.innerHTML='<b>Kurze Frage:</b> '+esc(s.ask.q)+'<br>';
+    p.appendChild(numAsk(parse(s.ask.a),ok=>{p.insertAdjacentHTML('beforeend',ok?'<div class="fb ok">Richtig! 👍</div>':'');}));box.appendChild(p);}
+  if(s.choose){const fb=document.createElement('div');
+    box.appendChild(choiceButtons((k,d)=>{d.querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.dataset.k===s.choose.ans)b.classList.add('right');else if(b.dataset.k===k)b.classList.add('wrong');});
+      fb.className='fb '+(k===s.choose.ans?'ok':'no');fb.innerHTML=(k===s.choose.ans?'<b>Richtig!</b> ':'<b>Nicht ganz.</b> ')+s.choose.why;}));box.appendChild(fb);}
+}
+$('#lPrev').onclick=()=>{if(lI>0){lI--;lShow();window.scrollTo(0,0);}};
+$('#lNext').onclick=()=>{if(lI<LS.length-1){lI++;lShow();window.scrollTo(0,0);}else document.querySelector('#nav button[data-s=pruefen]').click();};
+
+lShow();pRender();eStart();dStart();tRender();
+</script>
+</body>
+</html>
