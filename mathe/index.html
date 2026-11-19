@@ -21,11 +21,12 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",-apple-system,system-ui,sans-serif;font-size:19px;line-height:1.45;-webkit-text-size-adjust:100%}
-header{background:var(--lila);color:#fff;padding:14px 18px 0}
-header h1{margin:0 0 10px;font-size:1.35rem}
-nav{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-nav button{flex:0 0 auto;border:0;border-radius:12px 12px 0 0;padding:11px 16px;font:inherit;font-size:1rem;background:rgba(255,255,255,.18);color:#fff;cursor:pointer}
-nav button.on{background:var(--bg);color:var(--lila);font-weight:700}
+.topnav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topnav .wrap{display:flex;gap:.3rem;overflow-x:auto;padding:.5rem 1rem;scrollbar-width:none;max-width:860px;margin:0 auto}
+.topnav .wrap::-webkit-scrollbar{display:none}
+.topnav a,.topnav button{flex:none;text-decoration:none;color:var(--muted);font:inherit;font-weight:700;font-size:.95rem;padding:.5rem .8rem;border-radius:8px;white-space:nowrap;background:none;border:0;cursor:pointer}
+.topnav button.on{background:var(--lila);color:#fff}
+h1.titel{font-size:1.6rem;margin:.2rem 0 .2rem}
 main{max-width:860px;margin:0 auto;padding:18px 14px 90px}
 section{display:none} section.on{display:block}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 16px}
@@ -89,18 +90,18 @@ svg text{font-family:"Atkinson Hyperlegible",sans-serif}
 </style>
 </head>
 <body>
-<header>
-  <h1>Mathe: Zuordnungen</h1>
-  <nav id="nav">
-    <button data-s="verstehen" class="on">1 · Verstehen</button>
-    <button data-s="pruefen">2 · Prüfen</button>
-    <button data-s="tabellen">3 · Ergänzen</button>
-    <button data-s="test">4 · Probetest</button>
-    <button data-s="erkennen">Extra: Quiz</button>
-    <button data-s="dreisatz">Extra: Dreisatz</button>
-  </nav>
-</header>
+<nav class="topnav" aria-label="Themen"><div class="wrap" id="nav">
+  <a href="../index.html">← Fächer</a>
+  <button data-s="verstehen" class="on" aria-current="page">1 Verstehen</button>
+  <button data-s="pruefen">2 Prüfen</button>
+  <button data-s="tabellen">3 Ergänzen</button>
+  <button data-s="test">4 Probetest</button>
+  <button data-s="erkennen">5 Quiz</button>
+  <button data-s="dreisatz">6 Dreisatz</button>
+</div></nav>
 <main>
+<h1 class="titel">Mathe</h1>
+<p class="lead" style="margin-top:0">Proportionale und antiproportionale Zuordnungen</p>
 
 <!-- ============ 1 VERSTEHEN ============ -->
 <section id="verstehen" class="on">
@@ -170,7 +171,6 @@ svg text{font-family:"Atkinson Hyperlegible",sans-serif}
 </section>
 
 </main>
-<a class="back" id="back" href="../index.html">← Alle Fächer</a>
 
 <script id="logic">
 "use strict";
@@ -416,11 +416,11 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','
 
 /* Navigation */
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('#nav button').forEach(x=>{x.classList.toggle('on',x===b);if(x===b)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current');});b.scrollIntoView({block:'nearest',inline:'nearest'});
   document.querySelectorAll('main section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.s));
   window.scrollTo(0,0);
 });
-$('#back').style.display='block';
+
 
 /* ---------- Pfeil-Tabelle ---------- */
 function arrowTable(hl,hr,rows,opsL,opsR,color){ // rows: [[l,r],...] (HTML), ops between rows
@@ -758,7 +758,7 @@ function startTest(){
   // Aufgabe 3: wie Buch A4/A7/A2
   const g3=genPruef();
   const T={a1:{type:t1,xs:xs1,ys:ys1,sol:solveTable(xs1,ys1,null)},a2:{type:t2,xs:xs2,ys:ys2,sol:solveTable(xs2,ys2,t2)},a3:g3};
-  let h='<div class="card" style="position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center"><b>Probetest</b><span id="timer" class="big">15:00</span></div>';
+  let h='<div class="card" style="position:sticky;top:58px;z-index:5;display:flex;justify-content:space-between;align-items:center"><b>Probetest</b><span id="timer" class="big">15:00</span></div>';
   // A1
   h+='<div class="card"><h2>Aufgabe 1</h2><p>Kreuze an, ob eine proportionale Zuordnung (Quotientengleichheit) oder eine antiproportionale Zuordnung (Produktgleichheit) vorliegt. Vervollständige die Tabelle.</p>';
   h+='<div class="typesel" id="a1type"><button data-k="p" class="cp">Quotientengleichheit</button><button data-k="a" class="ca">Produktgleichheit</button></div>';
