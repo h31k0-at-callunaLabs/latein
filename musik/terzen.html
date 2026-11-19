@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Terzen: groß oder klein? – Musik</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Musik">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css?v=1">
+</head>
+<body data-page="t5">
+<nav class="noprint" aria-label="Themen"><div class="wrap">
+  <a href="../index.html">← Fächer</a>
+  <a href="index.html">🏠 Start</a>
+  <a href="violinschluessel.html" data-id="t1">1 Violinschlüssel</a>
+  <a href="bassschluessel.html" data-id="t2">2 Bassschlüssel</a>
+  <a href="oktaven.html" data-id="t3">3 Oktaven</a>
+  <a href="intervalle.html" data-id="t4">4 Intervalle</a>
+  <a href="terzen.html" data-id="t5" aria-current="page">5 Terzen</a>
+  <a href="dreiklaenge.html" data-id="t6">6 Dreiklänge</a>
+  <a href="begleitung.html" data-id="t7">7 Begleitung</a>
+  <a href="gemischt.html" data-id="gem">8 Großes Quiz</a>
+  <a href="probe.html" data-id="probe">9 Probe-Arbeit</a>
+</div></nav>
+<main><div class="wrap">
+<p class="crumb">Thema 5 von 7</p>
+<h1>Terzen: groß oder klein?</h1>
+<h2 class="part"><span class="num">1</span> Lesen</h2>
+<p class="hint">Lies alles einmal in Ruhe durch.</p>
+
+<div class="box merke"><h3>Das musst du wissen</h3>
+<ul><li>Ein <b>Halbtonschritt</b> (HTS) ist der Weg von einer Taste zur <b>direkt benachbarten</b> Taste. Schwarze Tasten zählen mit!</li>
+<li><b>große Terz = 4 Halbtonschritte</b> (g3)</li>
+<li><b>kleine Terz = 3 Halbtonschritte</b> (k3)</li></ul></div>
+<div class="box"><h3>So zählst du auf der Klaviatur</h3>
+<p>Leg den Finger auf den unteren Ton. Jede nächste Taste ist ein Schritt, egal ob weiß oder schwarz. Zähle bis zum oberen Ton.</p>
+<p><b>c' bis e':</b> 4 Halbtonschritte → <b>große Terz</b></p>
+<div data-kb="c'|e'|count"></div>
+<p><b>d' bis f':</b> 3 Halbtonschritte → <b>kleine Terz</b></p>
+<div data-kb="d'|f'|count"></div>
+<p>Wichtig: Zwischen <b>e und f</b> und zwischen <b>h und c</b> liegt keine schwarze Taste. Diese beiden Schritte sind schon Halbtonschritte.</p></div>
+<div class="box"><h3>Alle Terzen ohne Vorzeichen</h3>
+<div class="tbl"><table><tr><th>große Terz (4 HTS)</th><th>kleine Terz (3 HTS)</th></tr>
+<tr><td>c – e<br>f – a<br>g – h</td><td>d – f<br>e – g<br>a – c<br>h – d</td></tr></table></div>
+<p class="meta">Trick (nur ohne Vorzeichen): Steckt <b>e–f</b> oder <b>h–c</b> in der Terz, ist sie <b>klein</b>.</p></div>
+<div class="box"><h3>Vorzeichen</h3>
+<ul><li><b>♯ Kreuz:</b> erhöht den Ton um einen Halbtonschritt. Man hängt <b>-is</b> an: f → <b>fis</b>, c → <b>cis</b>, g → <b>gis</b>.</li>
+<li><b>♭ b:</b> erniedrigt den Ton um einen Halbtonschritt. Man hängt <b>-es</b> an: d → <b>des</b>. Ausnahmen: e → <b>es</b>, a → <b>as</b>, h → <b>b</b>.</li></ul>
+<p><b>Beispiel d' bis fis':</b> 4 Halbtonschritte → <b>große Terz</b>. Ohne Kreuz (d'–f') wäre es eine kleine Terz.</p>
+<div class="stbox" data-st="v|d'>fis'" data-cw="50"></div>
+<div data-kb="d'|fis'|count"></div>
+<p class="meta">Mit Vorzeichen gilt der Trick nicht. Dann zählst du immer genau.</p></div>
+<div class="box"><h3>Aus dem Arbeitsheft (Aufgabe 5b)</h3>
+<div class="tbl"><table><tr><th>Töne</th><th>HTS</th><th>Intervall</th></tr>
+<tr><td>d'–f'</td><td>3</td><td>kleine Terz</td></tr>
+<tr><td>c'–e'</td><td>4</td><td>große Terz</td></tr>
+<tr><td>g'–h'</td><td>4</td><td>große Terz</td></tr>
+<tr><td>h'–d''</td><td>3</td><td>kleine Terz</td></tr>
+<tr><td>f'–a'</td><td>4</td><td>große Terz</td></tr>
+<tr><td>a'–c''</td><td>3</td><td>kleine Terz</td></tr>
+<tr><td>e'–g'</td><td>3</td><td>kleine Terz</td></tr></table></div></div>
+<h2 class="part"><span class="num">2</span> Karten</h2>
+<p class="hint">Überleg dir die Antwort. Dann tippe auf die Karte.</p>
+<div id="cards"></div>
+<h2 class="part"><span class="num">3</span> Große oder kleine Terz?</h2>
+<p class="hint">Zähle die Halbtonschritte auf der Klaviatur.</p>
+<div data-trainer="terz"></div>
+<h2 class="part"><span class="num">4</span> Quiz</h2>
+<p class="hint">Tippe auf die richtige Antwort.</p>
+<div id="quiz"></div>
+<a class="btn big noprint" data-finish="t5" href="dreiklaenge.html">Fertig ✓ – weiter zu 6 Dreiklänge →</a>
+</div></main>
+<script src="app.js?v=1"></script>
+</body>
+</html>
