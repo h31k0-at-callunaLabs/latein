@@ -41,9 +41,10 @@ a.fach:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
   <div id="past"></div>
 </main>
 <script>
-// Neue Fächer einfach hier ergänzen: Ordnername, Datum der Arbeit (JJJJ-MM-TT)
+// Neue Fächer einfach hier ergänzen: Ordnername, Datum der Arbeit (JJJJ-MM-TT, oder "" wenn noch unbekannt)
 const FAECHER=[
-  {pfad:"musik/index.html",fach:"Musik",thema:"Intervalle, Terzen, Dreiklänge, Liedbegleitung, Notennamen",datum:"2026-11-23",icon:"🎵",farbe:"#4E3D96"},
+  {pfad:"biologie/index.html",fach:"Biologie",thema:"Van Helmont und Priestley, eigene Experimente, Blattquerschnitt, Tier- und Pflanzenzelle, Zellatmung",datum:"2026-11-25",icon:"🌿",farbe:"#2E7D32"},
+  {pfad:"musik/index.html",fach:"Musik",thema:"Intervalle, Terzen, Dreiklänge, Liedbegleitung, Notennamen",datum:"2026-11-24",icon:"🎵",farbe:"#4E3D96"},
   {pfad:"mathe/index.html",fach:"Mathe",thema:"Test: proportionale und antiproportionale Zuordnungen",datum:"2026-11-18",icon:"📐",farbe:"#2E8A5E"},
   {pfad:"chemie/index.html",fach:"Chemie",thema:"Chemische Reaktionen, Energie, Nachweise",datum:"2026-11-17",icon:"⚗️",farbe:"#D85F1C"},
   {pfad:"latein/index.html",fach:"Latein",thema:"Lektion 12: Imperfekt und Perfekt, Pronomina, Aeneas",datum:"2026-11-12",icon:"🏛️",farbe:"#245F86"}
@@ -51,12 +52,14 @@ const FAECHER=[
 const heute=new Date();heute.setHours(0,0,0,0);
 const fmt=d=>d.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"numeric"});
 function karte(f,vorbei){
+  if(!f.datum)return karteOhneDatum(f);
   const d=new Date(f.datum+"T00:00:00");const tage=Math.round((d-heute)/864e5);
   const wann=vorbei?`geschrieben am ${fmt(d)}`:tage===0?"Arbeit heute":tage===1?"Arbeit morgen":`Arbeit am ${fmt(d)} · noch ${tage} Tage`;
   return `<a class="fach${vorbei?" past":""}" href="${f.pfad}" style="--c:${f.farbe}"><span class="ic" aria-hidden="true">${f.icon}</span><span class="t">${f.fach}</span><span><span class="d">${f.thema}</span><br><span class="when">${wann}</span>${vorbei?"":"<span class=\"go\">Hier tippen zum Lernen →</span>"}</span></a>`;
 }
-const kommend=FAECHER.filter(f=>new Date(f.datum+"T00:00:00")>=heute).sort((a,b)=>a.datum.localeCompare(b.datum));
-const alt=FAECHER.filter(f=>new Date(f.datum+"T00:00:00")<heute).sort((a,b)=>b.datum.localeCompare(a.datum));
+function karteOhneDatum(f){return `<a class="fach" href="${f.pfad}" style="--c:${f.farbe}"><span class="ic" aria-hidden="true">${f.icon}</span><span class="t">${f.fach}</span><span><span class="d">${f.thema}</span><br><span class="when">Arbeit kommt bald · Datum folgt</span><span class="go">Hier tippen zum Lernen →</span></span></a>`}
+const kommend=FAECHER.filter(f=>!f.datum||new Date(f.datum+"T00:00:00")>=heute).sort((a,b)=>(a.datum||"9999").localeCompare(b.datum||"9999"));
+const alt=FAECHER.filter(f=>f.datum&&new Date(f.datum+"T00:00:00")<heute).sort((a,b)=>b.datum.localeCompare(a.datum));
 document.getElementById("next").innerHTML=kommend.length?kommend.map(f=>karte(f,false)).join(""):'<p class="sub">Gerade steht keine Arbeit an.</p>';
 document.getElementById("past").innerHTML=alt.map(f=>karte(f,true)).join("");
 if(!alt.length)document.getElementById("h-past").hidden=true;

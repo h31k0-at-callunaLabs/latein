@@ -518,7 +518,7 @@ def write(name, text):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    b = '<h1>Musik</h1>\n<p class="sub">Klassenarbeit am Montag, 23.11.</p>\n'
+    b = '<h1>Musik</h1>\n<p class="sub">Klassenarbeit am Dienstag, 24.11.</p>\n'
     b += '<div class="box merke"><h3>So lernst du</h3><p>Mach die Themen <b>der Reihe nach</b>. Jedes Thema ist eine eigene Seite: erst lesen, dann Karten, dann üben, dann Quiz. Unten tippst du auf <b>„Fertig ✓“</b>.</p><p class="meta" id="st-left"></p></div>\n'
     b += '<div class="box"><h3>Das kommt in der Arbeit dran</h3><ul><li>Notennamen im Violin- und Bassschlüssel mit Oktavbezeichnungen</li><li>Intervalle Prime bis Oktave (Grobbestimmung)</li><li>Terzen: groß (4 HTS) oder klein (3 HTS)</li><li>Dur- und Molldreiklänge mit Grundton, Terzton, Quintton</li><li>Liedbegleitung mit Dreiklängen</li></ul><p class="meta">AFB 1: nennen und benennen. AFB 2: anwenden, notieren, erklären. AFB 3: eine Liedbegleitung komponieren.</p></div>\n'
     for i, s in enumerate(STEPS):
